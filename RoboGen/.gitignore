@@ -1,6 +1,6 @@
 *.iml
 .gradle
-RoboGen/app/build/
+/app/build/*
 /local.properties
 /.idea/caches
 /.idea/libraries
