@@ -38,19 +38,16 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 
-
-/**
+/*******************************************************************************
  * This Activity appears as a dialog. It lists any paired devices and
  * devices detected in the area after discovery. When a device is chosen
  * by the user, the MAC address of the device is sent back to the parent
  * Activity in the result Intent.
- */
+ ******************************************************************************/
 public class DeviceListActivity extends Activity {
     // Debugging
     private static final String TAG = "DeviceListActivity";
     private static final boolean D = true;
-
-    // Return Intent extra
     public static String EXTRA_DEVICE_ADDRESS = "device_address";
 
     // Member fields
@@ -104,21 +101,27 @@ public class DeviceListActivity extends Activity {
         // Get the local Bluetooth adapter
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        // Get a set of currently paired devices
-        Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
+        if(mBtAdapter != null) { // is null if e.g. no bluetooth is enabled on device
 
-        // If there are paired devices, add each one to the ArrayAdapter
-        if (pairedDevices.size() > 0) {
-            findViewById(R.id.title_paired_devices).setVisibility(View.VISIBLE);
-            for (BluetoothDevice device : pairedDevices) {
-                mPairedDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+            // Get a set of currently paired devices
+            Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
+
+            // If there are paired devices, add each one to the ArrayAdapter
+            if (pairedDevices.size() > 0) {
+                findViewById(R.id.title_paired_devices).setVisibility(View.VISIBLE);
+                for (BluetoothDevice device : pairedDevices) {
+                    mPairedDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+                }
+            } else {
+                String noDevices = getResources().getText(R.string.none_paired).toString();
+                mPairedDevicesArrayAdapter.add(noDevices);
             }
-        } else {
-            String noDevices = getResources().getText(R.string.none_paired).toString();
-            mPairedDevicesArrayAdapter.add(noDevices);
         }
     }
 
+    /*******************************************************************************
+     * ON ACTIVITY DESTROY (clicked away, exception, ...)
+     ******************************************************************************/
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -132,11 +135,16 @@ public class DeviceListActivity extends Activity {
         this.unregisterReceiver(mReceiver);
     }
 
-    /**
+    /*******************************************************************************
      * Start device discover with the BluetoothAdapter
-     */
+     ******************************************************************************/
     private void doDiscovery() {
         if (D) Log.d(TAG, "doDiscovery()");
+
+        if(mBtAdapter == null)
+        {
+            setTitle(R.string.alert_dialog_no_bt);
+        }
 
         // Indicate scanning in the title
         setProgressBarIndeterminateVisibility(true);
@@ -154,7 +162,9 @@ public class DeviceListActivity extends Activity {
         mBtAdapter.startDiscovery();
     }
 
-    // The on-click listener for all devices in the ListViews
+    /*******************************************************************************
+     *  The on-click listener for all devices in the ListViews
+     ******************************************************************************/
     private OnItemClickListener mDeviceClickListener = new OnItemClickListener() {
         public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
             // Cancel discovery because it's costly and we're about to connect
@@ -174,8 +184,10 @@ public class DeviceListActivity extends Activity {
         }
     };
 
-    // The BroadcastReceiver that listens for discovered devices and
-    // changes the title when discovery is finished
+    /*******************************************************************************
+     *  The BroadcastReceiver that listens for discovered devices and
+     *  changes the title when discovery is finished
+     ******************************************************************************/
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {

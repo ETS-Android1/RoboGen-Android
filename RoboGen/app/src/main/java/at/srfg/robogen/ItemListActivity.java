@@ -16,26 +16,30 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
+import at.srfg.robogen.bluetooth.BluetoothManager;
+
+/*******************************************************************************
  * An activity representing a list of Items. This activity
  * has different presentations for handset and tablet-size devices. On
  * handsets, the activity presents a list of items, which when touched,
  * lead to a {@link ItemDetailActivity} representing
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
- */
+ ******************************************************************************/
 public class ItemListActivity extends AppCompatActivity {
 
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
+    BluetoothManager mBluetoothManager = null;
+
+    /** Whether or not the activity is in two-pane mode, i.e. running on a tablet **/
     private boolean mTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
+
+        mBluetoothManager = new BluetoothManager(this, ItemListActivity.this);
+        mBluetoothManager.RequestExtraPermissionsForBluetooth(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -47,6 +51,8 @@ public class ItemListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Prüfung auf vorhandene Bluetooth-Verbindung...", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                mBluetoothManager.doConnect();
             }
         });
 
@@ -63,10 +69,24 @@ public class ItemListActivity extends AppCompatActivity {
         setupRecyclerView((RecyclerView) recyclerView);
     }
 
+
+    /*******************************************************************************
+     * on Result of bluetooth search selection
+     *******************************************************************************/
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mBluetoothManager.onScanResult(requestCode, resultCode, data);
+    }
+
+    /*******************************************************************************
+     * setup the view for bt recycling
+     *******************************************************************************/
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, ItemContent.ITEMS, mTwoPane));
     }
 
+    /*******************************************************************************
+     * class SimpleItemRecyclerViewAdapter
+     *******************************************************************************/
     public static class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 

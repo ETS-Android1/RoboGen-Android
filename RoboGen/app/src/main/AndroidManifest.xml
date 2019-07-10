@@ -28,9 +28,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="at.srfg.robogen.ItemListActivity" />
         </activity>
+        <activity android:name=".bluetooth.DeviceListActivity"
+            android:label="@string/select_device"
+            android:theme="@android:style/Theme.Dialog"
+            android:configChanges="orientation|keyboardHidden">
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 </manifest>

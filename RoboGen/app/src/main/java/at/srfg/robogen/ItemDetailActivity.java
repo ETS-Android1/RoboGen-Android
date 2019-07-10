@@ -10,13 +10,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
 import android.view.MenuItem;
 
-/**
+import at.srfg.robogen.bluetooth.BluetoothManager;
+
+/*******************************************************************************
  * An activity representing a single Item detail screen. This
  * activity is only used on narrow width devices. On tablet-size devices,
  * item details are presented side-by-side with a list of items
  * in a {@link ItemListActivity}.
- */
+ ******************************************************************************/
 public class ItemDetailActivity extends AppCompatActivity {
+
+    BluetoothManager mBluetoothManager = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +29,17 @@ public class ItemDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
+        mBluetoothManager = new BluetoothManager(this, ItemDetailActivity.this);
+        mBluetoothManager.RequestExtraPermissionsForBluetooth(this);
+
         FloatingActionButton bluetoothButton = (FloatingActionButton) findViewById(R.id.bt);
         bluetoothButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Prüfung auf vorhandene Bluetooth-Verbindung..", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                mBluetoothManager.doConnect();
             }
         });
 
@@ -63,6 +72,17 @@ public class ItemDetailActivity extends AppCompatActivity {
         }
     }
 
+
+    /*******************************************************************************
+     * on result bluetooth search select
+     *******************************************************************************/
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mBluetoothManager.onScanResult(requestCode, resultCode, data);
+    }
+
+    /*******************************************************************************
+     * onOptionsItemSelected
+     *******************************************************************************/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
