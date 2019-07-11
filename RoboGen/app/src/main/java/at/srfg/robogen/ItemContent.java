@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
+/*******************************************************************************
  * Helper class for providing sample content for user interfaces created by
- */
+ ******************************************************************************/
 public class ItemContent {
 
     /**
@@ -38,9 +38,9 @@ public class ItemContent {
         return builder.toString();
     }
 
-    /**
+    /*******************************************************************************
      * An item representing a piece of content.
-     */
+     ******************************************************************************/
     public static class ItemEntry {
         public final String id;
         public final String content;

@@ -30,6 +30,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import at.srfg.robogen.R;
+
 /*******************************************************************************
  * This class does all the work for setting up and managing Bluetooth
  * connections with other devices. It has a thread that listens for
@@ -48,6 +50,7 @@ public class BluetoothSerialService {
     private ConnectThread mConnectThread;
     private ConnectedThread mConnectedThread;
     private int mState;
+    private Context mContext;
 
     // Constants that indicate the current connection state
     public static final int STATE_NONE = 0;       // we're doing nothing
@@ -64,6 +67,7 @@ public class BluetoothSerialService {
         mAdapter = BluetoothAdapter.getDefaultAdapter();
         mState = STATE_NONE;
         mHandler = handler;
+        mContext = context;
     }
 
     /*******************************************************************************
@@ -208,7 +212,8 @@ public class BluetoothSerialService {
         // Send a failure message back to the Activity
         Message msg = mHandler.obtainMessage(BluetoothManager.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
-        bundle.putString(BluetoothManager.TOAST, "Unable to connect device");
+        bundle.putString(BluetoothManager.TOAST,
+                         mContext.getResources().getText(R.string.device_connection_failed).toString());
         msg.setData(bundle);
         mHandler.sendMessage(msg);
     }
@@ -222,7 +227,8 @@ public class BluetoothSerialService {
         // Send a failure message back to the Activity
         Message msg = mHandler.obtainMessage(BluetoothManager.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
-        bundle.putString(BluetoothManager.TOAST, "Device connection was lost");
+        bundle.putString(BluetoothManager.TOAST,
+                         mContext.getResources().getText(R.string.device_connection_lost).toString());
         msg.setData(bundle);
         mHandler.sendMessage(msg);
     }
