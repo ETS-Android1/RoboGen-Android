@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
+
+import android.util.Log;
 import android.view.MenuItem;
 
 import at.srfg.robogen.ItemDetail.ItemDetailBase;
@@ -20,6 +22,11 @@ import at.srfg.robogen.ItemDetail.ItemDetailAlexa;
  ******************************************************************************/
 public class ItemDetailActivity extends AppCompatActivity {
 
+    /**
+     * logging and debugging
+     */
+    public static final String LOG_TAG = "ItemDetailActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +40,7 @@ public class ItemDetailActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        // Create the detail fragment and add it to the activity
-        // using a fragment transaction.
+        // Create the detail fragment and add it to the activity using a fragment transaction.
         if (savedInstanceState == null) {
 
             Bundle arguments = new Bundle();
@@ -63,7 +69,7 @@ public class ItemDetailActivity extends AppCompatActivity {
             }
             else
             {
-                // all went wrong
+                Log.d(LOG_TAG, "Internal Error: invalid option selected");
             }
         }
     }
@@ -75,12 +81,8 @@ public class ItemDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            // This ID represents the Home or Up button. In the case of this
-            // activity, the Up button is shown. For
-            // more details, see the Navigation pattern on Android Design:
-            //
-            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-            //
+
+            // represents the Home or Up button. In this activity only the Up button is shown
             navigateUpTo(new Intent(this, ItemListActivity.class));
             return true;
         }

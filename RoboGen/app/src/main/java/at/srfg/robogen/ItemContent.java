@@ -16,7 +16,6 @@ public class ItemContent {
      */
     public static final List<ItemEntry> ITEMS = new ArrayList<ItemEntry>();
     public static final Map<String, ItemEntry> ITEM_MAP = new HashMap<String, ItemEntry>();
-    private static final int COUNT = 25;
 
     static {
         // Add some sample items.
@@ -30,35 +29,23 @@ public class ItemContent {
         ITEM_MAP.put(item.id, item);
     }
 
-    private static String makeDetails(int position) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Details about Item: ").append(position);
-        for (int i = 0; i < position; i++) {
-            builder.append("\nMore details information here.");
-        }
-        return builder.toString();
-    }
-
     /*******************************************************************************
      * An item representing a piece of content.
      ******************************************************************************/
     public static class ItemEntry {
         public final String id;
-        public final String content;
-        public final String details;
-        public FloatingActionButton searchButton; // ohne CTOR
-        public FloatingActionButton sendButton;   // ohne CTOR
+        public final String title;
+        public final String header;
 
-
-        public ItemEntry(String id, String content, String details) {
+        public ItemEntry(String id, String title, String header) {
             this.id = id;
-            this.content = content;
-            this.details = details;
+            this.title = title;
+            this.header = header;
         }
 
         @Override
         public String toString() {
-            return content;
+            return title;
         }
     }
 }

@@ -27,6 +27,15 @@ public class ItemDetailRobot extends ItemDetailBase {
 
     private BluetoothManager mBluetoothManager = null;
 
+    private final String mText_1 = "Schritt 1) Verbindung aufbauen mit dem Roboter Hugo via Bluetooth.\n" +
+                                   "Das Gerät muss zuerst gekoppelt werden und dann verbunden.\n" +
+                                    "Beides kann mit dem folgenden Schalter erledigt werden:";
+    private final String mText_2 = "Schritt 2) Nachdem eine Verbindung erfolgreich aufgebaut wurde können Testdaten versendet werden.\n" +
+                                   "Mit dem folgenden Schalter können Test-Daten an den Roboter gesendet werden:";
+
+    public FloatingActionButton mSearchButton;
+    public FloatingActionButton mSendButton;
+
 
     /*******************************************************************************
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -43,41 +52,52 @@ public class ItemDetailRobot extends ItemDetailBase {
             Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.item_detail_robot, container, false);
 
-        // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.details);
-
-
-            Activity activity = this.getActivity();
-            mBluetoothManager = new BluetoothManager(activity, activity.getBaseContext());
-            mBluetoothManager.RequestExtraPermissionsForBluetooth(activity);
-
-            mItem.searchButton = (FloatingActionButton) rootView.findViewById(R.id.bt_search);
-            mItem.searchButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Snackbar.make(view, "Prüfung auf vorhandene Bluetooth-Verbindung..", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-
-                    mBluetoothManager.doConnect();
-                }
-            });
-
-            mItem.sendButton = (FloatingActionButton) rootView.findViewById(R.id.bt_send);
-            mItem.sendButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    Snackbar.make(view, "Sende Daten an Gerät", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-
-                    // TODO: test data
-                    byte[] buffer = new byte[1];
-                    buffer[0] = 1;
-                    mBluetoothManager.send(buffer);
-                }
-            });
+            initGUIComponents(rootView);
         }
 
         return rootView;
+    }
+
+    /*******************************************************************************
+     * init GUI components
+     ******************************************************************************/
+    private void initGUIComponents(final View rootView)
+    {
+        // init text
+        ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.header);
+        ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(mText_1);
+        ((TextView) rootView.findViewById(R.id.item_detail_text_2)).setText(mText_2);
+
+        // init bluetooth manager
+        Activity activity = this.getActivity();
+        mBluetoothManager = new BluetoothManager(activity, activity.getBaseContext());
+        mBluetoothManager.RequestExtraPermissionsForBluetooth(activity);
+
+
+        // init bluetooth buttons
+        mSearchButton = (FloatingActionButton) rootView.findViewById(R.id.bt_search);
+        mSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Prüfung auf vorhandene Bluetooth-Verbindung..", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
+                mBluetoothManager.doConnect();
+            }
+        });
+        mSendButton = (FloatingActionButton) rootView.findViewById(R.id.bt_send);
+        mSendButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Snackbar.make(view, "Sende Daten an Gerät", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
+                // TODO: test data
+                byte[] buffer = new byte[1];
+                buffer[0] = 1;
+                mBluetoothManager.send(buffer);
+            }
+        });
     }
 
     /*******************************************************************************

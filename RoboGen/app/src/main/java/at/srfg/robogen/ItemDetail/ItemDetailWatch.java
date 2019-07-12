@@ -20,7 +20,7 @@ public class ItemDetailWatch extends ItemDetailBase {
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.details);
+            ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.header);
         }
 
         return rootView;

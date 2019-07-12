@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,11 @@ import at.srfg.robogen.ItemDetail.ItemDetailAlexa;
  ******************************************************************************/
 public class ItemListActivity extends AppCompatActivity {
 
+    /**
+     * logging and debugging
+     */
+    public static final String LOG_TAG = "ItemListActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,13 +44,6 @@ public class ItemListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
-
-        //if (findViewById(R.id.item_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
-        //}
 
         View recyclerView = findViewById(R.id.item_list);
         assert recyclerView != null;
@@ -90,7 +90,7 @@ public class ItemListActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    // bad
+                    Log.d(LOG_TAG, "Internal Error: invalid option selected");
                 }
 
                 context.startActivity(intent);
@@ -113,7 +113,7 @@ public class ItemListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).content);
+            holder.mContentView.setText(mValues.get(position).title);
 
             holder.itemView.setTag(mValues.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);

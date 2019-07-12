@@ -52,14 +52,7 @@ public class BluetoothManager {
     private boolean mHasExtraPermissions = false;
 
     /**
-     * Set to true to add debugging code and logging.
-     */
-    public static final boolean DEBUG = true;
-
-    /**
-     * The tag we use when logging, so that our messages can be distinguished
-     * from other messages in the log. Public because it's used by several
-     * classes.
+     * logging and debugging
      */
     public static final String LOG_TAG = "BluetoothManager";
 
@@ -86,7 +79,7 @@ public class BluetoothManager {
      * on scan result of bluetooth search
      ******************************************************************************/
     public void onScanResult(int requestCode, int resultCode, Intent data) {
-        if(DEBUG) Log.d(LOG_TAG, "onActivityResult " + resultCode);
+        Log.d(LOG_TAG, "onActivityResult " + resultCode);
         switch (requestCode) {
 
             case REQUEST_CONNECT_DEVICE:
@@ -192,7 +185,9 @@ public class BluetoothManager {
         public void handleMessage(Message msg) {        	
             switch (msg.what) {
             case MESSAGE_STATE_CHANGE:
-                if(DEBUG) Log.i(LOG_TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
+
+                Log.i(LOG_TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
+
                 switch (msg.arg1) {
                 case BluetoothSerialService.STATE_CONNECTED:
                 	
