@@ -1,5 +1,6 @@
 package at.srfg.robogen;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +46,9 @@ public class ItemContent {
         public final String id;
         public final String content;
         public final String details;
+        public FloatingActionButton searchButton; // ohne CTOR
+        public FloatingActionButton sendButton;   // ohne CTOR
+
 
         public ItemEntry(String id, String content, String details) {
             this.id = id;

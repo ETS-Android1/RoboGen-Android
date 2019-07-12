@@ -2,15 +2,10 @@ package at.srfg.robogen;
 
 import android.content.Intent;
 import android.os.Bundle;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.widget.Toolbar;
-import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
 import android.view.MenuItem;
-
-import at.srfg.robogen.bluetooth.BluetoothManager;
 
 /*******************************************************************************
  * An activity representing a single Item detail screen. This
@@ -20,28 +15,12 @@ import at.srfg.robogen.bluetooth.BluetoothManager;
  ******************************************************************************/
 public class ItemDetailActivity extends AppCompatActivity {
 
-    BluetoothManager mBluetoothManager = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
-
-        mBluetoothManager = new BluetoothManager(this, ItemDetailActivity.this);
-        mBluetoothManager.RequestExtraPermissionsForBluetooth(this);
-
-        FloatingActionButton bluetoothButton = (FloatingActionButton) findViewById(R.id.bt);
-        bluetoothButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Prüfung auf vorhandene Bluetooth-Verbindung..", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-                mBluetoothManager.doConnect();
-            }
-        });
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
@@ -70,14 +49,6 @@ public class ItemDetailActivity extends AppCompatActivity {
                     .add(R.id.item_detail_container, fragment)
                     .commit();
         }
-    }
-
-
-    /*******************************************************************************
-     * on result bluetooth search select
-     *******************************************************************************/
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        mBluetoothManager.onScanResult(requestCode, resultCode, data);
     }
 
     /*******************************************************************************

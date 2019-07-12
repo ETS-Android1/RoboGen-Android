@@ -25,6 +25,7 @@
     <string name="title_paired_devices">Gekoppelte Geräte</string>
     <string name="title_other_devices">Andere Geräte</string>
     <string name="button_scan">Suche nach Geräten</string>
+    <string name="button_send">Sende an Geräte</string>
     <string name="device_no_name">Gerätename nur sichtbar für verbundene Geräte</string>
 
     <!--  BluetoothSerialService -->

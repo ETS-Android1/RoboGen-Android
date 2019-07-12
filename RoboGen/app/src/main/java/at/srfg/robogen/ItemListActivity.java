@@ -7,16 +7,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
-
-import at.srfg.robogen.bluetooth.BluetoothManager;
 
 /*******************************************************************************
  * An activity representing a list of Items. This activity
@@ -28,40 +24,20 @@ import at.srfg.robogen.bluetooth.BluetoothManager;
  ******************************************************************************/
 public class ItemListActivity extends AppCompatActivity {
 
-    BluetoothManager mBluetoothManager = null;
-
-    /** Whether or not the activity is in two-pane mode, i.e. running on a tablet **/
-    private boolean mTwoPane;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
 
-        mBluetoothManager = new BluetoothManager(this, ItemListActivity.this);
-        mBluetoothManager.RequestExtraPermissionsForBluetooth(this);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
-
-        FloatingActionButton bluetoothButton = (FloatingActionButton) findViewById(R.id.bt);
-        bluetoothButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Prüfung auf vorhandene Bluetooth-Verbindung...", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-                mBluetoothManager.doConnect();
-            }
-        });
 
         if (findViewById(R.id.item_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-w900dp).
             // If this view is present, then the
             // activity should be in two-pane mode.
-            mTwoPane = true;
         }
 
         View recyclerView = findViewById(R.id.item_list);
@@ -69,19 +45,11 @@ public class ItemListActivity extends AppCompatActivity {
         setupRecyclerView((RecyclerView) recyclerView);
     }
 
-
-    /*******************************************************************************
-     * on Result of bluetooth search selection
-     *******************************************************************************/
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        mBluetoothManager.onScanResult(requestCode, resultCode, data);
-    }
-
     /*******************************************************************************
      * setup the view for bt recycling
      *******************************************************************************/
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, ItemContent.ITEMS, mTwoPane));
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, ItemContent.ITEMS));
     }
 
     /*******************************************************************************
@@ -92,35 +60,24 @@ public class ItemListActivity extends AppCompatActivity {
 
         private final ItemListActivity mParentActivity;
         private final List<ItemContent.ItemEntry> mValues;
-        private final boolean mTwoPane;
+
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ItemContent.ItemEntry item = (ItemContent.ItemEntry) view.getTag();
-                if (mTwoPane) {
-                    Bundle arguments = new Bundle();
-                    arguments.putString(ItemDetailFragment.ARG_ITEM_ID, item.id);
-                    ItemDetailFragment fragment = new ItemDetailFragment();
-                    fragment.setArguments(arguments);
-                    mParentActivity.getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.item_detail_container, fragment)
-                            .commit();
-                } else {
-                    Context context = view.getContext();
-                    Intent intent = new Intent(context, ItemDetailActivity.class);
-                    intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id);
 
-                    context.startActivity(intent);
-                }
+                Context context = view.getContext();
+                Intent intent = new Intent(context, ItemDetailActivity.class);
+                intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id);
+
+                context.startActivity(intent);
             }
         };
 
         SimpleItemRecyclerViewAdapter(ItemListActivity parent,
-                                      List<ItemContent.ItemEntry> items,
-                                      boolean twoPane) {
+                                      List<ItemContent.ItemEntry> items) {
             mValues = items;
             mParentActivity = parent;
-            mTwoPane = twoPane;
         }
 
         @Override
