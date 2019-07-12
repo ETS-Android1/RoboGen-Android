@@ -1,18 +1,21 @@
-package at.srfg.robogen;
+package at.srfg.robogen.ItemDetail;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import at.srfg.robogen.ItemDetailActivity;
+import at.srfg.robogen.ItemDetail.ItemDetailBase;
+import at.srfg.robogen.ItemListActivity;
+import at.srfg.robogen.R;
 import at.srfg.robogen.bluetooth.BluetoothManager;
 
 /*******************************************************************************
@@ -21,46 +24,21 @@ import at.srfg.robogen.bluetooth.BluetoothManager;
  * in two-pane mode (on tablets) or a {@link ItemDetailActivity}
  * on handsets.
  ******************************************************************************/
-public class ItemDetailFragment extends Fragment {
+public class ItemDetailRobot extends ItemDetailBase {
 
-    BluetoothManager mBluetoothManager = null;
+    private BluetoothManager mBluetoothManager = null;
 
-    /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
-     */
-    public static final String ARG_ITEM_ID = "item_id";
 
-    /**
-     * The dummy content this fragment is presenting.
-     */
-    private ItemContent.ItemEntry mItem;
-
-    /**
+    /*******************************************************************************
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
-     */
-    public ItemDetailFragment() {
+     ******************************************************************************/
+    public ItemDetailRobot() {
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            mItem = ItemContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
-
-            Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
-            if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.content);
-            }
-        }
-    }
-
+    /*******************************************************************************
+     * creating view for robot detail page
+     ******************************************************************************/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {

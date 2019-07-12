@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import at.srfg.robogen.ItemDetail.ItemDetailRobot;
+
 /*******************************************************************************
  * An activity representing a list of Items. This activity
  * has different presentations for handset and tablet-size devices. On
@@ -68,7 +70,7 @@ public class ItemListActivity extends AppCompatActivity {
 
                 Context context = view.getContext();
                 Intent intent = new Intent(context, ItemDetailActivity.class);
-                intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id);
+                intent.putExtra(ItemDetailRobot.ARG_ITEM_ID, item.id);
 
                 context.startActivity(intent);
             }
