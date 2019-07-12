@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import at.srfg.robogen.ItemDetailActivity;
-import at.srfg.robogen.ItemDetail.ItemDetailBase;
 import at.srfg.robogen.ItemListActivity;
 import at.srfg.robogen.R;
 import at.srfg.robogen.bluetooth.BluetoothManager;
@@ -42,7 +41,7 @@ public class ItemDetailRobot extends ItemDetailBase {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.item_detail, container, false);
+        final View rootView = inflater.inflate(R.layout.item_detail_robot, container, false);
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {

@@ -7,7 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
 import android.view.MenuItem;
 
+import at.srfg.robogen.ItemDetail.ItemDetailBase;
 import at.srfg.robogen.ItemDetail.ItemDetailRobot;
+import at.srfg.robogen.ItemDetail.ItemDetailWatch;
+import at.srfg.robogen.ItemDetail.ItemDetailAlexa;
 
 /*******************************************************************************
  * An activity representing a single Item detail screen. This
@@ -30,26 +33,38 @@ public class ItemDetailActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        // savedInstanceState is non-null when there is fragment state
-        // saved from previous configurations of this activity
-        // (e.g. when rotating the screen from portrait to landscape).
-        // In this case, the fragment will automatically be re-added
-        // to its container so we don't need to manually add it.
-        // For more information, see the Fragments API guide at:
-        //
-        // http://developer.android.com/guide/components/fragments.html
-        //
+        // Create the detail fragment and add it to the activity
+        // using a fragment transaction.
         if (savedInstanceState == null) {
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
+
             Bundle arguments = new Bundle();
-            arguments.putString(ItemDetailRobot.ARG_ITEM_ID,
-                    getIntent().getStringExtra(ItemDetailRobot.ARG_ITEM_ID));
-            ItemDetailRobot fragment = new ItemDetailRobot();
-            fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.item_detail_container, fragment)
-                    .commit();
+            String itemID = getIntent().getStringExtra(ItemDetailBase.ARG_ITEM_ID);
+
+            if(itemID.equals("1."))
+            {
+                arguments.putString(ItemDetailRobot.ARG_ITEM_ID, getIntent().getStringExtra(ItemDetailRobot.ARG_ITEM_ID));
+                ItemDetailRobot fragment = new ItemDetailRobot();
+                fragment.setArguments(arguments);
+                getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
+            }
+            else if(itemID.equals("2."))
+            {
+                arguments.putString(ItemDetailWatch.ARG_ITEM_ID, getIntent().getStringExtra(ItemDetailWatch.ARG_ITEM_ID));
+                ItemDetailWatch fragment = new ItemDetailWatch();
+                fragment.setArguments(arguments);
+                getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
+            }
+            else if(itemID.equals("3."))
+            {
+                arguments.putString(ItemDetailAlexa.ARG_ITEM_ID, getIntent().getStringExtra(ItemDetailAlexa.ARG_ITEM_ID));
+                ItemDetailAlexa fragment = new ItemDetailAlexa();
+                fragment.setArguments(arguments);
+                getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
+            }
+            else
+            {
+                // all went wrong
+            }
         }
     }
 

@@ -14,7 +14,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import at.srfg.robogen.ItemDetail.ItemDetailBase;
 import at.srfg.robogen.ItemDetail.ItemDetailRobot;
+import at.srfg.robogen.ItemDetail.ItemDetailWatch;
+import at.srfg.robogen.ItemDetail.ItemDetailAlexa;
 
 /*******************************************************************************
  * An activity representing a list of Items. This activity
@@ -70,7 +73,25 @@ public class ItemListActivity extends AppCompatActivity {
 
                 Context context = view.getContext();
                 Intent intent = new Intent(context, ItemDetailActivity.class);
-                intent.putExtra(ItemDetailRobot.ARG_ITEM_ID, item.id);
+
+                if(item.toString() == "Hugo") {
+                    intent.putExtra(ItemDetailBase.ARG_ITEM_ID, item.id); // id  = 1
+                    intent.putExtra(ItemDetailRobot.ARG_ITEM_ID, item.id); // id  = 1
+                }
+                else if(item.toString() == "Uhren")
+                {
+                    intent.putExtra(ItemDetailBase.ARG_ITEM_ID, item.id); // id  = 2
+                    intent.putExtra(ItemDetailWatch.ARG_ITEM_ID, item.id); // id = 2
+                }
+                else if(item.toString() == "Alexa")
+                {
+                    intent.putExtra(ItemDetailBase.ARG_ITEM_ID, item.id); // id  = 3
+                    intent.putExtra(ItemDetailAlexa.ARG_ITEM_ID, item.id); // id = 3
+                }
+                else
+                {
+                    // bad
+                }
 
                 context.startActivity(intent);
             }
