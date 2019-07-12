@@ -20,9 +20,9 @@ public class ItemContent {
 
     static {
         // Add some sample items.
-        addItem(new ItemEntry("1:", "Hugo", "Management-Seite für Q.Bo One - Roboter"));
-        addItem(new ItemEntry("2:", "Uhren", "Management-Seite für Fitbit Charge 2 - Smart Watches"));
-        addItem(new ItemEntry("3:", "Alexa", "Management-Seite für Alexa Entscheidungsbäume"));
+        addItem(new ItemEntry("1.", "Hugo", "Management-Seite für Q.Bo One - Roboter"));
+        addItem(new ItemEntry("2.", "Uhren", "Management-Seite für Fitbit Charge 2 - Smart Watches"));
+        addItem(new ItemEntry("3.", "Alexa", "Management-Seite für Alexa Entscheidungsbäume"));
     }
 
     private static void addItem(ItemEntry item) {
