@@ -37,7 +37,7 @@
         android:layout_gravity="bottom|center"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/bluetooth_connect"
-        app:fabSize="auto"
+        app:fabSize="normal"
         app:rippleColor="@color/cardview_dark_background"
         app:backgroundTint= "@color/colorPrimary" />
 
@@ -59,7 +59,7 @@
         android:layout_gravity="bottom|center"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/bluetooth_send"
-        app:fabSize="auto"
+        app:fabSize="normal"
         app:rippleColor="@color/cardview_dark_background"
         app:backgroundTint= "@color/colorPrimary" />
 </LinearLayout>

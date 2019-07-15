@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="@drawable/customborder"
@@ -8,13 +8,13 @@
 
     <ImageView
         android:id="@+id/image_connOverview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="275px"
+        android:layout_height="275px"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:paddingLeft="25dp"
-        android:paddingRight="25dp"
+        android:paddingRight="50dp"
         android:paddingTop="10dp"
         app:srcCompat="@drawable/img_not_connected" />
 
@@ -28,7 +28,7 @@
 
     <TextView
         android:id="@+id/content"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:textAppearance="?attr/textAppearanceListItem"

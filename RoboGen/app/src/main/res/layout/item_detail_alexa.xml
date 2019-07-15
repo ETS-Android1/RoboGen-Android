@@ -19,4 +19,26 @@
         android:textIsSelectable="true"
         tools:context=".ItemDetail.ItemDetailAlexa" />
 
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/item_detail_text_1"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:textSize="20dp"
+        android:textIsSelectable="true"
+        tools:context=".ItemDetail.ItemDetailRobot" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bt_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/alexa_start"
+        app:fabSize="normal"
+        app:rippleColor="@color/cardview_dark_background"
+        app:backgroundTint= "@color/colorPrimary" />
+
 </LinearLayout>
