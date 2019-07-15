@@ -2,6 +2,7 @@ package at.srfg.robogen;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -66,6 +68,22 @@ public class ItemListActivity extends AppCompatActivity {
         private final ItemListActivity mParentActivity;
         private final List<ItemContent.ItemEntry> mValues;
 
+        public Drawable mDrawableConnected = null;
+        public Drawable mDrawableNotConnected = null;
+
+        /*******************************************************************************
+         * CTOR will init all entry ImageViews, representing state of connection
+         *******************************************************************************/
+        SimpleItemRecyclerViewAdapter(ItemListActivity parent,
+                                      List<ItemContent.ItemEntry> items) {
+
+            mValues = items;
+            mParentActivity = parent;
+        }
+
+        /*******************************************************************************
+         * listening to main page item click
+         *******************************************************************************/
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,23 +115,29 @@ public class ItemListActivity extends AppCompatActivity {
             }
         };
 
-        SimpleItemRecyclerViewAdapter(ItemListActivity parent,
-                                      List<ItemContent.ItemEntry> items) {
-            mValues = items;
-            mParentActivity = parent;
-        }
-
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_list_content, parent, false);
+
+            mDrawableConnected = view.getResources().getDrawable(R.drawable.img_connected);
+            mDrawableNotConnected = view.getResources().getDrawable(R.drawable.img_not_connected);
+
             return new ViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
+
+            if(mValues.get(position).mEntryIsConnected) {
+                holder.mConnectionView.setImageDrawable(mDrawableConnected);
+            }
+            else{
+                holder.mConnectionView.setImageDrawable(mDrawableNotConnected);
+            }
+
             holder.mIdView.setText(mValues.get(position).mEntryID);
-            holder.mContentView.setText(mValues.get(position).mEntryTitle);
+            holder.mTitleView.setText(mValues.get(position).mEntryTitle);
 
             holder.itemView.setTag(mValues.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);
@@ -124,14 +148,19 @@ public class ItemListActivity extends AppCompatActivity {
             return mValues.size();
         }
 
+        /*******************************************************************************
+         * class representing a viewholder
+         *******************************************************************************/
         class ViewHolder extends RecyclerView.ViewHolder {
+            ImageView mConnectionView;
             final TextView mIdView;
-            final TextView mContentView;
+            final TextView mTitleView;
 
             ViewHolder(View view) {
                 super(view);
+                mConnectionView = (ImageView) view.findViewById(R.id.image_connOverview);
                 mIdView = (TextView) view.findViewById(R.id.id_text);
-                mContentView = (TextView) view.findViewById(R.id.content);
+                mTitleView = (TextView) view.findViewById(R.id.content);
             }
         }
     }

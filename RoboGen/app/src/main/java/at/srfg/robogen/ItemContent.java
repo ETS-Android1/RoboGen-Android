@@ -1,8 +1,6 @@
 package at.srfg.robogen;
 
-import android.widget.ImageView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,9 +19,9 @@ public class ItemContent {
 
     static {
         // Add some sample items.
-        addItem(new ItemEntry("1.", "Hugo", "Management-Seite für Q.Bo One - Roboter"));
-        addItem(new ItemEntry("2.", "Uhren", "Management-Seite für Fitbit Charge 2 - Smart Watches"));
-        addItem(new ItemEntry("3.", "Alexa", "Management-Seite für Alexa Entscheidungsbäume"));
+        addItem(new ItemEntry("1.", "Hugo", "Management-Seite für Q.Bo One - Roboter", false));
+        addItem(new ItemEntry("2.", "Uhren", "Management-Seite für Fitbit Charge 2 - Smart Watches", false));
+        addItem(new ItemEntry("3.", "Alexa", "Management-Seite für Alexa Entscheidungsbäume", false));
     }
 
     private static void addItem(ItemEntry item) {
@@ -35,15 +33,16 @@ public class ItemContent {
      * An item representing a piece of content.
      ******************************************************************************/
     public static class ItemEntry {
-        //public ImageView mConnectionState;
         public final String mEntryID;
         public final String mEntryTitle;
         public final String mEntryHeader;
+        public boolean mEntryIsConnected;
 
-        public ItemEntry(String id, String title, String header) {
+        public ItemEntry(String id, String title, String header, boolean connected) {
             this.mEntryID = id;
             this.mEntryTitle = title;
             this.mEntryHeader = header;
+            this.mEntryIsConnected = connected;
         }
 
         @Override
