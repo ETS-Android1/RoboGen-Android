@@ -75,18 +75,18 @@ public class ItemListActivity extends AppCompatActivity {
                 Intent intent = new Intent(context, ItemDetailActivity.class);
 
                 if(item.toString() == "Hugo") {
-                    intent.putExtra(ItemDetailBase.ARG_ITEM_ID, item.id); // id  = 1
-                    intent.putExtra(ItemDetailRobot.ARG_ITEM_ID, item.id); // id  = 1
+                    intent.putExtra(ItemDetailBase.ARG_ITEM_ID, item.mEntryID); // id  = 1
+                    intent.putExtra(ItemDetailRobot.ARG_ITEM_ID, item.mEntryID); // id  = 1
                 }
                 else if(item.toString() == "Uhren")
                 {
-                    intent.putExtra(ItemDetailBase.ARG_ITEM_ID, item.id); // id  = 2
-                    intent.putExtra(ItemDetailWatch.ARG_ITEM_ID, item.id); // id = 2
+                    intent.putExtra(ItemDetailBase.ARG_ITEM_ID, item.mEntryID); // id  = 2
+                    intent.putExtra(ItemDetailWatch.ARG_ITEM_ID, item.mEntryID); // id = 2
                 }
                 else if(item.toString() == "Alexa")
                 {
-                    intent.putExtra(ItemDetailBase.ARG_ITEM_ID, item.id); // id  = 3
-                    intent.putExtra(ItemDetailAlexa.ARG_ITEM_ID, item.id); // id = 3
+                    intent.putExtra(ItemDetailBase.ARG_ITEM_ID, item.mEntryID); // id  = 3
+                    intent.putExtra(ItemDetailAlexa.ARG_ITEM_ID, item.mEntryID); // id = 3
                 }
                 else
                 {
@@ -112,8 +112,8 @@ public class ItemListActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).title);
+            holder.mIdView.setText(mValues.get(position).mEntryID);
+            holder.mContentView.setText(mValues.get(position).mEntryTitle);
 
             holder.itemView.setTag(mValues.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);

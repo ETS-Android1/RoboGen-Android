@@ -40,7 +40,7 @@ public class ItemDetailAlexa extends ItemDetailBase {
      ******************************************************************************/
     private void initGUIComponents(final View rootView, final View mainView){
 
-        ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.header);
+        ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.mEntryHeader);
         ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(mText_1);
 
 

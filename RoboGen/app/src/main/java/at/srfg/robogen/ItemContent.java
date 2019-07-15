@@ -1,5 +1,7 @@
 package at.srfg.robogen;
 
+import android.widget.ImageView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,26 +28,27 @@ public class ItemContent {
 
     private static void addItem(ItemEntry item) {
         ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
+        ITEM_MAP.put(item.mEntryID, item);
     }
 
     /*******************************************************************************
      * An item representing a piece of content.
      ******************************************************************************/
     public static class ItemEntry {
-        public final String id;
-        public final String title;
-        public final String header;
+        //public ImageView mConnectionState;
+        public final String mEntryID;
+        public final String mEntryTitle;
+        public final String mEntryHeader;
 
         public ItemEntry(String id, String title, String header) {
-            this.id = id;
-            this.title = title;
-            this.header = header;
+            this.mEntryID = id;
+            this.mEntryTitle = title;
+            this.mEntryHeader = header;
         }
 
         @Override
         public String toString() {
-            return title;
+            return mEntryTitle;
         }
     }
 }
