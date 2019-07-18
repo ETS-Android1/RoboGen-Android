@@ -1,5 +1,6 @@
-package at.srfg.robogen.ItemDetail;
+package at.srfg.robogen.itemdetail;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +11,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import at.srfg.robogen.R;
+import at.srfg.robogen.fitnesswatch.FitBitManager;
 
 public class ItemDetailWatch extends ItemDetailBase {
 
     private final String mText_1 = "Test-Schritt) Verbindung aufbauen mit Uhr:";
     public FloatingActionButton mWatchStartButton;
+
+    private FitBitManager mWatchManager = null;
 
     /*******************************************************************************
      * creating view for watch detail page
@@ -37,6 +41,10 @@ public class ItemDetailWatch extends ItemDetailBase {
      ******************************************************************************/
     private void initGUIComponents(final View rootView){
 
+        Activity activity = this.getActivity();
+        mWatchManager = new FitBitManager(activity, activity.getBaseContext());
+        // TODO
+
         ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.mEntryHeader);
         ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(mText_1);
 
@@ -48,6 +56,7 @@ public class ItemDetailWatch extends ItemDetailBase {
                         .setAction("Action", null).show();
 
                 // TODO:
+                mWatchManager.logIn(rootView);
                 mItem.mEntryIsConnected = !mItem.mEntryIsConnected;
             }
         });

@@ -18,10 +18,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import at.srfg.robogen.ItemDetail.ItemDetailBase;
-import at.srfg.robogen.ItemDetail.ItemDetailRobot;
-import at.srfg.robogen.ItemDetail.ItemDetailWatch;
-import at.srfg.robogen.ItemDetail.ItemDetailAlexa;
+import at.srfg.robogen.itemdetail.ItemDetailBase;
+import at.srfg.robogen.itemdetail.ItemDetailRobot;
+import at.srfg.robogen.itemdetail.ItemDetailWatch;
+import at.srfg.robogen.itemdetail.ItemDetailAlexa;
 
 /*******************************************************************************
  * An activity representing a list of Items. This activity

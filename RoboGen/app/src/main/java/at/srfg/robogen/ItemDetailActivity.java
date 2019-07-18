@@ -2,17 +2,16 @@ package at.srfg.robogen;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
 
-import android.util.Log;
-import android.view.MenuItem;
-
-import at.srfg.robogen.ItemDetail.ItemDetailBase;
-import at.srfg.robogen.ItemDetail.ItemDetailRobot;
-import at.srfg.robogen.ItemDetail.ItemDetailWatch;
-import at.srfg.robogen.ItemDetail.ItemDetailAlexa;
+import at.srfg.robogen.itemdetail.ItemDetailBase;
+import at.srfg.robogen.itemdetail.ItemDetailRobot;
+import at.srfg.robogen.itemdetail.ItemDetailWatch;
+import at.srfg.robogen.itemdetail.ItemDetailAlexa;
 
 /*******************************************************************************
  * An activity representing a single Item detail screen. This

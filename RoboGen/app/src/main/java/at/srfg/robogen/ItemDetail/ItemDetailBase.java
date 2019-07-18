@@ -1,4 +1,4 @@
-package at.srfg.robogen.ItemDetail;
+package at.srfg.robogen.itemdetail;
 
 import android.app.Activity;
 import android.os.Bundle;

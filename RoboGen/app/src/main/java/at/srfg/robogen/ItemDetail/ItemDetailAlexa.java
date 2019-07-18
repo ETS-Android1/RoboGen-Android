@@ -1,4 +1,4 @@
-package at.srfg.robogen.ItemDetail;
+package at.srfg.robogen.itemdetail;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -39,7 +39,6 @@ public class ItemDetailAlexa extends ItemDetailBase {
 
         ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.mEntryHeader);
         ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(mText_1);
-
 
         mAlexaStartButton = (FloatingActionButton) rootView.findViewById(R.id.bt_search);
         mAlexaStartButton.setOnClickListener(new View.OnClickListener() {
