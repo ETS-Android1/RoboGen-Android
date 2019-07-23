@@ -43,7 +43,6 @@ public class ItemDetailWatch extends ItemDetailBase {
 
         Activity activity = this.getActivity();
         mWatchManager = new FitBitManager(activity, activity.getBaseContext());
-        // TODO
 
         ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.mEntryHeader);
         ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(mText_1);
@@ -52,12 +51,16 @@ public class ItemDetailWatch extends ItemDetailBase {
         mWatchStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Snackbar.make(view, "Starte Verbindung mit Uhr..", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                // TODO:
+                // starte Verbindung mit Uhr
                 mWatchManager.logIn(rootView);
                 mItem.mEntryIsConnected = !mItem.mEntryIsConnected;
+
+                Snackbar.make(view, "Verbindung erfolgreich aufgebaut!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
     }

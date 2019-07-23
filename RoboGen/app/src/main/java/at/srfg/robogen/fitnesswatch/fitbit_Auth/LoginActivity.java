@@ -1,10 +1,5 @@
 package at.srfg.robogen.fitnesswatch.fitbit_Auth;
 
-//import at.srfg.robogen.fitnesswatch.fitbit_Auth.databinding.ActivityLoginBinding;
-//import android.databinding.DataBindingUtil;
-//import android.support.annotation.NonNull;
-//import android.support.v7.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +7,8 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.ProgressBar;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,8 +27,8 @@ public class LoginActivity extends AppCompatActivity implements AuthenticationHa
     private static final String EXPIRES_IN_KEY = "EXPIRES_IN_KEY";
     private static final String SCOPES_KEY = "SCOPES_KEY";
 
-    //private ActivityLoginBinding binding;
-    private WebView mLoginBindingView;
+    private WebView mLoginView;
+    private ProgressBar mLoginProgress;
 
     public static Intent createIntent(Context context, @NonNull ClientCredentials clientCredentials, @Nullable Long expiresIn, Set<Scope> scopes) {
         return createIntent(context, null, clientCredentials, expiresIn, scopes);
@@ -51,8 +48,9 @@ public class LoginActivity extends AppCompatActivity implements AuthenticationHa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-        mLoginBindingView = (WebView) findViewById(R.id.login_binding_webview);
+        setContentView(R.layout.activity_login);
+        mLoginView = (WebView) findViewById(R.id.login_webview);
+        mLoginProgress = (ProgressBar) findViewById(R.id.login_progressBar);
 
         ClientCredentials clientCredentials = getIntent().getParcelableExtra(CLIENT_CREDENTIALS_KEY);
         Long expiresIn = getIntent().getLongExtra(EXPIRES_IN_KEY, 604800);
@@ -63,19 +61,16 @@ public class LoginActivity extends AppCompatActivity implements AuthenticationHa
         }
 
         AuthorizationController authorizationController = new AuthorizationController(
-                //binding.loginWebview,
-                mLoginBindingView,
+                mLoginView,
                 clientCredentials,
                 this);
 
         authorizationController.authenticate(expiresIn, scopesSet);
-
     }
 
     @Override
     public void onAuthFinished(AuthenticationResult result) {
-        //binding.loginWebview.setVisibility(View.GONE);
-        mLoginBindingView.setVisibility(View.GONE);
+        mLoginView.setVisibility(View.VISIBLE);
 
         Intent resultIntent = new Intent();
         resultIntent.putExtra(AUTHENTICATION_RESULT_KEY, result);

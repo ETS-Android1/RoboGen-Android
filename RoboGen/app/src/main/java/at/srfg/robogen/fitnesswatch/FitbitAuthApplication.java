@@ -17,11 +17,10 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-
-/**
- * Created by jboggess on 9/28/16.
- */
-
+/*******************************************************************************
+ * Class FitbitAuthApplication
+ * static application initialized with android manifest file
+ ******************************************************************************/
 public class FitbitAuthApplication extends Application {
 
     /**
@@ -32,9 +31,8 @@ public class FitbitAuthApplication extends Application {
      * (like `https://finished` or `https://done` or `https://completed`, etc.), and save.
      * <p>
      */
-
     //!! THIS SHOULD BE IN AN ANDROID KEYSTORE!! See https://developer.android.com/training/articles/keystore.html
-    private static final String CLIENT_SECRET = "86401692efd006045a157f45755000d0";
+    private static final String CLIENT_SECRET = "fb1d4feca889b225724051a673f5876f";
 
     /**
      * This key was generated using the SecureKeyGenerator [java] class. Run as a Java application (not Android)
@@ -59,9 +57,7 @@ public class FitbitAuthApplication extends Application {
             String clientId = bundle.getString("at.srfg.robogen.fitnesswatch.CLIENT_ID");
             String redirectUrl = bundle.getString("at.srfg.robogen.fitnesswatch.REDIRECT_URL");
 
-
             ClientCredentials CLIENT_CREDENTIALS = new ClientCredentials(clientId, CLIENT_SECRET, redirectUrl);
-
             return new AuthenticationConfigurationBuilder()
 
                     .setClientCredentials(CLIENT_CREDENTIALS)

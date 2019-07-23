@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Set;
@@ -18,7 +17,10 @@ import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationManager;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationResult;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.Scope;
 
-
+/*******************************************************************************
+ * Class FitBitManager
+ * serves as AuthenticationHandler and Activity
+ ******************************************************************************/
 public class FitBitManager extends AppCompatActivity implements AuthenticationHandler {
 
     private Activity mParentActivity;
@@ -30,7 +32,9 @@ public class FitBitManager extends AppCompatActivity implements AuthenticationHa
         mParentContext = ct;
     }
 
-
+    /*******************************************************************************
+     * onResume will start process if is logged in succesfully
+     ******************************************************************************/
     @Override
     protected void onResume() {
         super.onResume();
@@ -49,7 +53,9 @@ public class FitBitManager extends AppCompatActivity implements AuthenticationHa
         }
     }
 
-
+    /*******************************************************************************
+     * logIn, will logIn the User in FitBit Account
+     ******************************************************************************/
     public void logIn(View view) {
         /**
          *  3. Call login to show the login UI
@@ -57,7 +63,9 @@ public class FitBitManager extends AppCompatActivity implements AuthenticationHa
         AuthenticationManager.login(mParentActivity);
     }
 
-
+    /*******************************************************************************
+     * OnActivityResult
+     ******************************************************************************/
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -77,9 +85,11 @@ public class FitBitManager extends AppCompatActivity implements AuthenticationHa
         if (!AuthenticationManager.onActivityResult(requestCode, resultCode, data, this)) {
             // Handle other activity results, if needed
         }
-
     }
 
+    /*******************************************************************************
+     * onAuthFinished
+     ******************************************************************************/
     public void onAuthFinished(AuthenticationResult authenticationResult) {
 
         /**
@@ -98,7 +108,9 @@ public class FitBitManager extends AppCompatActivity implements AuthenticationHa
         //startActivity(intent);
     }
 
-
+    /*******************************************************************************
+     * displayAuthError
+     ******************************************************************************/
     private void displayAuthError(AuthenticationResult authenticationResult) {
         String message = "";
 
