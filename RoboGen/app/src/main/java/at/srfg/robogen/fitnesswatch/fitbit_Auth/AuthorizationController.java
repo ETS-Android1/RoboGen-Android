@@ -42,7 +42,7 @@ public class AuthorizationController implements UrlChangeHandler {
 
         webView.setWebViewClient(new AuthenticationWebviewClient(this));
         String url = String.format(
-                Locale.ENGLISH, // Locale.GERMAN????
+                Locale.ENGLISH,
                 AUTHORIZE_URL_FORMAT,
                 clientCredentials.getClientId(),
                 clientCredentials.getRedirectUrl(),
