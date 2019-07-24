@@ -8,15 +8,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import at.srfg.robogen.R;
 import at.srfg.robogen.fitnesswatch.FitBitManager;
 
 public class ItemDetailWatch extends ItemDetailBase {
 
-    private final String mText_1 = "Test-Schritt) Verbindung aufbauen mit Uhr:";
+    private final String mText_1 = "Schritt 1) Verbindung aufbauen mit einem Account für FitBit-Geräte:";
     public FloatingActionButton mWatchStartButton;
+
+    private final String mText_Heartrate = "Schritt 2) Herzrate anfordern von registriertem Account:";
+    public FloatingActionButton mAlexaButton_Heartrate;
+
 
     private FitBitManager mWatchManager = null;
 
@@ -52,15 +55,30 @@ public class ItemDetailWatch extends ItemDetailBase {
             @Override
             public void onClick(View view) {
 
-                Snackbar.make(view, "Starte Verbindung mit Uhr..", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                makeSnackbarMessage(view, "Starte Verbindung mit Uhr..");
 
                 // starte Verbindung mit Uhr
                 mWatchManager.logIn(rootView);
                 mItem.mEntryIsConnected = !mItem.mEntryIsConnected;
 
-                Snackbar.make(view, "Verbindung erfolgreich aufgebaut!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                makeSnackbarMessage(view, "Verbindung erfolgreich aufgebaut!");
+            }
+        });
+
+
+        ((TextView) rootView.findViewById(R.id.item_detail_text_heartrate)).setText(mText_Heartrate);
+        ((TextView) rootView.findViewById(R.id.item_detail_result_heartrate)).setText("Noch keine Herzrate bezogen");
+
+        mAlexaButton_Heartrate = (FloatingActionButton) rootView.findViewById(R.id.bt_heartrate);
+        mAlexaButton_Heartrate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                makeSnackbarMessage(view,"Herzrate anfordern..");
+
+                // starte Verbindung mit Uhr
+                ((TextView) rootView.findViewById(R.id.item_detail_result_heartrate))
+                        .setText("Die Herzrate ist: " + mWatchManager.getHeartRate());
             }
         });
     }

@@ -2,10 +2,12 @@ package at.srfg.robogen.itemdetail;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.snackbar.Snackbar;
 
 import at.srfg.robogen.ItemContent;
 import at.srfg.robogen.R;
@@ -14,19 +16,22 @@ public class ItemDetailBase extends Fragment {
 
     protected ItemContent.ItemEntry mItem;
 
-    /**
+    /*******************************************************************************
      * The fragment argument representing the item ID that this fragment
      * represents.
-     */
+     ******************************************************************************/
     public static final String ARG_ITEM_ID = "item_id";
 
-    /**
+    /*******************************************************************************
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
-     */
+     ******************************************************************************/
     public ItemDetailBase() {
     }
 
+    /*******************************************************************************
+     * override creation method to init item content
+     ******************************************************************************/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,5 +48,13 @@ public class ItemDetailBase extends Fragment {
                 appBarLayout.setTitle(mItem.mEntryTitle);
             }
         }
+    }
+
+    /*******************************************************************************
+     * helper function to make snackbars, used in derived classes
+     ******************************************************************************/
+    protected void makeSnackbarMessage(View view, String msg)
+    {
+        Snackbar.make(view, msg, Snackbar.LENGTH_LONG).setAction("Action", null).show();
     }
 }

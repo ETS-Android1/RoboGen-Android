@@ -139,4 +139,17 @@ public class FitBitManager extends AppCompatActivity implements AuthenticationHa
                 .create()
                 .show();
     }
+
+    /*******************************************************************************
+     * getHearthRate
+     ******************************************************************************/
+    public String getHeartRate()
+    {
+        // TODO: https://dev.fitbit.com/build/reference/web-api/heart-rate/
+        // Resource URL 1: GET https://api.fitbit.com/1/user/[user-id]/activities/heart/date/[date]/[period].json
+        // Resource URL 2: GET https://api.fitbit.com/1/user/[user-id]/activities/heart/date/[base-date]/[end-date].json
+        // Example request: GET https://api.fitbit.com/1/user/-/activities/heart/date/today/1d.json
+
+        return "0";
+    }
 }

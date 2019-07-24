@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,22 +79,24 @@ public class ItemDetailRobot extends ItemDetailBase {
         mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Prüfung auf vorhandene Bluetooth-Verbindung..", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
 
+                makeSnackbarMessage(view, "Prüfung auf vorhandene Bluetooth-Verbindung..");
                 mBluetoothManager.doConnect();
             }
         });
         mSendButton = (FloatingActionButton) rootView.findViewById(R.id.bt_send);
         mSendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Snackbar.make(view, "Sende Daten an Gerät", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                makeSnackbarMessage(view, "Sende Daten an Gerät");
 
                 // TODO: test data
                 byte[] buffer = new byte[1];
                 buffer[0] = 1;
                 mBluetoothManager.send(buffer);
+
+                // TODO:
+                mItem.mEntryIsConnected = !mItem.mEntryIsConnected;
             }
         });
     }

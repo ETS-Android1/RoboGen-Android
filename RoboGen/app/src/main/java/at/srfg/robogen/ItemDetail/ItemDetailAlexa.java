@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import at.srfg.robogen.R;
 
@@ -44,8 +43,8 @@ public class ItemDetailAlexa extends ItemDetailBase {
         mAlexaStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Starte Alexa..", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                makeSnackbarMessage(view, "Starte Alexa..");
 
                 // TODO:
                 mItem.mEntryIsConnected = !mItem.mEntryIsConnected;
