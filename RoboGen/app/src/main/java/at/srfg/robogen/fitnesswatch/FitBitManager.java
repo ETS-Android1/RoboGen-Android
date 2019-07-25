@@ -4,17 +4,25 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Locale;
 import java.util.Set;
 
+import at.srfg.robogen.ItemDetailActivity;
 import at.srfg.robogen.R;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationHandler;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationManager;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationResult;
+import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationWebviewClient;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.Scope;
+import at.srfg.robogen.itemdetail.ItemDetailWatch;
 
 /*******************************************************************************
  * Class FitBitManager
@@ -44,7 +52,7 @@ import at.srfg.robogen.fitnesswatch.fitbit_Auth.Scope;
  *         Now we can parse the auth response! If the auth was successful, we can continue onto
  *         the next activity. Otherwise, we display a generic error message here
  ******************************************************************************/
-public class FitBitManager extends AppCompatActivity implements AuthenticationHandler {
+public class FitBitManager extends AppCompatActivity implements AuthenticationHandler { // TODO: does this even need to be an activity anymore??
 
     private Activity mParentActivity;
     private Context mParentContext;
@@ -86,8 +94,7 @@ public class FitBitManager extends AppCompatActivity implements AuthenticationHa
     }
 
     public void onLoggedIn() {
-        //Intent intent = UserDataActivity.newIntent(mParentActivity);
-        //startActivity(intent);
+        // TODO?
     }
 
     /*******************************************************************************
@@ -125,18 +132,16 @@ public class FitBitManager extends AppCompatActivity implements AuthenticationHa
     /*******************************************************************************
      * getHearthRate
      ******************************************************************************/
-    public String getHeartRate()
+    public void startUserDataStream()
     {
         // TODO: https://dev.fitbit.com/build/reference/web-api/heart-rate/
         // Resource URL 1: GET https://api.fitbit.com/1/user/[user-id]/activities/heart/date/[date]/[period].json
         // Resource URL 2: GET https://api.fitbit.com/1/user/[user-id]/activities/heart/date/[base-date]/[end-date].json
         // Example request: GET https://api.fitbit.com/1/user/-/activities/heart/date/today/1d.json
 
-        //if(AuthenticationManager.isLoggedIn())
-        //{
-        //
-        //}
-
-        return "0";
+        if(AuthenticationManager.isLoggedIn()) {
+            Intent intent = UserDataActivity.newIntent(mParentContext);
+            mParentActivity.startActivity(intent);
+        }
     }
 }

@@ -7,16 +7,16 @@ import at.srfg.robogen.fitnesswatch.fitbit_Common.BasicHttpRequest;
 import at.srfg.robogen.fitnesswatch.fitbit_Common.BasicHttpResponse;
 
 import android.app.Activity;
-import android.content.AsyncTaskLoader;
+import androidx.loader.content.AsyncTaskLoader;
 import android.os.Handler;
 
 import com.google.gson.Gson;
 
 import java.util.Locale;
 
-/**
- * Created by jboggess on 9/19/16.
- */
+/*******************************************************************************
+ * ResourceLoader Templated Class
+ ******************************************************************************/
 public class ResourceLoader<T> extends AsyncTaskLoader<ResourceLoaderResult<T>> {
 
     private final static String EOL = System.getProperty("line.separator");
@@ -35,7 +35,6 @@ public class ResourceLoader<T> extends AsyncTaskLoader<ResourceLoaderResult<T>> 
         this.handler = handler;
         this.requiredScopes = requiredScopes;
     }
-
 
     @Override
     public ResourceLoaderResult<T> loadInBackground() {
@@ -67,22 +66,15 @@ public class ResourceLoader<T> extends AsyncTaskLoader<ResourceLoaderResult<T>> 
                     }
                     return ResourceLoaderResult.onLoggedOut();
                 } else {
-                    String errorMessage =
-                            String.format(Locale.ENGLISH,
-                                    "Error making request:%s\tHTTP Code:%d%s\tResponse Body:%s%s%s\n",
-                                    EOL,
-                                    responseCode,
-                                    EOL,
-                                    EOL,
-                                    json,
-                                    EOL);
+                    String errorMessage = String.format(
+                            Locale.ENGLISH,
+                            "Error making request:%s\tHTTP Code:%d%s\tResponse Body:%s%s%s\n",
+                            EOL, responseCode, EOL, EOL, json, EOL);
                     return ResourceLoaderResult.onError(errorMessage);
                 }
             }
         } catch (Exception e) {
             return ResourceLoaderResult.onException(e);
         }
-
     }
-
 }

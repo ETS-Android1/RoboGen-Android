@@ -46,6 +46,9 @@
             android:name="at.srfg.robogen.fitnesswatch.fitbit_Auth.LoginActivity"
             android:theme="@style/Theme.Fitbit.Teal">
         </activity>
+        <activity android:name="at.srfg.robogen.fitnesswatch.UserDataActivity"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
     <!-- Permissions for Bluetooth -->

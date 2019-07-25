@@ -17,8 +17,8 @@ public class ItemDetailWatch extends ItemDetailBase {
     private final String mText_1 = "Schritt 1) Verbindung aufbauen mit einem Account für FitBit-Geräte:";
     public FloatingActionButton mWatchStartButton;
 
-    private final String mText_Heartrate = "Schritt 2) Herzrate anfordern von registriertem Account:";
-    public FloatingActionButton mAlexaButton_Heartrate;
+    private final String mText_UserData = "Schritt 2) FitBit-Daten ansehen zu Benutzer, Geäten, Aktivitäten und Gewicht:";
+    public FloatingActionButton mAlexaButton_UserData;
 
 
     private FitBitManager mWatchManager = null;
@@ -71,19 +71,17 @@ public class ItemDetailWatch extends ItemDetailBase {
         });
 
 
-        ((TextView) rootView.findViewById(R.id.item_detail_text_heartrate)).setText(mText_Heartrate);
-        ((TextView) rootView.findViewById(R.id.item_detail_result_heartrate)).setText("Noch keine Herzrate bezogen");
+        ((TextView) rootView.findViewById(R.id.item_detail_text_userdata)).setText(mText_UserData);
 
-        mAlexaButton_Heartrate = (FloatingActionButton) rootView.findViewById(R.id.bt_heartrate);
-        mAlexaButton_Heartrate.setOnClickListener(new View.OnClickListener() {
+        mAlexaButton_UserData = (FloatingActionButton) rootView.findViewById(R.id.bt_userdata);
+        mAlexaButton_UserData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 makeSnackbarMessage(view,"Herzrate anfordern..");
 
-                // starte Verbindung mit Uhr
-                ((TextView) rootView.findViewById(R.id.item_detail_result_heartrate))
-                        .setText("Die Herzrate ist: " + mWatchManager.getHeartRate());
+                // starte Streaming von infos von Uhr
+                mWatchManager.startUserDataStream();
             }
         });
     }
