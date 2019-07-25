@@ -21,7 +21,7 @@ public class ItemDetailAlexa extends ItemDetailBase {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.item_detail_alexa, container, false);
+        final View rootView = inflater.inflate(R.layout.main_itemdetail_alexa, container, false);
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {

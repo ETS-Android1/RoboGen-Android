@@ -49,7 +49,7 @@ public class ItemDetailRobot extends ItemDetailBase {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.item_detail_robot, container, false);
+        final View rootView = inflater.inflate(R.layout.main_itemdetail_robot, container, false);
 
         if (mItem != null) {
             initGUIComponents(rootView);

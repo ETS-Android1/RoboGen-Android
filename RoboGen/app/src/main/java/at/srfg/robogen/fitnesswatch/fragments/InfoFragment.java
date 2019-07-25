@@ -50,7 +50,7 @@ public abstract class InfoFragment<T> extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        final View rootView = inflater.inflate(R.layout.layout_info, container, false);
+        final View rootView = inflater.inflate(R.layout.fitbit_fragment_info, container, false);
         mTitleText = rootView.findViewById(R.id.layout_title_text);
         mTitleText.setText(getActivity().getString(R.string.no_data));
         //setMainText(getActivity().getString(R.string.no_data));

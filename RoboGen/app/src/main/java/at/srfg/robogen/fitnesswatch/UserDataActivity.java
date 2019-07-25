@@ -40,7 +40,7 @@ public class UserDataActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
-        setContentView(R.layout.activity_user_data);
+        setContentView(R.layout.fitbit_activity_userdata);
 
         userDataPagerAdapter = new UserDataPagerAdapter(getSupportFragmentManager());
 

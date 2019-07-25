@@ -22,6 +22,6 @@
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
         tools:context="ItemListActivity"
-        tools:listitem="@layout/item_list_content"/>
+        tools:listitem="@layout/main_itemlist_content"/>
 
 </LinearLayout>

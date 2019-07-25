@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity implements AuthenticationHa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.fitbit_activity_login);
         mLoginView = (WebView) findViewById(R.id.login_webview);
         mLoginProgress = (ProgressBar) findViewById(R.id.login_progressBar);
 

@@ -34,7 +34,7 @@ public class ItemDetailWatch extends ItemDetailBase {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.item_detail_watch, container, false);
+        final View rootView = inflater.inflate(R.layout.main_itemdetail_watch, container, false);
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
@@ -78,10 +78,10 @@ public class ItemDetailWatch extends ItemDetailBase {
             @Override
             public void onClick(View view) {
 
-                makeSnackbarMessage(view,"Herzrate anfordern..");
-
                 // starte Streaming von infos von Uhr
                 mWatchManager.startUserDataStream();
+
+                makeSnackbarMessage(view,"Benutzerdaten angefordert..");
             }
         });
     }
