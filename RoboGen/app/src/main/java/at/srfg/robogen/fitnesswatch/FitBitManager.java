@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +19,30 @@ import at.srfg.robogen.fitnesswatch.fitbit_Auth.Scope;
 /*******************************************************************************
  * Class FitBitManager
  * serves as AuthenticationHandler and Activity
+********************************************************************************
+ * Steps for Login into our RoboGen-FitBitAccount:
+ *
+ * Step 1) Look in FitbitAuthApplication.generateAuthenticationConfiguration()
+ *
+ * Step 2) this.onResume():
+ *         If we are logged in, go to next activity, otherwise, display the login screen
+ *
+ * Step 3) this.logIn():
+ *         Call login to show the login UI (LoginActivity)
+ *
+ * Step 4) ItemDetailActivity.onActivityResult():
+ *         When the Login UI finishes, it will invoke the `onActivityResult` of ItemDetailActivity.
+ *         We call `AuthenticationManager.onActivityResult` and set ourselves as a login listener
+ *         (via AuthenticationHandler) to check to see if this result was a login result. If the
+ *         result code matches login, the AuthenticationManager will process the login request,
+ *         and invoke our `onAuthFinished` method.
+ *
+ *         If the result code was not a login result code, then `onActivityResult` will return
+ *         false, and we can handle other onActivityResult result codes.
+ *
+ * Step 5) this.onAuthFinished():
+ *         Now we can parse the auth response! If the auth was successful, we can continue onto
+ *         the next activity. Otherwise, we display a generic error message here
  ******************************************************************************/
 public class FitBitManager extends AppCompatActivity implements AuthenticationHandler {
 
@@ -39,15 +62,6 @@ public class FitBitManager extends AppCompatActivity implements AuthenticationHa
     protected void onResume() {
         super.onResume();
 
-        /**
-         *  (Look in FitbitAuthApplication for Step 1)
-         */
-
-
-        /**
-         *  2. If we are logged in, go to next activity
-         *      Otherwise, display the login screen
-         */
         if (AuthenticationManager.isLoggedIn()) {
             onLoggedIn();
         }
@@ -57,45 +71,13 @@ public class FitBitManager extends AppCompatActivity implements AuthenticationHa
      * logIn, will logIn the User in FitBit Account
      ******************************************************************************/
     public void logIn(View view) {
-        /**
-         *  3. Call login to show the login UI
-         */
         AuthenticationManager.login(mParentActivity);
-    }
-
-    /*******************************************************************************
-     * OnActivityResult
-     ******************************************************************************/
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        /**
-         *  4. When the Login UI finishes, it will invoke the `onActivityResult` of this activity.
-         *  We call `AuthenticationManager.onActivityResult` and set ourselves as a login listener
-         *  (via AuthenticationHandler) to check to see if this result was a login result. If the
-         *  result code matches login, the AuthenticationManager will process the login request,
-         *  and invoke our `onAuthFinished` method.
-         *
-         *  If the result code was not a login result code, then `onActivityResult` will return
-         *  false, and we can handle other onActivityResult result codes.
-         *
-         */
-
-        if (!AuthenticationManager.onActivityResult(requestCode, resultCode, data, this)) {
-            // Handle other activity results, if needed
-        }
     }
 
     /*******************************************************************************
      * onAuthFinished
      ******************************************************************************/
     public void onAuthFinished(AuthenticationResult authenticationResult) {
-
-        /**
-         * 5. Now we can parse the auth response! If the auth was successful, we can continue onto
-         *      the next activity. Otherwise, we display a generic error message here
-         */
         if (authenticationResult.isSuccessful()) {
             onLoggedIn();
         } else {
@@ -104,7 +86,7 @@ public class FitBitManager extends AppCompatActivity implements AuthenticationHa
     }
 
     public void onLoggedIn() {
-        //Intent intent = UserDataActivity.newIntent(this);
+        //Intent intent = UserDataActivity.newIntent(mParentActivity);
         //startActivity(intent);
     }
 
@@ -149,6 +131,11 @@ public class FitBitManager extends AppCompatActivity implements AuthenticationHa
         // Resource URL 1: GET https://api.fitbit.com/1/user/[user-id]/activities/heart/date/[date]/[period].json
         // Resource URL 2: GET https://api.fitbit.com/1/user/[user-id]/activities/heart/date/[base-date]/[end-date].json
         // Example request: GET https://api.fitbit.com/1/user/-/activities/heart/date/today/1d.json
+
+        //if(AuthenticationManager.isLoggedIn())
+        //{
+        //
+        //}
 
         return "0";
     }

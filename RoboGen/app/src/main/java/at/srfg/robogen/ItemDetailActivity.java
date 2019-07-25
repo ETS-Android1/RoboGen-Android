@@ -7,7 +7,9 @@ import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
+import androidx.fragment.app.Fragment;
 
+import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationManager;
 import at.srfg.robogen.itemdetail.ItemDetailBase;
 import at.srfg.robogen.itemdetail.ItemDetailRobot;
 import at.srfg.robogen.itemdetail.ItemDetailWatch;
@@ -86,5 +88,34 @@ public class ItemDetailActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /*******************************************************************************
+     * !!!!!!!! currently only used for SmartWatch connection !!!!!!!!
+     *******************************************************************************/
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.item_detail_container);
+        if (currentFragment instanceof ItemDetailWatch) {
+
+            /**
+             *  When the FitBit Login UI finishes, it will invoke the `onActivityResult` of this activity.
+             *  We call `AuthenticationManager.onActivityResult` and set ourselves as a login listener
+             *  (via AuthenticationHandler) to check to see if this result was a login result. If the
+             *  result code matches login, the AuthenticationManager will process the login request,
+             *  and invoke our `onAuthFinished` method.
+             *
+             *  If the result code was not a login result code, then `onActivityResult` will return
+             *  false, and we can handle other onActivityResult result codes.
+             */
+
+            ItemDetailWatch watchFragment = (ItemDetailWatch)currentFragment;
+            if (!AuthenticationManager.onActivityResult(requestCode, resultCode, data, watchFragment.getWatchManager())) {
+                // Handle other activity results, if needed
+            }
+        }
     }
 }

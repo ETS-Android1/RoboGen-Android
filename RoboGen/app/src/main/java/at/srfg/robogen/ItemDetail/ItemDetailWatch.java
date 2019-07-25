@@ -23,6 +23,11 @@ public class ItemDetailWatch extends ItemDetailBase {
 
     private FitBitManager mWatchManager = null;
 
+    public FitBitManager getWatchManager()
+    {
+        return mWatchManager;
+    }
+
     /*******************************************************************************
      * creating view for watch detail page
      ******************************************************************************/
