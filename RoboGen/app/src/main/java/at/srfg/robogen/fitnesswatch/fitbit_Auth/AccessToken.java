@@ -7,9 +7,9 @@ import android.util.Base64;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by jboggess on 9/14/16.
- */
+/*******************************************************************************
+ * Class AccessToken
+ ******************************************************************************/
 public class AccessToken implements Parcelable {
 
     public static final Creator<AccessToken> CREATOR = new Creator<AccessToken>() {

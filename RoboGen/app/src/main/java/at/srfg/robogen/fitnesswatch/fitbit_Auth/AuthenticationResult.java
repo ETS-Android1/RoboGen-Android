@@ -8,9 +8,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by jboggess on 9/14/16.
- */
+/*******************************************************************************
+ * Interface AuthenticationResult
+ ******************************************************************************/
 public class AuthenticationResult implements Parcelable {
 
     public static final Creator<AuthenticationResult> CREATOR = new Creator<AuthenticationResult>() {

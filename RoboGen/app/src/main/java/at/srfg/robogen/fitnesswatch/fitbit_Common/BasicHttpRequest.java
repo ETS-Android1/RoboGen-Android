@@ -15,10 +15,9 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by jboggess on 11/30/16.
- */
-
+/*******************************************************************************
+ * Class BasicHttpRequest
+ ******************************************************************************/
 public class BasicHttpRequest {
 
     private String url;
@@ -31,6 +30,9 @@ public class BasicHttpRequest {
 
     BasicHttpRequest() {}
 
+    /*******************************************************************************
+     * getter/setter
+     ******************************************************************************/
     public String getUrl() {
         return url;
     }
@@ -81,6 +83,9 @@ public class BasicHttpRequest {
         return params;
     }
 
+    /*******************************************************************************
+     * fillInConnectionInfo
+     ******************************************************************************/
     private synchronized void fillInConnectionInfo(HttpURLConnection connection) throws IOException {
         connection.setRequestMethod(method);
 
@@ -110,6 +115,9 @@ public class BasicHttpRequest {
         connection.setUseCaches(this.useCaches);
     }
 
+    /*******************************************************************************
+     * getQuery
+     ******************************************************************************/
     private String getQuery(List<Pair<String, String>> params) throws UnsupportedEncodingException {
         List<String> keyValues = new ArrayList<>();
 
@@ -124,6 +132,9 @@ public class BasicHttpRequest {
         return TextUtils.join("&", keyValues);
     }
 
+    /*******************************************************************************
+     * readBytes
+     ******************************************************************************/
     public byte[] readBytes(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
 
@@ -138,6 +149,9 @@ public class BasicHttpRequest {
         return byteBuffer.toByteArray();
     }
 
+    /*******************************************************************************
+     * execute
+     ******************************************************************************/
     public synchronized BasicHttpResponse execute() throws IOException {
         HttpURLConnection connection = null;
 

@@ -4,9 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
-/**
- * Created by jboggess on 9/14/16.
- */
+/*******************************************************************************
+ * Class ClientCredentials
+ ******************************************************************************/
 public class ClientCredentials implements Parcelable {
     public static final Creator<ClientCredentials> CREATOR = new Creator<ClientCredentials>() {
         @Override

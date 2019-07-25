@@ -12,9 +12,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by jboggess on 9/19/16.
- */
+/*******************************************************************************
+ * Class APIUtils
+ ******************************************************************************/
 public class APIUtils {
 
     public static void validateToken(Activity contextActivity, AccessToken accessToken, Scope... scopes) throws MissingScopesException, TokenExpiredException {

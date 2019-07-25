@@ -6,10 +6,9 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
-/**
- * Created by jboggess on 9/28/16.
- */
-
+/*******************************************************************************
+ * Class SecureKeyGenerator
+ ******************************************************************************/
 public class SecureKeyGenerator {
 
     public static void main(String[] args) {

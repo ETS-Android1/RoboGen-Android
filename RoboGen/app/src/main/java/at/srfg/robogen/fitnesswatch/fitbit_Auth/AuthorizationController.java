@@ -17,9 +17,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by jboggess on 9/14/16.
- */
+/*******************************************************************************
+ * Class AuthorizationController
+ ******************************************************************************/
 public class AuthorizationController implements UrlChangeHandler {
     private final static String TAG = "AuthorizationController";
     private static final String AUTHORIZE_URL_FORMAT = "https://www.fitbit.com/oauth2/authorize?response_type=token&client_id=%s&redirect_uri=%s&scope=%s&expires_in=%d";

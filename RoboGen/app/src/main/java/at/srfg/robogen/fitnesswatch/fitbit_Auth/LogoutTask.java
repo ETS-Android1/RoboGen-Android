@@ -14,9 +14,9 @@ import androidx.annotation.NonNull;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-/**
- * Created by jboggess on 9/19/16.
- */
+/*******************************************************************************
+ * Class LogoutTask
+ ******************************************************************************/
 public class LogoutTask extends AsyncTask<Handler, String, Void> {
 
     private static final String REVOKE_URL = "https://api.fitbit.com/oauth2/revoke";

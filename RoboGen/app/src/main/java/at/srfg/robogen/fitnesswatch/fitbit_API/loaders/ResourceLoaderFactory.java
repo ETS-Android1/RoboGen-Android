@@ -4,9 +4,9 @@ import at.srfg.robogen.fitnesswatch.fitbit_Auth.Scope;
 import android.app.Activity;
 import android.os.Handler;
 
-/**
- * Created by jboggess on 9/19/16.
- */
+/*******************************************************************************
+ * Class ResourceLoaderFactory
+ ******************************************************************************/
 public class ResourceLoaderFactory<T> {
 
     private String urlFormat;

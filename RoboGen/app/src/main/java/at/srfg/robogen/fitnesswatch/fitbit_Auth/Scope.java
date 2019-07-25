@@ -7,9 +7,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by jboggess on 9/14/16.
- */
+/*******************************************************************************
+ * Class Scope
+ ******************************************************************************/
 public enum Scope implements Parcelable {
     activity, heartrate, location, nutrition, profile, settings, sleep, social,
     weight;

@@ -12,9 +12,9 @@ import androidx.annotation.Nullable;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by jboggess on 9/14/16.
- */
+/*******************************************************************************
+ * Class AuthenticationManager
+ ******************************************************************************/
 public class AuthenticationManager {
 
     private static final int RESULT_CODE = 1;

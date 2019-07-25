@@ -4,10 +4,9 @@ import android.content.Intent;
 
 import java.util.Set;
 
-/**
- * Created by jboggess on 9/26/16.
- */
-
+/*******************************************************************************
+ * Class AuthenticationConfiguration
+ ******************************************************************************/
 public class AuthenticationConfiguration {
 
     private ClientCredentials clientCredentials;

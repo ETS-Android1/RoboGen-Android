@@ -5,10 +5,9 @@ import android.text.TextUtils;
 
 import java.util.HashSet;
 
-/**
- * Created by jboggess on 9/26/16.
- */
-
+/*******************************************************************************
+ * Class AuthenticationConfigurationBuilder
+ ******************************************************************************/
 public class AuthenticationConfigurationBuilder {
 
     private AuthenticationConfiguration authenticationConfiguration;

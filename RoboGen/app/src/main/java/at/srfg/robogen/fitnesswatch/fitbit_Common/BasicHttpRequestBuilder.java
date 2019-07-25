@@ -8,10 +8,9 @@ import android.util.Pair;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-/**
- * Created by jboggess on 11/30/16.
- */
-
+/*******************************************************************************
+ * Class BasicHttpRequestBuilder
+ ******************************************************************************/
 public class BasicHttpRequestBuilder {
 
     private BasicHttpRequest basicHttpRequest;
@@ -33,6 +32,9 @@ public class BasicHttpRequestBuilder {
         basicHttpRequest.setMethod("GET");
     }
 
+    /*******************************************************************************
+     * setter
+     ******************************************************************************/
     public BasicHttpRequestBuilder setUrl(String url) {
         basicHttpRequest.setUrl(url);
         return this;
@@ -68,6 +70,9 @@ public class BasicHttpRequestBuilder {
         return this;
     }
 
+    /*******************************************************************************
+     * addQueryParam
+     ******************************************************************************/
     public BasicHttpRequestBuilder addQueryParam(String name, String value) {
         if (basicHttpRequest.getParams() == null) {
             basicHttpRequest.setParams(new ArrayList<Pair<String, String>>());

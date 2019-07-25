@@ -3,9 +3,9 @@ package at.srfg.robogen.fitnesswatch.fitbit_API.exceptions;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.Scope;
 import java.util.Collection;
 
-/**
- * Created by jboggess on 9/19/16.
- */
+/*******************************************************************************
+ * Class MissingScopesException
+ ******************************************************************************/
 public class MissingScopesException extends FitbitAPIException {
 
     private Collection<Scope> scopes;

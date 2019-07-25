@@ -18,7 +18,9 @@ import java.util.Set;
 
 import at.srfg.robogen.R;
 
-
+/*******************************************************************************
+ * Class LoginActivity
+ ******************************************************************************/
 public class LoginActivity extends AppCompatActivity implements AuthenticationHandler {
 
     public static final String CONFIGURATION_VERSION = "CONFIGURATION_VERSION";

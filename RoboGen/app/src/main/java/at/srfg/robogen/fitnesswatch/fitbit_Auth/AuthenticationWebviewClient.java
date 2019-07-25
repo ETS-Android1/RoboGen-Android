@@ -7,9 +7,9 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-/**
- * Created by jboggess on 9/14/16.
- */
+/*******************************************************************************
+ * Class AuthenticationWebviewClient
+ ******************************************************************************/
 public class AuthenticationWebviewClient extends WebViewClient {
 
     private UrlChangeHandler urlChangeHandler;
