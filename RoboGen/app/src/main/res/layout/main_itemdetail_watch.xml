@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/watch_start"
+        app:srcCompat="@drawable/fitbit_start"
         app:fabSize="normal"
         app:rippleColor="@color/cardview_dark_background"
         app:backgroundTint= "@color/colorPrimary" />
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/watch_heartrate"
+        app:srcCompat="@drawable/fitbit_heartrate"
         app:fabSize="normal"
         app:rippleColor="@color/cardview_dark_background"
         app:backgroundTint= "@color/colorPrimary" />

@@ -120,8 +120,8 @@ public class ItemListActivity extends AppCompatActivity {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.main_itemlist_content, parent, false);
 
-            mDrawableConnected = view.getResources().getDrawable(R.drawable.img_connected);
-            mDrawableNotConnected = view.getResources().getDrawable(R.drawable.img_not_connected);
+            mDrawableConnected = view.getResources().getDrawable(R.drawable.main_connected);
+            mDrawableNotConnected = view.getResources().getDrawable(R.drawable.main_not_connected);
 
             return new ViewHolder(view);
         }

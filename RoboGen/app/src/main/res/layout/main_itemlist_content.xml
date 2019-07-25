@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@drawable/customborder"
+    android:background="@drawable/main_customborder"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
@@ -16,7 +16,7 @@
         android:paddingLeft="25dp"
         android:paddingRight="50dp"
         android:paddingTop="10dp"
-        app:srcCompat="@drawable/img_not_connected" />
+        app:srcCompat="@drawable/main_not_connected" />
 
     <TextView
         android:id="@+id/id_text"
