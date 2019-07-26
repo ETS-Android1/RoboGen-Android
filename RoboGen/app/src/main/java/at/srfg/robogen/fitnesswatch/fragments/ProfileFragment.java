@@ -46,6 +46,13 @@ public class ProfileFragment extends InfoFragment<UserContainer> {
     public void bindProfileInfo(User user) {
         StringBuilder stringBuilder = new StringBuilder();
         printKeys(stringBuilder, user);
+
+        if(stringBuilder.length() == 0) { // Keine Daten
+            stringBuilder.append("<b>&nbsp;&nbsp;</b>");
+            stringBuilder.append(getString(R.string.no_data));
+            stringBuilder.append("<br><br>");
+        }
+
         setMainText(stringBuilder.toString());
     }
 }

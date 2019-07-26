@@ -18,7 +18,7 @@ public class DeviceFragment extends InfoFragment<Device[]> {
      ******************************************************************************/
     @Override
     public int getTitleResourceId() {
-        return R.string.devices;
+        return R.string.devices_info;
     }
 
     @Override
@@ -65,6 +65,11 @@ public class DeviceFragment extends InfoFragment<Device[]> {
 
         if (stringBuilder.length() > 0) {
             stringBuilder.replace(stringBuilder.length() - 8, stringBuilder.length(), "");
+        }
+        else { // Keine Daten
+            stringBuilder.append("<b>&nbsp;&nbsp;</b>");
+            stringBuilder.append(getString(R.string.no_data));
+            stringBuilder.append("<br><br>");
         }
 
         setMainText(stringBuilder.toString());

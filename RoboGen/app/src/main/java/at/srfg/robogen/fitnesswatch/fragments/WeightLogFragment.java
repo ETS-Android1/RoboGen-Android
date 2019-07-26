@@ -1,6 +1,5 @@
 package at.srfg.robogen.fitnesswatch.fragments;
 
-
 import at.srfg.robogen.R;
 import at.srfg.robogen.fitnesswatch.fitbit_API.loaders.ResourceLoaderResult;
 import at.srfg.robogen.fitnesswatch.fitbit_API.models.Weight;
@@ -15,7 +14,6 @@ import android.view.ViewGroup;
 
 import java.util.Calendar;
 import java.util.List;
-import at.srfg.robogen.fitnesswatch.fitbit_API.models.WeightLogs;
 
 /*******************************************************************************
  * WeightLogFragment Class
@@ -35,7 +33,7 @@ public class WeightLogFragment extends InfoFragment<WeightLogs> {
 
     @Override
     public int getTitleResourceId() {
-        return R.string.weight;
+        return R.string.weight_info;
     }
 
     @Override
@@ -61,25 +59,58 @@ public class WeightLogFragment extends InfoFragment<WeightLogs> {
     /*******************************************************************************
      * bindWeightLogs
      ******************************************************************************/
-    public void bindWeightLogs(WeightLogs weightLogs) { // TODO
-        //List<Weight> weights = weightLogs.getWeight();
-        //DataPoint[] dataPoints = new DataPoint[weights.size()];
-        //
-        //for (int i = 0; i < weights.size(); i++) {
-        //    Weight weight = weights.get(i);
-        //    dataPoints[i] = new DataPoint(weight.getDateTime(), weight.getWeight());
-        //}
-        //
-        //LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoints);
-        //binding.graph.addSeries(series);
-        //
-        //binding.graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-        //binding.graph.getGridLabelRenderer().setNumHorizontalLabels(3);
-        //
-        //binding.graph.getViewport().setMinX(dataPoints[0].getX());
-        //binding.graph.getViewport().setMaxX(dataPoints[dataPoints.length - 1].getX());
-        //binding.graph.getViewport().setXAxisBoundsManual(true);
-        //
-        //binding.graph.getGridLabelRenderer().setHumanRounding(false);
+    public void bindWeightLogs(WeightLogs weightLogs) {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        List<Weight> weights = weightLogs.getWeight();
+
+        for (Weight weight : weights) {
+
+            stringBuilder.append("<b>FITBIT ");
+            stringBuilder.append("&trade;</b><br>");
+
+            stringBuilder.append("<b>&nbsp;&nbsp;BMI: </b>");
+            stringBuilder.append(weight.getBmi());
+            stringBuilder.append("<br>");
+
+            stringBuilder.append("<b>&nbsp;&nbsp;Date: </b>");
+            stringBuilder.append(weight.getDate());
+            stringBuilder.append("<br>");
+
+            stringBuilder.append("<b>&nbsp;&nbsp;DateTime: </b>");
+            stringBuilder.append(weight.getDateTime());
+            stringBuilder.append("<br><br>");
+
+            stringBuilder.append("<b>&nbsp;&nbsp;Fat: </b>");
+            stringBuilder.append(weight.getFat());
+            stringBuilder.append("<br><br>");
+
+            stringBuilder.append("<b>&nbsp;&nbsp;LogID: </b>");
+            stringBuilder.append(weight.getLogId());
+            stringBuilder.append("<br><br>");
+
+            stringBuilder.append("<b>&nbsp;&nbsp;Source: </b>");
+            stringBuilder.append(weight.getSource());
+            stringBuilder.append("<br><br>");
+
+            stringBuilder.append("<b>&nbsp;&nbsp;Time: </b>");
+            stringBuilder.append(weight.getTime());
+            stringBuilder.append("<br><br>");
+
+            stringBuilder.append("<b>&nbsp;&nbsp;Weight: </b>");
+            stringBuilder.append(weight.getWeight());
+            stringBuilder.append("<br><br>");
+        }
+
+        if (stringBuilder.length() > 0) {
+            stringBuilder.replace(stringBuilder.length() - 8, stringBuilder.length(), "");
+        }
+        else { // Keine Daten
+            stringBuilder.append("<b>&nbsp;&nbsp;</b>");
+            stringBuilder.append(getString(R.string.no_data));
+            stringBuilder.append("<br><br>");
+        }
+
+        setMainText(stringBuilder.toString());
     }
 }

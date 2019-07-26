@@ -67,7 +67,7 @@ public class ResourceLoader<T> extends AsyncTaskLoader<ResourceLoaderResult<T>> 
                     return ResourceLoaderResult.onLoggedOut();
                 } else {
                     String errorMessage = String.format(
-                            Locale.ENGLISH,
+                            Locale.GERMAN,
                             "Error making request:%s\tHTTP Code:%d%s\tResponse Body:%s%s%s\n",
                             EOL, responseCode, EOL, EOL, json, EOL);
                     return ResourceLoaderResult.onError(errorMessage);

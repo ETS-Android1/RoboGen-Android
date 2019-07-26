@@ -134,7 +134,7 @@ public class Weight {
     private final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public Date getDateTime() {
         try {
-            return DATE_TIME_FORMAT.parse(String.format(Locale.ENGLISH, "%s %s", getDate(), getTime()));
+            return DATE_TIME_FORMAT.parse(String.format(Locale.GERMAN, "%s %s", getDate(), getTime()));
         } catch (ParseException e) {
             e.printStackTrace();
             return new Date();

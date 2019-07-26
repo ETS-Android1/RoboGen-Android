@@ -45,11 +45,9 @@ public abstract class InfoFragment<T> extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         final View rootView = inflater.inflate(R.layout.fitbit_fragment_info, container, false);
-        m_viewTitleText = rootView.findViewById(R.id.layout_title_text);
-        m_viewTitleText.setText(getActivity().getString(R.string.no_data));
-        //setMainText(getActivity().getString(R.string.no_data));
-
         m_viewWebContent = rootView.findViewById(R.id.layout_webview);
+        m_viewTitleText = rootView.findViewById(R.id.layout_title_text);
+        m_viewTitleText.setText(getActivity().getString(getTitleResourceId()));
         return rootView;
     }
 
