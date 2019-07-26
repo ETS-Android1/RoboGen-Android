@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- new sizes constants for application -->
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="app_bar_height">200dp</dimen>
     <dimen name="item_width">200dp</dimen>
+
+    <!-- new sizes constants for textviews -->
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="title_font_size">40dp</dimen>
+    <dimen name="text_font_size">30dp</dimen>
+
+    <!-- Overriding sizes of the FAB-Buttons -->
+    <dimen name="design_fab_size_normal">80dp</dimen>
+    <dimen name="design_fab_size_mini">40dp</dimen>
 </resources>

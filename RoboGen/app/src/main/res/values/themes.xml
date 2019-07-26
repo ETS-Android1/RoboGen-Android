@@ -16,7 +16,6 @@
 
     <style name="Theme.Fitbit.Teal" parent="@style/Theme.Fitbit.Base">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <!--<item name="colorPrimaryRecents">@color/primary_teal_for_recent_tasks</item>-->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
 

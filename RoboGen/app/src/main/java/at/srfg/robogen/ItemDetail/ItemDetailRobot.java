@@ -26,11 +26,11 @@ public class ItemDetailRobot extends ItemDetailBase {
 
     private BluetoothManager m_cBluetoothManager = null;
 
-    private final String m_sConnectRobot = "Schritt 1) Verbindung aufbauen mit dem Roboter Hugo via Bluetooth.\n" +
-                                   "Das Gerät muss zuerst gekoppelt werden und dann verbunden.\n" +
+    private final String m_sConnectRobot = "Schritt 1) Verbindung aufbauen mit Q.Bo One via Bluetooth. " +
+                                   "Das Gerät muss zuerst gekoppelt werden und dann verbunden. " +
                                     "Beides kann mit dem folgenden Schalter erledigt werden:";
-    private final String m_sSendRobot = "Schritt 2) Nachdem eine Verbindung erfolgreich aufgebaut wurde können Testdaten versendet werden.\n" +
-                                   "Mit dem folgenden Schalter können Test-Daten an den Roboter gesendet werden:";
+    private final String m_sSendRobot = "Schritt 2) Nach einem erfolgreichen Verbindungsaufbau können Testdaten versendet werden. " +
+                                   "Mit dem folgenden Schalter können Daten an den Roboter gesendet werden:";
 
     public FloatingActionButton m_btnConnectRobot;
     public FloatingActionButton m_btnSendRobot;
