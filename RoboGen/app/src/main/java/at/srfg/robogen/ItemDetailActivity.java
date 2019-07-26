@@ -26,7 +26,7 @@ public class ItemDetailActivity extends AppCompatActivity {
     /**
      * logging and debugging
      */
-    public static final String LOG_TAG = "ItemDetailActivity";
+    public static final String m_sLogTag = "ItemDetailActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,32 +45,32 @@ public class ItemDetailActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
 
             Bundle arguments = new Bundle();
-            String itemID = getIntent().getStringExtra(ItemDetailBase.ARG_ITEM_ID);
+            String itemID = getIntent().getStringExtra(ItemDetailBase.m_sARG_ITEM_ID);
 
             if(itemID.equals("1."))
             {
-                arguments.putString(ItemDetailRobot.ARG_ITEM_ID, getIntent().getStringExtra(ItemDetailRobot.ARG_ITEM_ID));
+                arguments.putString(ItemDetailRobot.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailRobot.m_sARG_ITEM_ID));
                 ItemDetailRobot fragment = new ItemDetailRobot();
                 fragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
             }
             else if(itemID.equals("2."))
             {
-                arguments.putString(ItemDetailWatch.ARG_ITEM_ID, getIntent().getStringExtra(ItemDetailWatch.ARG_ITEM_ID));
+                arguments.putString(ItemDetailWatch.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailWatch.m_sARG_ITEM_ID));
                 ItemDetailWatch fragment = new ItemDetailWatch();
                 fragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
             }
             else if(itemID.equals("3."))
             {
-                arguments.putString(ItemDetailAlexa.ARG_ITEM_ID, getIntent().getStringExtra(ItemDetailAlexa.ARG_ITEM_ID));
+                arguments.putString(ItemDetailAlexa.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailAlexa.m_sARG_ITEM_ID));
                 ItemDetailAlexa fragment = new ItemDetailAlexa();
                 fragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
             }
             else
             {
-                Log.d(LOG_TAG, "Internal Error: invalid option selected");
+                Log.d(m_sLogTag, "Internal Error: invalid option selected");
             }
         }
     }

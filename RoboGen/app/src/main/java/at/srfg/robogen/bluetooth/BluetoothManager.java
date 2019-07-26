@@ -41,20 +41,20 @@ public class BluetoothManager {
     public static final int MESSAGE_TOAST = 5;
 
     // Members for communication, pairing and scanning
-    private DeviceListActivity mDeviceListActivity = null;
-	private BluetoothAdapter mBluetoothAdapter = null;
-    private static BluetoothSerialService mSerialService = null;
+    private DeviceListActivity m_cDeviceListActivity = null;
+	private BluetoothAdapter m_cBluetoothAdapter = null;
+    private static BluetoothSerialService m_cSerialService = null;
 
     // Additional member helpers
-    private boolean mLocalEcho = false;
-    private Activity mParentActivity = null;
-    private Context mParentContext = null;
-    private boolean mHasExtraPermissions = false;
+    private boolean m_bLocalEcho = false;
+    private Activity m_actParent = null;
+    private Context m_ctxParent = null;
+    private boolean m_bHasExtraPermissions = false;
 
     /**
      * logging and debugging
      */
-    public static final String LOG_TAG = "BluetoothManager";
+    public static final String m_sLogTag = "BluetoothManager";
 
 
     /*******************************************************************************
@@ -62,14 +62,14 @@ public class BluetoothManager {
      ******************************************************************************/
     public BluetoothManager(Activity act, Context ct)
     {
-        mParentActivity = act;
-        mParentContext = ct;
-        mDeviceListActivity = new DeviceListActivity();
+        m_actParent = act;
+        m_ctxParent = ct;
+        m_cDeviceListActivity = new DeviceListActivity();
 
-        mSerialService = new BluetoothSerialService(mParentContext, mHandlerBT);
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        m_cSerialService = new BluetoothSerialService(m_ctxParent, mHandlerBT);
+        m_cBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        if (mBluetoothAdapter == null) {
+        if (m_cBluetoothAdapter == null) {
             finishDialogNoBluetooth();
             return;
         }
@@ -79,7 +79,7 @@ public class BluetoothManager {
      * on scan result of bluetooth search
      ******************************************************************************/
     public void onScanResult(int requestCode, int resultCode, Intent data) {
-        Log.d(LOG_TAG, "onActivityResult " + resultCode);
+        Log.d(m_sLogTag, "onActivityResult " + resultCode);
         switch (requestCode) {
 
             case REQUEST_CONNECT_DEVICE:
@@ -92,17 +92,17 @@ public class BluetoothManager {
                             .getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
 
                     // Get the BluetoothDevice object
-                    BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+                    BluetoothDevice device = m_cBluetoothAdapter.getRemoteDevice(address);
 
                     // Attempt to connect to the device
-                    mSerialService.connect(device);
+                    m_cSerialService.connect(device);
                 }
                 break;
 
             case REQUEST_ENABLE_BT:
                 // When the request to enable Bluetooth returns
                 if (resultCode == Activity.RESULT_OK) {
-                    Log.d(LOG_TAG, "BT not enabled");
+                    Log.d(m_sLogTag, "BT not enabled");
 
                     finishDialogNoBluetooth();
                 }
@@ -117,13 +117,13 @@ public class BluetoothManager {
         if (getConnectionState() == BluetoothSerialService.STATE_NONE) {
 
             // Launch the DeviceListActivity to see devices and do scan
-            Intent serverIntent = new Intent(mParentContext, DeviceListActivity.class);
-            mParentActivity.startActivityForResult(serverIntent, 1);
+            Intent serverIntent = new Intent(m_ctxParent, DeviceListActivity.class);
+            m_actParent.startActivityForResult(serverIntent, 1);
         }
         else {
             if (getConnectionState() == BluetoothSerialService.STATE_CONNECTED) {
-                mSerialService.stop();
-                mSerialService.start();
+                m_cSerialService.stop();
+                m_cSerialService.start();
             }
         }
     }
@@ -133,13 +133,13 @@ public class BluetoothManager {
      ******************************************************************************/
     public void RequestExtraPermissionsForBluetooth(Activity callerActivity)
     {
-        if(!mHasExtraPermissions) {
+        if(!m_bHasExtraPermissions) {
             int PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
             ActivityCompat.requestPermissions(callerActivity,
                     new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
 
-            mHasExtraPermissions = true;
+            m_bHasExtraPermissions = true;
         }
     }
 
@@ -147,7 +147,7 @@ public class BluetoothManager {
      * show finishing dialog if no bluetooth is enabled on device
      ******************************************************************************/
     public void finishDialogNoBluetooth() {
-         AlertDialog.Builder builder = new AlertDialog.Builder(mParentContext);
+         AlertDialog.Builder builder = new AlertDialog.Builder(m_ctxParent);
          builder.setMessage(R.string.alert_dialog_no_bt)
          .setIcon(android.R.drawable.ic_dialog_info)
          .setTitle(R.string.app_name)
@@ -165,14 +165,14 @@ public class BluetoothManager {
      * get state of connection to device
      ******************************************************************************/
 	public int getConnectionState() {
-	    return mSerialService.getState();
+	    return m_cSerialService.getState();
 	}
 
     /*******************************************************************************
      * send bytes to device
      ******************************************************************************/
     public void send(byte[] out) {
-    	mSerialService.write( out );
+    	m_cSerialService.write( out );
     }
 
 
@@ -186,7 +186,7 @@ public class BluetoothManager {
             switch (msg.what) {
             case MESSAGE_STATE_CHANGE:
 
-                Log.i(LOG_TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
+                Log.i(m_sLogTag, "MESSAGE_STATE_CHANGE: " + msg.arg1);
 
                 switch (msg.arg1) {
                 case BluetoothSerialService.STATE_CONNECTED:
@@ -209,7 +209,7 @@ public class BluetoothManager {
                 }
                 break;
             case MESSAGE_WRITE:
-            	if (mLocalEcho) {
+            	if (m_bLocalEcho) {
             		//byte[] writeBuf = (byte[]) msg.obj;  // TODO: still needed?
             		//mEmulatorView.write(writeBuf, msg.arg1);
             	}
@@ -224,11 +224,11 @@ public class BluetoothManager {
             case MESSAGE_DEVICE_NAME:
                 // save the connected device's name
                 mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
-                Toast.makeText(mParentContext, "Connected to "
+                Toast.makeText(m_ctxParent, "Connected to "
                                + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
                 break;
             case MESSAGE_TOAST:
-                Toast.makeText(mParentContext, msg.getData().getString(TOAST),
+                Toast.makeText(m_ctxParent, msg.getData().getString(TOAST),
                                Toast.LENGTH_SHORT).show();
                 break;
             }

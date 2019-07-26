@@ -23,7 +23,7 @@ import java.util.List;
  ******************************************************************************/
 public class UserDataPagerAdapter extends FragmentPagerAdapter {
 
-    private final List<InfoFragment> fragments = new ArrayList<>();
+    private final List<InfoFragment> m_listFragments = new ArrayList<>();
 
     /*******************************************************************************
      * CTOR
@@ -31,18 +31,18 @@ public class UserDataPagerAdapter extends FragmentPagerAdapter {
     public UserDataPagerAdapter(FragmentManager fm) {
         super(fm);
 
-        fragments.clear();
+        m_listFragments.clear();
         if (containsScope(Scope.profile)) {
-            fragments.add(new ProfileFragment());
+            m_listFragments.add(new ProfileFragment());
         }
         if (containsScope(Scope.settings)) {
-            fragments.add(new DeviceFragment());
+            m_listFragments.add(new DeviceFragment());
         }
         if (containsScope(Scope.activity)) {
-            fragments.add(new ActivitiesFragment());
+            m_listFragments.add(new ActivitiesFragment());
         }
         if (containsScope(Scope.weight)) {
-            fragments.add(new WeightLogFragment());
+            m_listFragments.add(new WeightLogFragment());
         }
     }
 
@@ -51,16 +51,16 @@ public class UserDataPagerAdapter extends FragmentPagerAdapter {
      ******************************************************************************/
     @Override
     public Fragment getItem(int position) {
-        if (position >= fragments.size()) {
+        if (position >= m_listFragments.size()) {
             return null;
         }
 
-        return fragments.get(position);
+        return m_listFragments.get(position);
     }
 
     @Override
     public int getCount() {
-        return fragments.size();
+        return m_listFragments.size();
     }
 
     /*******************************************************************************
@@ -71,6 +71,6 @@ public class UserDataPagerAdapter extends FragmentPagerAdapter {
     }
 
     public int getTitleResourceId(int index) {
-        return fragments.get(index).getTitleResourceId();
+        return m_listFragments.get(index).getTitleResourceId();
     }
 }

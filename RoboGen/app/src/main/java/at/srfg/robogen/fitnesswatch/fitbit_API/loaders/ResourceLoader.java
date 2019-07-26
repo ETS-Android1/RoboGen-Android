@@ -21,46 +21,46 @@ public class ResourceLoader<T> extends AsyncTaskLoader<ResourceLoaderResult<T>> 
 
     private final static String EOL = System.getProperty("line.separator");
 
-    private final String url;
-    private final Class<T> classType;
-    private final Activity contextActivity;
-    private final Handler handler;
-    private final Scope[] requiredScopes;
+    private final String m_sURL;
+    private final Class<T> m_tClassType;
+    private final Activity m_cContextActivity;
+    private final Handler m_hHandler;
+    private final Scope[] m_arrRequiredScopes;
 
     public ResourceLoader(Activity context, String url, Scope[] requiredScopes, Handler handler, Class<T> classType) {
         super(context);
-        this.contextActivity = context;
-        this.url = url;
-        this.classType = classType;
-        this.handler = handler;
-        this.requiredScopes = requiredScopes;
+        this.m_cContextActivity = context;
+        this.m_sURL = url;
+        this.m_tClassType = classType;
+        this.m_hHandler = handler;
+        this.m_arrRequiredScopes = requiredScopes;
     }
 
     @Override
     public ResourceLoaderResult<T> loadInBackground() {
         try {
-            APIUtils.validateToken(contextActivity, AuthenticationManager.getCurrentAccessToken(), requiredScopes);
+            APIUtils.validateToken(m_cContextActivity, AuthenticationManager.getCurrentAccessToken(), m_arrRequiredScopes);
 
             BasicHttpRequest request = AuthenticationManager
                     .createSignedRequest()
                     .setContentType("Application/json")
-                    .setUrl(url)
+                    .setUrl(m_sURL)
                     .build();
 
             final BasicHttpResponse response = request.execute();
             int responseCode = response.getStatusCode();
             final String json = response.getBodyAsString();
             if (response.isSuccessful()) {
-                final T resource = new Gson().fromJson(json, classType);
+                final T resource = new Gson().fromJson(json, m_tClassType);
                 return ResourceLoaderResult.onSuccess(resource);
             } else {
                 if (responseCode == 401) {
                     if (AuthenticationManager.getAuthenticationConfiguration().isLogoutOnAuthFailure()) {
                         // Token may have been revoked or expired
-                        handler.post(new Runnable() {
+                        m_hHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                AuthenticationManager.logout(contextActivity);
+                                AuthenticationManager.logout(m_cContextActivity);
                             }
                         });
                     }

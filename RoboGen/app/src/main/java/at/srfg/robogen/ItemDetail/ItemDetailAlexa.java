@@ -12,8 +12,8 @@ import at.srfg.robogen.R;
 
 public class ItemDetailAlexa extends ItemDetailBase {
 
-    private final String mText_1 = "Test-Schritt) Verbindung aufbauen mit Alexa:";
-    public FloatingActionButton mAlexaStartButton;
+    private final String m_sStartAlexa = "Test-Schritt) Verbindung aufbauen mit Alexa:";
+    public FloatingActionButton m_btnStartAlexa;
 
     /*******************************************************************************
      * creating view for alexa detail page
@@ -36,18 +36,18 @@ public class ItemDetailAlexa extends ItemDetailBase {
      ******************************************************************************/
     private void initGUIComponents(final View rootView){
 
-        ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.mEntryHeader);
-        ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(mText_1);
+        ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.m_sEntryHeader);
+        ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(m_sStartAlexa);
 
-        mAlexaStartButton = (FloatingActionButton) rootView.findViewById(R.id.bt_search);
-        mAlexaStartButton.setOnClickListener(new View.OnClickListener() {
+        m_btnStartAlexa = (FloatingActionButton) rootView.findViewById(R.id.bt_search);
+        m_btnStartAlexa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 makeSnackbarMessage(view, "Starte Alexa..");
 
                 // TODO:
-                mItem.mEntryIsConnected = !mItem.mEntryIsConnected;
+                mItem.m_bEntryIsConnected = !mItem.m_bEntryIsConnected;
             }
         });
     }

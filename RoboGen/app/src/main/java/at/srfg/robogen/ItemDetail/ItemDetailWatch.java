@@ -14,11 +14,11 @@ import at.srfg.robogen.fitnesswatch.FitBitManager;
 
 public class ItemDetailWatch extends ItemDetailBase {
 
-    private final String mText_1 = "Schritt 1) Verbindung aufbauen mit einem Account für FitBit-Geräte:";
-    public FloatingActionButton mWatchStartButton;
+    private final String m_sConnectWatch = "Schritt 1) Verbindung aufbauen mit einem Account für FitBit-Geräte:";
+    public FloatingActionButton m_btnConnectWatch;
 
-    private final String mText_UserData = "Schritt 2) FitBit-Daten ansehen zu Benutzer, Geäten, Aktivitäten und Gewicht:";
-    public FloatingActionButton mAlexaButton_UserData;
+    private final String m_sUserDataWatch = "Schritt 2) FitBit-Daten ansehen zu Benutzer, Geäten, Aktivitäten und Gewicht:";
+    public FloatingActionButton m_btnUserDataWatch;
 
 
     private FitBitManager mWatchManager = null;
@@ -52,11 +52,11 @@ public class ItemDetailWatch extends ItemDetailBase {
         Activity activity = this.getActivity();
         mWatchManager = new FitBitManager(activity, activity.getBaseContext());
 
-        ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.mEntryHeader);
-        ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(mText_1);
+        ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.m_sEntryHeader);
+        ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(m_sConnectWatch);
 
-        mWatchStartButton = (FloatingActionButton) rootView.findViewById(R.id.bt_search);
-        mWatchStartButton.setOnClickListener(new View.OnClickListener() {
+        m_btnConnectWatch = (FloatingActionButton) rootView.findViewById(R.id.bt_search);
+        m_btnConnectWatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -64,17 +64,17 @@ public class ItemDetailWatch extends ItemDetailBase {
 
                 // starte Verbindung mit Uhr
                 mWatchManager.logIn(rootView);
-                mItem.mEntryIsConnected = !mItem.mEntryIsConnected;
+                mItem.m_bEntryIsConnected = !mItem.m_bEntryIsConnected;
 
                 makeSnackbarMessage(view, "Verbindung erfolgreich aufgebaut!");
             }
         });
 
 
-        ((TextView) rootView.findViewById(R.id.item_detail_text_userdata)).setText(mText_UserData);
+        ((TextView) rootView.findViewById(R.id.item_detail_text_userdata)).setText(m_sUserDataWatch);
 
-        mAlexaButton_UserData = (FloatingActionButton) rootView.findViewById(R.id.bt_userdata);
-        mAlexaButton_UserData.setOnClickListener(new View.OnClickListener() {
+        m_btnUserDataWatch = (FloatingActionButton) rootView.findViewById(R.id.bt_userdata);
+        m_btnUserDataWatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

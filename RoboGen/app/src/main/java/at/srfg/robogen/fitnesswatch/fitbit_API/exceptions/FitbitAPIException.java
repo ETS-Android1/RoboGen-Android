@@ -5,9 +5,7 @@ package at.srfg.robogen.fitnesswatch.fitbit_API.exceptions;
  ******************************************************************************/
 public class FitbitAPIException extends RuntimeException {
 
-    public FitbitAPIException() {
-    }
-
+    public FitbitAPIException() {}
     public FitbitAPIException(String message) {
         super(message);
     }

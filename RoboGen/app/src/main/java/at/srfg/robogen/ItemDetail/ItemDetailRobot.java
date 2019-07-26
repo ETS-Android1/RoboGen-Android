@@ -24,16 +24,16 @@ import at.srfg.robogen.bluetooth.BluetoothManager;
  ******************************************************************************/
 public class ItemDetailRobot extends ItemDetailBase {
 
-    private BluetoothManager mBluetoothManager = null;
+    private BluetoothManager m_cBluetoothManager = null;
 
-    private final String mText_1 = "Schritt 1) Verbindung aufbauen mit dem Roboter Hugo via Bluetooth.\n" +
+    private final String m_sConnectRobot = "Schritt 1) Verbindung aufbauen mit dem Roboter Hugo via Bluetooth.\n" +
                                    "Das Gerät muss zuerst gekoppelt werden und dann verbunden.\n" +
                                     "Beides kann mit dem folgenden Schalter erledigt werden:";
-    private final String mText_2 = "Schritt 2) Nachdem eine Verbindung erfolgreich aufgebaut wurde können Testdaten versendet werden.\n" +
+    private final String m_sSendRobot = "Schritt 2) Nachdem eine Verbindung erfolgreich aufgebaut wurde können Testdaten versendet werden.\n" +
                                    "Mit dem folgenden Schalter können Test-Daten an den Roboter gesendet werden:";
 
-    public FloatingActionButton mSearchButton;
-    public FloatingActionButton mSendButton;
+    public FloatingActionButton m_btnConnectRobot;
+    public FloatingActionButton m_btnSendRobot;
 
 
     /*******************************************************************************
@@ -64,28 +64,28 @@ public class ItemDetailRobot extends ItemDetailBase {
     private void initGUIComponents(final View rootView)
     {
         // init text
-        ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.mEntryHeader);
-        ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(mText_1);
-        ((TextView) rootView.findViewById(R.id.item_detail_text_2)).setText(mText_2);
+        ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.m_sEntryHeader);
+        ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(m_sConnectRobot);
+        ((TextView) rootView.findViewById(R.id.item_detail_text_2)).setText(m_sSendRobot);
 
         // init bluetooth manager
         Activity activity = this.getActivity();
-        mBluetoothManager = new BluetoothManager(activity, activity.getBaseContext());
-        mBluetoothManager.RequestExtraPermissionsForBluetooth(activity);
+        m_cBluetoothManager = new BluetoothManager(activity, activity.getBaseContext());
+        m_cBluetoothManager.RequestExtraPermissionsForBluetooth(activity);
 
 
         // init bluetooth buttons
-        mSearchButton = (FloatingActionButton) rootView.findViewById(R.id.bt_search);
-        mSearchButton.setOnClickListener(new View.OnClickListener() {
+        m_btnConnectRobot = (FloatingActionButton) rootView.findViewById(R.id.bt_search);
+        m_btnConnectRobot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 makeSnackbarMessage(view, "Prüfung auf vorhandene Bluetooth-Verbindung..");
-                mBluetoothManager.doConnect();
+                m_cBluetoothManager.doConnect();
             }
         });
-        mSendButton = (FloatingActionButton) rootView.findViewById(R.id.bt_send);
-        mSendButton.setOnClickListener(new View.OnClickListener() {
+        m_btnSendRobot = (FloatingActionButton) rootView.findViewById(R.id.bt_send);
+        m_btnSendRobot.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
                 makeSnackbarMessage(view, "Sende Daten an Gerät");
@@ -93,10 +93,10 @@ public class ItemDetailRobot extends ItemDetailBase {
                 // TODO: test data
                 byte[] buffer = new byte[1];
                 buffer[0] = 1;
-                mBluetoothManager.send(buffer);
+                m_cBluetoothManager.send(buffer);
 
                 // TODO:
-                mItem.mEntryIsConnected = !mItem.mEntryIsConnected;
+                mItem.m_bEntryIsConnected = !mItem.m_bEntryIsConnected;
             }
         });
     }
@@ -105,6 +105,6 @@ public class ItemDetailRobot extends ItemDetailBase {
      * on result bluetooth search select
      *******************************************************************************/
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        mBluetoothManager.onScanResult(requestCode, resultCode, data);
+        m_cBluetoothManager.onScanResult(requestCode, resultCode, data);
     }
 }

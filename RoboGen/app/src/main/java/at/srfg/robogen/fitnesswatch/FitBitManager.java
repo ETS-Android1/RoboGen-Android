@@ -7,22 +7,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Locale;
 import java.util.Set;
 
-import at.srfg.robogen.ItemDetailActivity;
 import at.srfg.robogen.R;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationHandler;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationManager;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationResult;
-import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationWebviewClient;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.Scope;
-import at.srfg.robogen.itemdetail.ItemDetailWatch;
 
 /*******************************************************************************
  * Class FitBitManager
@@ -54,13 +48,13 @@ import at.srfg.robogen.itemdetail.ItemDetailWatch;
  ******************************************************************************/
 public class FitBitManager extends AppCompatActivity implements AuthenticationHandler { // TODO: does this even need to be an activity anymore??
 
-    private Activity mParentActivity;
-    private Context mParentContext;
+    private Activity m_actParent;
+    private Context m_ctxParent;
 
-    public FitBitManager(Activity act, Context ct)
+    public FitBitManager(Activity act, Context ctx)
     {
-        mParentActivity = act;
-        mParentContext = ct;
+        m_actParent = act;
+        m_ctxParent = ctx;
     }
 
     /*******************************************************************************
@@ -79,7 +73,7 @@ public class FitBitManager extends AppCompatActivity implements AuthenticationHa
      * logIn, will logIn the User in FitBit Account
      ******************************************************************************/
     public void logIn(View view) {
-        AuthenticationManager.login(mParentActivity);
+        AuthenticationManager.login(m_actParent);
     }
 
     /*******************************************************************************
@@ -140,8 +134,8 @@ public class FitBitManager extends AppCompatActivity implements AuthenticationHa
         // Example request: GET https://api.fitbit.com/1/user/-/activities/heart/date/today/1d.json
 
         if(AuthenticationManager.isLoggedIn()) {
-            Intent intent = UserDataActivity.newIntent(mParentContext);
-            mParentActivity.startActivity(intent);
+            Intent intent = UserDataActivity.newIntent(m_ctxParent);
+            m_actParent.startActivity(intent);
         }
     }
 }

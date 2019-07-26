@@ -13,60 +13,59 @@ import java.util.ArrayList;
  ******************************************************************************/
 public class BasicHttpRequestBuilder {
 
-    private BasicHttpRequest basicHttpRequest;
+    private BasicHttpRequest m_cBasicHttpRequest;
 
     public static BasicHttpRequestBuilder create() {
         return new BasicHttpRequestBuilder();
     }
 
     public BasicHttpRequest build() {
-        if (TextUtils.isEmpty(basicHttpRequest.getUrl())) {
+        if (TextUtils.isEmpty(m_cBasicHttpRequest.getUrl())) {
             throw new IllegalArgumentException("Url cannot be empty!");
         }
-        return basicHttpRequest;
-
+        return m_cBasicHttpRequest;
     }
 
     private BasicHttpRequestBuilder() {
-        basicHttpRequest = new BasicHttpRequest();
-        basicHttpRequest.setMethod("GET");
+        m_cBasicHttpRequest = new BasicHttpRequest();
+        m_cBasicHttpRequest.setMethod("GET");
     }
 
     /*******************************************************************************
      * setter
      ******************************************************************************/
     public BasicHttpRequestBuilder setUrl(String url) {
-        basicHttpRequest.setUrl(url);
+        m_cBasicHttpRequest.setUrl(url);
         return this;
     }
 
     public BasicHttpRequestBuilder setAuthorization(String authorization) {
-        basicHttpRequest.setAuthorization(authorization);
+        m_cBasicHttpRequest.setAuthorization(authorization);
         return this;
     }
 
     public BasicHttpRequestBuilder setMethod(String method) {
-        basicHttpRequest.setMethod(method);
+        m_cBasicHttpRequest.setMethod(method);
         return this;
     }
 
     public BasicHttpRequestBuilder setContentType(String contentType) {
-        basicHttpRequest.setContentType(contentType);
+        m_cBasicHttpRequest.setContentType(contentType);
         return this;
     }
 
     public BasicHttpRequestBuilder setContent(String content) throws UnsupportedEncodingException {
-        basicHttpRequest.setContent(content);
+        m_cBasicHttpRequest.setContent(content);
         return this;
     }
 
     public BasicHttpRequestBuilder setContent(byte[] content) {
-        basicHttpRequest.setContent(content);
+        m_cBasicHttpRequest.setContent(content);
         return this;
     }
 
     public BasicHttpRequestBuilder setUseCaches(boolean useCaches) {
-        basicHttpRequest.setUseCaches(useCaches);
+        m_cBasicHttpRequest.setUseCaches(useCaches);
         return this;
     }
 
@@ -74,11 +73,11 @@ public class BasicHttpRequestBuilder {
      * addQueryParam
      ******************************************************************************/
     public BasicHttpRequestBuilder addQueryParam(String name, String value) {
-        if (basicHttpRequest.getParams() == null) {
-            basicHttpRequest.setParams(new ArrayList<Pair<String, String>>());
+        if (m_cBasicHttpRequest.getParams() == null) {
+            m_cBasicHttpRequest.setParams(new ArrayList<Pair<String, String>>());
         }
 
-        basicHttpRequest.getParams().add(new Pair<String, String>(name, value));
+        m_cBasicHttpRequest.getParams().add(new Pair<String, String>(name, value));
         return this;
     }
 }

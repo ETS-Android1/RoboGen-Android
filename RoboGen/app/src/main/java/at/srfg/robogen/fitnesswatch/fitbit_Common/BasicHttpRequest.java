@@ -20,13 +20,13 @@ import java.util.List;
  ******************************************************************************/
 public class BasicHttpRequest {
 
-    private String url;
-    private String authorization;
-    private String method;
-    private String contentType;
-    private byte[] content;
-    private boolean useCaches;
-    private List<Pair<String, String>> params;
+    private String m_sURL;
+    private String m_sAuthorization;
+    private String m_sMethod;
+    private String m_sContentType;
+    private byte[] m_arrContent;
+    private boolean m_bUseCaches;
+    private List<Pair<String, String>> m_listParams;
 
     BasicHttpRequest() {}
 
@@ -34,85 +34,85 @@ public class BasicHttpRequest {
      * getter/setter
      ******************************************************************************/
     public String getUrl() {
-        return url;
+        return m_sURL;
     }
     void setUrl(String url) {
-        this.url = url;
+        this.m_sURL = url;
     }
 
     void setAuthorization(String authorization) {
-        this.authorization = authorization;
+        this.m_sAuthorization = authorization;
     }
 
     public String getMethod() {
-        return method;
+        return m_sMethod;
     }
     void setMethod(String method) {
-        this.method = method;
+        this.m_sMethod = method;
     }
 
     public String getContentType() {
-        return contentType;
+        return m_sContentType;
     }
     void setContentType(String contentType) {
-        this.contentType = contentType;
+        this.m_sContentType = contentType;
     }
 
     public int getContentLength() {
-        return content != null ? content.length : 0;
+        return m_arrContent != null ? m_arrContent.length : 0;
     }
 
     void setContent(byte[] content) {
-        this.content = content;
+        this.m_arrContent = content;
     }
     void setContent(String content) throws UnsupportedEncodingException {
         setContent(content.getBytes("UTF-8"));
     }
 
     public boolean useCaches() {
-        return useCaches;
+        return m_bUseCaches;
     }
     void setUseCaches(boolean useCaches) {
-        this.useCaches = useCaches;
+        this.m_bUseCaches = useCaches;
     }
 
     void setParams(List<Pair<String, String>> params) {
-        this.params = params;
+        this.m_listParams = params;
     }
     public List<Pair<String, String>> getParams() {
-        return params;
+        return m_listParams;
     }
 
     /*******************************************************************************
      * fillInConnectionInfo
      ******************************************************************************/
     private synchronized void fillInConnectionInfo(HttpURLConnection connection) throws IOException {
-        connection.setRequestMethod(method);
+        connection.setRequestMethod(m_sMethod);
 
-        if (!TextUtils.isEmpty(authorization)) {
-            connection.setRequestProperty("Authorization", authorization);
+        if (!TextUtils.isEmpty(m_sAuthorization)) {
+            connection.setRequestProperty("Authorization", m_sAuthorization);
         }
 
-        if (!TextUtils.isEmpty(contentType)) {
-            connection.setRequestProperty("Content-Type", contentType);
+        if (!TextUtils.isEmpty(m_sContentType)) {
+            connection.setRequestProperty("Content-Type", m_sContentType);
         }
 
-        if (content == null || content.length == 0) {
+        if (m_arrContent == null || m_arrContent.length == 0) {
             connection.setRequestProperty("Content-Length", "0");
         } else {
-            connection.setRequestProperty("Content-Length", Integer.toString(content.length));
+            connection.setRequestProperty("Content-Length", Integer.toString(m_arrContent.length));
             OutputStream outputStream = null;
 
             try {
                 outputStream = connection.getOutputStream();
-                outputStream.write(this.content);
+                outputStream.write(this.m_arrContent);
             } finally {
                 if (outputStream != null) {
                     outputStream.close();
                 }
             }
         }
-        connection.setUseCaches(this.useCaches);
+        connection.setUseCaches(this.m_bUseCaches);
     }
 
     /*******************************************************************************
@@ -155,7 +155,7 @@ public class BasicHttpRequest {
     public synchronized BasicHttpResponse execute() throws IOException {
         HttpURLConnection connection = null;
 
-        String urlString = this.url + ((params != null) ? "?" + getQuery(this.params) : "");
+        String urlString = this.m_sURL + ((m_listParams != null) ? "?" + getQuery(this.m_listParams) : "");
 
         try {
             URL url = new URL(urlString);

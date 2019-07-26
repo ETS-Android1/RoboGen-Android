@@ -20,7 +20,7 @@ public class ItemDetailBase extends Fragment {
      * The fragment argument representing the item ID that this fragment
      * represents.
      ******************************************************************************/
-    public static final String ARG_ITEM_ID = "item_id";
+    public static final String m_sARG_ITEM_ID = "item_id";
 
     /*******************************************************************************
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -36,16 +36,16 @@ public class ItemDetailBase extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
+        if (getArguments().containsKey(m_sARG_ITEM_ID)) {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItem = ItemContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            mItem = ItemContent.m_mapItems.get(getArguments().getString(m_sARG_ITEM_ID));
 
             Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.mEntryTitle);
+                appBarLayout.setTitle(mItem.m_sEntryTitle);
             }
         }
     }

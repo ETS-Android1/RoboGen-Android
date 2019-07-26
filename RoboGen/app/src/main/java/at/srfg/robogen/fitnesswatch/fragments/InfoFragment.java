@@ -3,11 +3,6 @@ package at.srfg.robogen.fitnesswatch.fragments;
 import at.srfg.robogen.R;
 import at.srfg.robogen.fitnesswatch.fitbit_API.loaders.ResourceLoaderResult;
 
-//import com.fitbit.sampleandroidoauth2.databinding.LayoutInfoBinding;
-//import android.databinding.DataBindingUtil;
-//import android.support.annotation.Nullable;
-//import android.support.v4.widget.SwipeRefreshLayout;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,9 +33,8 @@ import java.util.Locale;
 public abstract class InfoFragment<T> extends Fragment
         implements LoaderManager.LoaderCallbacks<ResourceLoaderResult<T>>, SwipeRefreshLayout.OnRefreshListener {
 
-    //protected LayoutInfoBinding binding;
-    private TextView mTitleText;
-    private WebView mWebView;
+    private TextView m_viewTitleText;
+    private WebView m_viewWebContent;
     protected final String TAG = getClass().getSimpleName();
 
     /*******************************************************************************
@@ -51,11 +45,11 @@ public abstract class InfoFragment<T> extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         final View rootView = inflater.inflate(R.layout.fitbit_fragment_info, container, false);
-        mTitleText = rootView.findViewById(R.id.layout_title_text);
-        mTitleText.setText(getActivity().getString(R.string.no_data));
+        m_viewTitleText = rootView.findViewById(R.id.layout_title_text);
+        m_viewTitleText.setText(getActivity().getString(R.string.no_data));
         //setMainText(getActivity().getString(R.string.no_data));
 
-        mWebView = rootView.findViewById(R.id.layout_webview);
+        m_viewWebContent = rootView.findViewById(R.id.layout_webview);
         return rootView;
     }
 
@@ -140,6 +134,6 @@ public abstract class InfoFragment<T> extends Fragment
     }
 
     protected void setMainText(String text) {
-        mWebView.loadData(text, "text/html", "UTF-8");
+        m_viewWebContent.loadData(text, "text/html", "UTF-8");
     }
 }

@@ -36,7 +36,7 @@ public class ItemListActivity extends AppCompatActivity {
     /**
      * logging and debugging
      */
-    public static final String LOG_TAG = "ItemListActivity";
+    public static final String m_sLogTag = "ItemListActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class ItemListActivity extends AppCompatActivity {
      * setup the view for bt recycling
      *******************************************************************************/
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, ItemContent.ITEMS));
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, ItemContent.m_listItems));
     }
 
     /*******************************************************************************
@@ -65,8 +65,7 @@ public class ItemListActivity extends AppCompatActivity {
     public static class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
-        private final ItemListActivity mParentActivity;
-        private final List<ItemContent.ItemEntry> mValues;
+        private final List<ItemContent.ItemEntry> m_listValues;
 
         public Drawable mDrawableConnected = null;
         public Drawable mDrawableNotConnected = null;
@@ -76,9 +75,7 @@ public class ItemListActivity extends AppCompatActivity {
          *******************************************************************************/
         SimpleItemRecyclerViewAdapter(ItemListActivity parent,
                                       List<ItemContent.ItemEntry> items) {
-
-            mValues = items;
-            mParentActivity = parent;
+            m_listValues = items;
         }
 
         /*******************************************************************************
@@ -93,22 +90,22 @@ public class ItemListActivity extends AppCompatActivity {
                 Intent intent = new Intent(context, ItemDetailActivity.class);
 
                 if(item.toString() == "Hugo") {
-                    intent.putExtra(ItemDetailBase.ARG_ITEM_ID, item.mEntryID); // id  = 1
-                    intent.putExtra(ItemDetailRobot.ARG_ITEM_ID, item.mEntryID); // id  = 1
+                    intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 1
+                    intent.putExtra(ItemDetailRobot.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 1
                 }
                 else if(item.toString() == "Uhren")
                 {
-                    intent.putExtra(ItemDetailBase.ARG_ITEM_ID, item.mEntryID); // id  = 2
-                    intent.putExtra(ItemDetailWatch.ARG_ITEM_ID, item.mEntryID); // id = 2
+                    intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 2
+                    intent.putExtra(ItemDetailWatch.m_sARG_ITEM_ID, item.m_sEntryID); // id = 2
                 }
                 else if(item.toString() == "Alexa")
                 {
-                    intent.putExtra(ItemDetailBase.ARG_ITEM_ID, item.mEntryID); // id  = 3
-                    intent.putExtra(ItemDetailAlexa.ARG_ITEM_ID, item.mEntryID); // id = 3
+                    intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 3
+                    intent.putExtra(ItemDetailAlexa.m_sARG_ITEM_ID, item.m_sEntryID); // id = 3
                 }
                 else
                 {
-                    Log.d(LOG_TAG, "Internal Error: invalid option selected");
+                    Log.d(m_sLogTag, "Internal Error: invalid option selected");
                 }
 
                 context.startActivity(intent);
@@ -129,23 +126,23 @@ public class ItemListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
 
-            if(mValues.get(position).mEntryIsConnected) {
+            if(m_listValues.get(position).m_bEntryIsConnected) {
                 holder.mConnectionView.setImageDrawable(mDrawableConnected);
             }
             else{
                 holder.mConnectionView.setImageDrawable(mDrawableNotConnected);
             }
 
-            holder.mIdView.setText(mValues.get(position).mEntryID);
-            holder.mTitleView.setText(mValues.get(position).mEntryTitle);
+            holder.mIdView.setText(m_listValues.get(position).m_sEntryID);
+            holder.mTitleView.setText(m_listValues.get(position).m_sEntryTitle);
 
-            holder.itemView.setTag(mValues.get(position));
+            holder.itemView.setTag(m_listValues.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);
         }
 
         @Override
         public int getItemCount() {
-            return mValues.size();
+            return m_listValues.size();
         }
 
         /*******************************************************************************

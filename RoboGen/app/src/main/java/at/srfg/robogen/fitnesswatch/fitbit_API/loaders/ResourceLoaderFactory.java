@@ -9,21 +9,21 @@ import android.os.Handler;
  ******************************************************************************/
 public class ResourceLoaderFactory<T> {
 
-    private String urlFormat;
-    private Class<T> classType;
+    private String m_sURLFormat;
+    private Class<T> m_tClassType;
 
     public ResourceLoaderFactory(String urlFormat, Class<T> classType) {
-        this.urlFormat = urlFormat;
-        this.classType = classType;
+        this.m_sURLFormat = urlFormat;
+        this.m_tClassType = classType;
     }
 
     public ResourceLoader<T> newResourceLoader(Activity contextActivity, Scope[] requiredScopes, String... pathParams) {
 
-        String url = urlFormat;
+        String url = m_sURLFormat;
         if (pathParams != null && pathParams.length > 0) {
-            url = String.format(urlFormat, pathParams);
+            url = String.format(m_sURLFormat, pathParams);
         }
 
-        return new ResourceLoader<T>(contextActivity, url, requiredScopes, new Handler(), classType);
+        return new ResourceLoader<T>(contextActivity, url, requiredScopes, new Handler(), m_tClassType);
     }
 }

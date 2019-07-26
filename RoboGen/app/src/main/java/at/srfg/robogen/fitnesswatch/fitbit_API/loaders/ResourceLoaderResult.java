@@ -5,22 +5,22 @@ package at.srfg.robogen.fitnesswatch.fitbit_API.loaders;
  */
 
 public class ResourceLoaderResult<T> {
-    private final T result;
-    private final boolean successful;
-    private final Exception exception;
-    private final String errorMessage;
-    private final ResultType resultType;
+    private final T m_tResult;
+    private final boolean m_bSuccessful;
+    private final Exception m_cException;
+    private final String m_sErrorMessage;
+    private final ResultType m_cResultType;
 
     public enum ResultType {
         SUCCESS, ERROR, EXCEPTION, LOGGED_OUT
     }
 
     private ResourceLoaderResult(T result, ResultType resultType, String errorMessage, Exception exception) {
-        this.result = result;
-        this.successful = resultType == ResultType.SUCCESS;
-        this.errorMessage = errorMessage;
-        this.exception = exception;
-        this.resultType = resultType;
+        this.m_tResult = result;
+        this.m_bSuccessful = resultType == ResultType.SUCCESS;
+        this.m_sErrorMessage = errorMessage;
+        this.m_cException = exception;
+        this.m_cResultType = resultType;
     }
 
     public static <G> ResourceLoaderResult<G> onSuccess(G result) {
@@ -44,22 +44,22 @@ public class ResourceLoaderResult<T> {
     }
 
     public T getResult() {
-        return result;
+        return m_tResult;
     }
 
     public boolean isSuccessful() {
-        return successful;
+        return m_bSuccessful;
     }
 
     public String getErrorMessage() {
-        return errorMessage;
+        return m_sErrorMessage;
     }
 
     public Exception getException() {
-        return exception;
+        return m_cException;
     }
 
     public ResultType getResultType() {
-        return resultType;
+        return m_cResultType;
     }
 }

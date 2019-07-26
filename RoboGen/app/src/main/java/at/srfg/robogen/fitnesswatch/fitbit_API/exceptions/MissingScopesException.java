@@ -8,13 +8,13 @@ import java.util.Collection;
  ******************************************************************************/
 public class MissingScopesException extends FitbitAPIException {
 
-    private Collection<Scope> scopes;
+    private Collection<Scope> m_collectionScopes;
 
     public MissingScopesException(Collection<Scope> scopes) {
-        this.scopes = scopes;
+        this.m_collectionScopes = scopes;
     }
 
     public Collection<Scope> getScopes() {
-        return scopes;
+        return m_collectionScopes;
     }
 }
