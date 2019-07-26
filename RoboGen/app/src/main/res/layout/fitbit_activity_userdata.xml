@@ -23,7 +23,7 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="@dimen/fab_margin"
         android:onClick="onLogoutClick"
-        app:srcCompat="@drawable/fitbit_start"
+        app:srcCompat="@drawable/fitbit_logout"
         app:fabSize="normal"
         app:rippleColor="@color/cardview_dark_background"
         app:backgroundTint= "@color/colorPrimary" />
