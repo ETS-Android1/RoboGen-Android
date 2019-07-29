@@ -2,7 +2,7 @@ package at.srfg.robogen.fitnesswatch.fragments;
 
 import at.srfg.robogen.R;
 import at.srfg.robogen.fitnesswatch.fitbit_API.loaders.ResourceLoaderResult;
-import at.srfg.robogen.fitnesswatch.fitbit_API.models.Device;
+import at.srfg.robogen.fitnesswatch.fitbit_API.models.devices_list.Device;
 import at.srfg.robogen.fitnesswatch.fitbit_API.services.DeviceService;
 
 import androidx.loader.content.Loader;

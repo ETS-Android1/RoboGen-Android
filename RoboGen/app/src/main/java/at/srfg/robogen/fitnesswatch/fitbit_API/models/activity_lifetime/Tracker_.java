@@ -1,13 +1,14 @@
-package at.srfg.robogen.fitnesswatch.fitbit_API.models;
+package at.srfg.robogen.fitnesswatch.fitbit_API.models.activity_lifetime;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Goals {
 
-    @SerializedName("activeMinutes")
+public class Tracker_ {
+
+    @SerializedName("activeScore")
     @Expose
-    private Integer activeMinutes;
+    private Integer activeScore;
     @SerializedName("caloriesOut")
     @Expose
     private Integer caloriesOut;
@@ -22,17 +23,17 @@ public class Goals {
     private Integer steps;
 
     /**
-     * @return The activeMinutes
+     * @return The activeScore
      */
-    public Integer getActiveMinutes() {
-        return activeMinutes;
+    public Integer getActiveScore() {
+        return activeScore;
     }
 
     /**
-     * @param activeMinutes The activeMinutes
+     * @param activeScore The activeScore
      */
-    public void setActiveMinutes(Integer activeMinutes) {
-        this.activeMinutes = activeMinutes;
+    public void setActiveScore(Integer activeScore) {
+        this.activeScore = activeScore;
     }
 
     /**

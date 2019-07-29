@@ -1,17 +1,17 @@
-package at.srfg.robogen.fitnesswatch.fitbit_API.models;
+package at.srfg.robogen.fitnesswatch.fitbit_API.models.activity_lifetime;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class Steps_ {
+public class Distance_ {
 
     @SerializedName("date")
     @Expose
     private String date;
     @SerializedName("value")
     @Expose
-    private Integer value;
+    private Double value;
 
     /**
      * @return The date
@@ -30,14 +30,14 @@ public class Steps_ {
     /**
      * @return The value
      */
-    public Integer getValue() {
+    public Double getValue() {
         return value;
     }
 
     /**
      * @param value The value
      */
-    public void setValue(Integer value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 

@@ -2,9 +2,9 @@ package at.srfg.robogen.fitnesswatch.fragments;
 
 import at.srfg.robogen.R;
 import at.srfg.robogen.fitnesswatch.fitbit_API.loaders.ResourceLoaderResult;
-import at.srfg.robogen.fitnesswatch.fitbit_API.models.DailyActivitySummary;
-import at.srfg.robogen.fitnesswatch.fitbit_API.models.Goals;
-import at.srfg.robogen.fitnesswatch.fitbit_API.models.Summary;
+import at.srfg.robogen.fitnesswatch.fitbit_API.models.activity_lifetime.DailyActivitySummary;
+import at.srfg.robogen.fitnesswatch.fitbit_API.models.activity_lifetime.Goals;
+import at.srfg.robogen.fitnesswatch.fitbit_API.models.activity_lifetime.Summary;
 import at.srfg.robogen.fitnesswatch.fitbit_API.services.ActivityService;
 
 import androidx.loader.content.Loader;

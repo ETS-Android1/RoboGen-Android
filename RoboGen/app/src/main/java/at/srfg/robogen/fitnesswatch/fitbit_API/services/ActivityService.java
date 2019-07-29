@@ -4,7 +4,7 @@ import at.srfg.robogen.fitnesswatch.fitbit_API.exceptions.MissingScopesException
 import at.srfg.robogen.fitnesswatch.fitbit_API.exceptions.TokenExpiredException;
 import at.srfg.robogen.fitnesswatch.fitbit_API.loaders.ResourceLoaderFactory;
 import at.srfg.robogen.fitnesswatch.fitbit_API.loaders.ResourceLoaderResult;
-import at.srfg.robogen.fitnesswatch.fitbit_API.models.DailyActivitySummary;
+import at.srfg.robogen.fitnesswatch.fitbit_API.models.activity_lifetime.DailyActivitySummary;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.Scope;
 
 import android.app.Activity;

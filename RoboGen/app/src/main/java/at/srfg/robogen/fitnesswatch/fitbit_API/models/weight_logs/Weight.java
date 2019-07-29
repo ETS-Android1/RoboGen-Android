@@ -1,4 +1,4 @@
-package at.srfg.robogen.fitnesswatch.fitbit_API.models;
+package at.srfg.robogen.fitnesswatch.fitbit_API.models.weight_logs;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
