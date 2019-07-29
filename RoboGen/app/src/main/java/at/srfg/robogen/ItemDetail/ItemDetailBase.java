@@ -46,6 +46,8 @@ public class ItemDetailBase extends Fragment {
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
                 appBarLayout.setTitle(mItem.m_sEntryTitle);
+                appBarLayout.setCollapsedTitleTextAppearance(R.style.Toolbar_TitleItemDetail);
+                appBarLayout.setExpandedTitleTextAppearance(R.style.Toolbar_TitleItemDetail);
             }
         }
     }

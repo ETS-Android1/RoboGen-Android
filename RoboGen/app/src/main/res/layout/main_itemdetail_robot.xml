@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/item_detail_title"
         style="?android:attr/textAppearanceLarge"
@@ -17,7 +19,8 @@
         android:textIsSelectable="true"
         tools:context=".ItemDetail.ItemDetailRobot" />
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/item_detail_text_1"
         style="?android:attr/textAppearanceLarge"
@@ -39,7 +42,8 @@
         app:rippleColor="@color/cardview_dark_background"
         app:backgroundTint= "@color/colorPrimary" />
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/item_detail_text_2"
         style="?android:attr/textAppearanceLarge"
