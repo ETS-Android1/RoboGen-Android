@@ -1,4 +1,4 @@
-package at.srfg.robogen.fitnesswatch.fitbit_API;
+package at.srfg.robogen.fitnesswatch.fitbit_API.loaders;
 
 import at.srfg.robogen.fitnesswatch.fitbit_API.exceptions.MissingScopesException;
 import at.srfg.robogen.fitnesswatch.fitbit_API.exceptions.TokenExpiredException;

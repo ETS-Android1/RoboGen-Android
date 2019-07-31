@@ -1,6 +1,5 @@
 package at.srfg.robogen.fitnesswatch.fitbit_API.loaders;
 
-import at.srfg.robogen.fitnesswatch.fitbit_API.APIUtils;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationManager;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.Scope;
 import at.srfg.robogen.fitnesswatch.fitbit_Common.BasicHttpRequest;

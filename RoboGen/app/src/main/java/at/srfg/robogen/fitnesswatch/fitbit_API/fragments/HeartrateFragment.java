@@ -1,4 +1,4 @@
-package at.srfg.robogen.fitnesswatch.fragments;
+package at.srfg.robogen.fitnesswatch.fitbit_API.fragments;
 
 import android.os.Bundle;
 
@@ -6,10 +6,7 @@ import androidx.loader.content.Loader;
 
 import at.srfg.robogen.R;
 import at.srfg.robogen.fitnesswatch.fitbit_API.loaders.ResourceLoaderResult;
-import at.srfg.robogen.fitnesswatch.fitbit_API.models.activity_lifetime.Goals;
-import at.srfg.robogen.fitnesswatch.fitbit_API.models.activity_lifetime.Summary;
 import at.srfg.robogen.fitnesswatch.fitbit_API.models.heartrate_intraday.ActivitiesHeart;
-import at.srfg.robogen.fitnesswatch.fitbit_API.models.heartrate_intraday.ActivitiesHeartIntra;
 import at.srfg.robogen.fitnesswatch.fitbit_API.models.heartrate_intraday.HeartContainer;
 import at.srfg.robogen.fitnesswatch.fitbit_API.models.heartrate_intraday.HeartRateZone;
 import at.srfg.robogen.fitnesswatch.fitbit_API.services.HeartrateService;

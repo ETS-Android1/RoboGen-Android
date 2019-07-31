@@ -2,12 +2,12 @@ package at.srfg.robogen.fitnesswatch;
 
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationManager;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.Scope;
-import at.srfg.robogen.fitnesswatch.fragments.ActivitiesFragment;
-import at.srfg.robogen.fitnesswatch.fragments.DeviceFragment;
-import at.srfg.robogen.fitnesswatch.fragments.HeartrateFragment;
-import at.srfg.robogen.fitnesswatch.fragments.InfoFragment;
-import at.srfg.robogen.fitnesswatch.fragments.ProfileFragment;
-import at.srfg.robogen.fitnesswatch.fragments.WeightLogFragment;
+import at.srfg.robogen.fitnesswatch.fitbit_API.fragments.ActivitiesFragment;
+import at.srfg.robogen.fitnesswatch.fitbit_API.fragments.DeviceFragment;
+import at.srfg.robogen.fitnesswatch.fitbit_API.fragments.HeartrateFragment;
+import at.srfg.robogen.fitnesswatch.fitbit_API.fragments.InfoFragment;
+import at.srfg.robogen.fitnesswatch.fitbit_API.fragments.ProfileFragment;
+import at.srfg.robogen.fitnesswatch.fitbit_API.fragments.WeightLogFragment;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

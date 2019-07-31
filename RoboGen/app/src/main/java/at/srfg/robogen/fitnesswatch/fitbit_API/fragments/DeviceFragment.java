@@ -1,4 +1,4 @@
-package at.srfg.robogen.fitnesswatch.fragments;
+package at.srfg.robogen.fitnesswatch.fitbit_API.fragments;
 
 import at.srfg.robogen.R;
 import at.srfg.robogen.fitnesswatch.fitbit_API.loaders.ResourceLoaderResult;
