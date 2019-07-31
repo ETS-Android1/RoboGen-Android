@@ -100,30 +100,39 @@ public abstract class InfoFragment<T> extends Fragment
                         || string.endsWith("png")));
     }
 
+    protected void setMainText(String text) {
+        m_viewWebContent.loadData(text, "text/html", "UTF-8");
+    }
+
+    /*******************************************************************************
+     * printKeys function
+     * will run through every entry of JsonObject and call print helpers
+     ******************************************************************************/
     protected void printKeys(StringBuilder stringBuilder, Object object) {
         JSONObject jsonObject = null;
         try {
             jsonObject = new JSONObject(new Gson().toJson(object));
             Iterator<String> keys = jsonObject.keys();
+
             while (keys.hasNext()) {
                 String key = keys.next();
                 Object value = jsonObject.get(key);
-                if (!(value instanceof JSONObject)
-                        && !(value instanceof JSONArray)) {
-                    stringBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp;<b>");
-                    stringBuilder.append(key);
-                    stringBuilder.append(":</b>&nbsp;");
-                    if (value instanceof Number) {
-                        stringBuilder.append(formatNumber((Number) value));
-                    } else if (isImageUrl(value.toString())) {
-                        stringBuilder.append("<br/>");
-                        stringBuilder.append("<center><img src=\"");
-                        stringBuilder.append(value.toString());
-                        stringBuilder.append("\" width=\"150\" height=\"150\"></center>");
-                    } else {
-                        stringBuilder.append(value.toString());
+
+                if (!(value instanceof JSONObject) && !(value instanceof JSONArray)) {
+
+                    if (isImageUrl(value.toString())) {
+                        printSingleImageReversed(stringBuilder, key, value);
                     }
-                    stringBuilder.append("<br/>");
+                    else if (value instanceof Number) {
+                        printSingleKey(stringBuilder, key);
+                        stringBuilder.append(formatNumber((Number) value));
+                        stringBuilder.append("<br/>");
+                    }
+                    else {
+                        printSingleKey(stringBuilder, key);
+                        stringBuilder.append(value.toString());
+                        stringBuilder.append("<br/>");
+                    }
                 }
             }
         } catch (JSONException e) {
@@ -131,7 +140,34 @@ public abstract class InfoFragment<T> extends Fragment
         }
     }
 
-    protected void setMainText(String text) {
-        m_viewWebContent.loadData(text, "text/html", "UTF-8");
+    /*******************************************************************************
+     * print a simple value's key
+     ******************************************************************************/
+    private void printSingleKey(StringBuilder stringBuilder, String key)
+    {
+        stringBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp;<b>");
+        stringBuilder.append(key);
+        stringBuilder.append(":</b>&nbsp;");
+    }
+
+    /*******************************************************************************
+     * print an image reversed at the beginning of the stringbuilder
+     * (to ensure that images are always printed at the beginning)
+     ******************************************************************************/
+    private void printSingleImageReversed(StringBuilder stringBuilder, String key, Object value)
+    {
+        // avatar currently is the last image we get from JSON object
+        // so if entry is avatar: stop here and add separator line
+        if(key.equals("avatar")) {
+            stringBuilder.insert(0, "<br/><hr><br/>");
+        }
+
+        stringBuilder.insert(0, "\" width=\"150\" height=\"150\"></div>");
+        stringBuilder.insert(0, value.toString());
+        stringBuilder.insert(0, "<div style=\"display: inline-block;\"><img src=\"");
+
+        stringBuilder.insert(0, ":</b>&nbsp;");
+        stringBuilder.insert(0, key);
+        stringBuilder.insert(0, "&nbsp;&nbsp;&nbsp;&nbsp;<b>");
     }
 }

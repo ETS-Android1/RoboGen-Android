@@ -66,9 +66,6 @@ public class WeightLogFragment extends InfoFragment<WeightLogs> {
 
         for (Weight weight : weights) {
 
-            stringBuilder.append("<b>FITBIT ");
-            stringBuilder.append("&trade;</b><br>");
-
             stringBuilder.append("<b>&nbsp;&nbsp;BMI: </b>");
             stringBuilder.append(weight.getBmi());
             stringBuilder.append("<br>");
@@ -79,27 +76,27 @@ public class WeightLogFragment extends InfoFragment<WeightLogs> {
 
             stringBuilder.append("<b>&nbsp;&nbsp;DateTime: </b>");
             stringBuilder.append(weight.getDateTime());
-            stringBuilder.append("<br><br>");
+            stringBuilder.append("<br>");
 
             stringBuilder.append("<b>&nbsp;&nbsp;Fat: </b>");
             stringBuilder.append(weight.getFat());
-            stringBuilder.append("<br><br>");
+            stringBuilder.append("<br>");
 
             stringBuilder.append("<b>&nbsp;&nbsp;LogID: </b>");
             stringBuilder.append(weight.getLogId());
-            stringBuilder.append("<br><br>");
+            stringBuilder.append("<br>");
 
             stringBuilder.append("<b>&nbsp;&nbsp;Source: </b>");
             stringBuilder.append(weight.getSource());
-            stringBuilder.append("<br><br>");
+            stringBuilder.append("<br>");
 
             stringBuilder.append("<b>&nbsp;&nbsp;Time: </b>");
             stringBuilder.append(weight.getTime());
-            stringBuilder.append("<br><br>");
+            stringBuilder.append("<br>");
 
             stringBuilder.append("<b>&nbsp;&nbsp;Weight: </b>");
-            stringBuilder.append(weight.getWeight());
-            stringBuilder.append("<br><br>");
+            stringBuilder.append(weight.getWeight().doubleValue());
+            stringBuilder.append("<br><hr>");
         }
 
         if (stringBuilder.length() > 0) {

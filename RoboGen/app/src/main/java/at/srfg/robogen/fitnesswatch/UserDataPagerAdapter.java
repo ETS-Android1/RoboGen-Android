@@ -4,11 +4,10 @@ import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationManager;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.Scope;
 import at.srfg.robogen.fitnesswatch.fragments.ActivitiesFragment;
 import at.srfg.robogen.fitnesswatch.fragments.DeviceFragment;
+import at.srfg.robogen.fitnesswatch.fragments.HeartrateFragment;
 import at.srfg.robogen.fitnesswatch.fragments.InfoFragment;
 import at.srfg.robogen.fitnesswatch.fragments.ProfileFragment;
 import at.srfg.robogen.fitnesswatch.fragments.WeightLogFragment;
-
-//import android.support.v13.app.FragmentPagerAdapter;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -43,6 +42,9 @@ public class UserDataPagerAdapter extends FragmentPagerAdapter {
         }
         if (containsScope(Scope.weight)) {
             m_listFragments.add(new WeightLogFragment());
+        }
+        if (containsScope(Scope.heartrate)) {
+            m_listFragments.add(new HeartrateFragment());
         }
     }
 

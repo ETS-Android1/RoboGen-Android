@@ -60,7 +60,7 @@ public class DeviceFragment extends InfoFragment<Device[]> {
 
             stringBuilder.append("<b>&nbsp;&nbsp;Battery Level: </b>");
             stringBuilder.append(device.getBattery());
-            stringBuilder.append("<br><br>");
+            stringBuilder.append("<br><br><hr>");
         }
 
         if (stringBuilder.length() > 0) {

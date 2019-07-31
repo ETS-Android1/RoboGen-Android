@@ -65,9 +65,8 @@ public class FitbitAuthApplication extends Application {
                     .setTokenExpiresIn(2592000L) // 30 days
                     .setBeforeLoginActivity(new Intent(context, mainActivityClass))
                     .addRequiredScopes(Scope.profile, Scope.settings)
-                    .addOptionalScopes(activity, Scope.weight)
+                    .addOptionalScopes(Scope.activity, Scope.weight, Scope.heartrate)
                     .setLogoutOnAuthFailure(true)
-
                     .build();
 
         } catch (Exception e) {

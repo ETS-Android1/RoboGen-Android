@@ -57,7 +57,7 @@ public class ActivitiesFragment extends InfoFragment<DailyActivitySummary> {
         stringBuilder.append("<br />");
         printKeys(stringBuilder, summary);
 
-        stringBuilder.append("<br /><br />");
+        stringBuilder.append("<br /><br /><hr>");
         stringBuilder.append("<b>GOALS</b> ");
         stringBuilder.append("<br />");
         printKeys(stringBuilder, goals);
