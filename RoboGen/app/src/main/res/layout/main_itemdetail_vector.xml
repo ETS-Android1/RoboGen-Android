@@ -15,7 +15,7 @@
         android:padding="16dp"
         android:textSize="@dimen/title_font_size"
         android:textIsSelectable="true"
-        tools:context=".ItemDetail.ItemDetailAlexa" />
+        tools:context=".ItemDetail.ItemDetailVector" />
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/alexa_start"
+        app:srcCompat="@drawable/vector_start"
         app:fabSize="normal"
         app:rippleColor="@color/cardview_dark_background"
         app:backgroundTint= "@color/colorPrimary" />

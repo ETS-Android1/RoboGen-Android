@@ -10,18 +10,18 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import at.srfg.robogen.R;
 
-public class ItemDetailAlexa extends ItemDetailBase {
+public class ItemDetailVector extends ItemDetailBase {
 
-    private final String m_sStartAlexa = "Test-Schritt) Verbindung aufbauen mit Alexa:";
-    public FloatingActionButton m_btnStartAlexa;
+    private final String m_sStartVector = "Test-Schritt) Verbindung aufbauen mit Anki Vector Roboter:";
+    public FloatingActionButton m_btnStartVector;
 
     /*******************************************************************************
-     * creating view for alexa detail page
+     * creating view for anki vector detail page
      ******************************************************************************/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.main_itemdetail_alexa, container, false);
+        final View rootView = inflater.inflate(R.layout.main_itemdetail_vector, container, false);
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
@@ -37,14 +37,14 @@ public class ItemDetailAlexa extends ItemDetailBase {
     private void initGUIComponents(final View rootView){
 
         ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.m_sEntryHeader);
-        ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(m_sStartAlexa);
+        ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(m_sStartVector);
 
-        m_btnStartAlexa = (FloatingActionButton) rootView.findViewById(R.id.bt_search);
-        m_btnStartAlexa.setOnClickListener(new View.OnClickListener() {
+        m_btnStartVector = (FloatingActionButton) rootView.findViewById(R.id.bt_search);
+        m_btnStartVector.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                makeSnackbarMessage(view, "Starte Alexa..");
+                makeSnackbarMessage(view, "Starte Vector-Kommunikation..");
 
                 // TODO:
                 mItem.m_bEntryIsConnected = !mItem.m_bEntryIsConnected;

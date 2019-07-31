@@ -13,7 +13,7 @@ import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationManager;
 import at.srfg.robogen.itemdetail.ItemDetailBase;
 import at.srfg.robogen.itemdetail.ItemDetailRobot;
 import at.srfg.robogen.itemdetail.ItemDetailWatch;
-import at.srfg.robogen.itemdetail.ItemDetailAlexa;
+import at.srfg.robogen.itemdetail.ItemDetailVector;
 
 /*******************************************************************************
  * An activity representing a single Item detail screen. This
@@ -63,8 +63,8 @@ public class ItemDetailActivity extends AppCompatActivity {
             }
             else if(itemID.equals("3."))
             {
-                arguments.putString(ItemDetailAlexa.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailAlexa.m_sARG_ITEM_ID));
-                ItemDetailAlexa fragment = new ItemDetailAlexa();
+                arguments.putString(ItemDetailVector.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailVector.m_sARG_ITEM_ID));
+                ItemDetailVector fragment = new ItemDetailVector();
                 fragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
             }

@@ -21,7 +21,7 @@ import java.util.List;
 import at.srfg.robogen.itemdetail.ItemDetailBase;
 import at.srfg.robogen.itemdetail.ItemDetailRobot;
 import at.srfg.robogen.itemdetail.ItemDetailWatch;
-import at.srfg.robogen.itemdetail.ItemDetailAlexa;
+import at.srfg.robogen.itemdetail.ItemDetailVector;
 
 /*******************************************************************************
  * An activity representing a list of Items. This activity
@@ -89,19 +89,19 @@ public class ItemListActivity extends AppCompatActivity {
                 Context context = view.getContext();
                 Intent intent = new Intent(context, ItemDetailActivity.class);
 
-                if(item.toString() == "Hugo") {
+                if(item.toString() == "Q.bo One") {
                     intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 1
                     intent.putExtra(ItemDetailRobot.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 1
                 }
-                else if(item.toString() == "Uhren")
+                else if(item.toString() == "FitBit-Uhr")
                 {
                     intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 2
                     intent.putExtra(ItemDetailWatch.m_sARG_ITEM_ID, item.m_sEntryID); // id = 2
                 }
-                else if(item.toString() == "Alexa")
+                else if(item.toString() == "Anki Vector")
                 {
                     intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 3
-                    intent.putExtra(ItemDetailAlexa.m_sARG_ITEM_ID, item.m_sEntryID); // id = 3
+                    intent.putExtra(ItemDetailVector.m_sARG_ITEM_ID, item.m_sEntryID); // id = 3
                 }
                 else
                 {
