@@ -1,4 +1,4 @@
-package at.srfg.robogen.fitnesswatch.fitbit_Common;
+package at.srfg.robogen.fitnesswatch.fitbit_Http;
 
 //import android.support.v4.util.Pair;
 import android.text.TextUtils;

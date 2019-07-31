@@ -1,9 +1,9 @@
-package at.srfg.robogen.fitnesswatch.fitbit_API.loaders;
+package at.srfg.robogen.fitnesswatch.fitbit_API.common.loaders;
 
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationManager;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.Scope;
-import at.srfg.robogen.fitnesswatch.fitbit_Common.BasicHttpRequest;
-import at.srfg.robogen.fitnesswatch.fitbit_Common.BasicHttpResponse;
+import at.srfg.robogen.fitnesswatch.fitbit_Http.BasicHttpRequest;
+import at.srfg.robogen.fitnesswatch.fitbit_Http.BasicHttpResponse;
 
 import android.app.Activity;
 import androidx.loader.content.AsyncTaskLoader;

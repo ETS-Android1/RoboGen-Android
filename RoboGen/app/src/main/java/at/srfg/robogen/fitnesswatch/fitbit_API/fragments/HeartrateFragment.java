@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.loader.content.Loader;
 
 import at.srfg.robogen.R;
-import at.srfg.robogen.fitnesswatch.fitbit_API.loaders.ResourceLoaderResult;
+import at.srfg.robogen.fitnesswatch.fitbit_API.common.loaders.ResourceLoaderResult;
 import at.srfg.robogen.fitnesswatch.fitbit_API.models.heartrate_intraday.ActivitiesHeart;
 import at.srfg.robogen.fitnesswatch.fitbit_API.models.heartrate_intraday.HeartContainer;
 import at.srfg.robogen.fitnesswatch.fitbit_API.models.heartrate_intraday.HeartRateZone;

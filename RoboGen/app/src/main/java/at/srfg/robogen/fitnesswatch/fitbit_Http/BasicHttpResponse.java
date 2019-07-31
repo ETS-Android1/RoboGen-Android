@@ -1,4 +1,4 @@
-package at.srfg.robogen.fitnesswatch.fitbit_Common;
+package at.srfg.robogen.fitnesswatch.fitbit_Http;
 
 import java.io.UnsupportedEncodingException;
 

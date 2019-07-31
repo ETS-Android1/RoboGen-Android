@@ -1,9 +1,9 @@
 package at.srfg.robogen.fitnesswatch.fitbit_API.services;
 
-import at.srfg.robogen.fitnesswatch.fitbit_API.exceptions.MissingScopesException;
-import at.srfg.robogen.fitnesswatch.fitbit_API.exceptions.TokenExpiredException;
-import at.srfg.robogen.fitnesswatch.fitbit_API.loaders.ResourceLoaderFactory;
-import at.srfg.robogen.fitnesswatch.fitbit_API.loaders.ResourceLoaderResult;
+import at.srfg.robogen.fitnesswatch.fitbit_API.common.exceptions.MissingScopesException;
+import at.srfg.robogen.fitnesswatch.fitbit_API.common.exceptions.TokenExpiredException;
+import at.srfg.robogen.fitnesswatch.fitbit_API.common.loaders.ResourceLoaderFactory;
+import at.srfg.robogen.fitnesswatch.fitbit_API.common.loaders.ResourceLoaderResult;
 import at.srfg.robogen.fitnesswatch.fitbit_API.models.user_summary.UserContainer;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.Scope;
 

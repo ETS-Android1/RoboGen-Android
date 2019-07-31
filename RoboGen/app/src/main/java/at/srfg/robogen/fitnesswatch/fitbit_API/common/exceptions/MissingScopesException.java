@@ -1,4 +1,4 @@
-package at.srfg.robogen.fitnesswatch.fitbit_API.exceptions;
+package at.srfg.robogen.fitnesswatch.fitbit_API.common.exceptions;
 
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.Scope;
 import java.util.Collection;

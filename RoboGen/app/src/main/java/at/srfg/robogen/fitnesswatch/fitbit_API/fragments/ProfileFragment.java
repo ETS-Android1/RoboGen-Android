@@ -2,7 +2,7 @@ package at.srfg.robogen.fitnesswatch.fitbit_API.fragments;
 
 
 import at.srfg.robogen.R;
-import at.srfg.robogen.fitnesswatch.fitbit_API.loaders.ResourceLoaderResult;
+import at.srfg.robogen.fitnesswatch.fitbit_API.common.loaders.ResourceLoaderResult;
 import at.srfg.robogen.fitnesswatch.fitbit_API.models.user_summary.User;
 import at.srfg.robogen.fitnesswatch.fitbit_API.models.user_summary.UserContainer;
 import at.srfg.robogen.fitnesswatch.fitbit_API.services.UserService;

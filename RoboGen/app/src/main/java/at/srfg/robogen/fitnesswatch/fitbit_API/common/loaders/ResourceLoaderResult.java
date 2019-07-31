@@ -1,4 +1,4 @@
-package at.srfg.robogen.fitnesswatch.fitbit_API.loaders;
+package at.srfg.robogen.fitnesswatch.fitbit_API.common.loaders;
 
 /**
  * Created by jboggess on 10/17/16.

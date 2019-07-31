@@ -1,7 +1,7 @@
 package at.srfg.robogen.fitnesswatch.fitbit_API.fragments;
 
 import at.srfg.robogen.R;
-import at.srfg.robogen.fitnesswatch.fitbit_API.loaders.ResourceLoaderResult;
+import at.srfg.robogen.fitnesswatch.fitbit_API.common.loaders.ResourceLoaderResult;
 import at.srfg.robogen.fitnesswatch.fitbit_API.models.weight_logs.Weight;
 import at.srfg.robogen.fitnesswatch.fitbit_API.models.weight_logs.WeightLogs;
 import at.srfg.robogen.fitnesswatch.fitbit_API.services.WeightService;

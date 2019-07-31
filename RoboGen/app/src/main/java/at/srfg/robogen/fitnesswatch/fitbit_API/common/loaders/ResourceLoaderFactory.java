@@ -1,4 +1,4 @@
-package at.srfg.robogen.fitnesswatch.fitbit_API.loaders;
+package at.srfg.robogen.fitnesswatch.fitbit_API.common.loaders;
 
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.Scope;
 import android.app.Activity;
