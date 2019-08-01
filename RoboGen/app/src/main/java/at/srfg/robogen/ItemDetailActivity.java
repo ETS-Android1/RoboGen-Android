@@ -91,7 +91,7 @@ public class ItemDetailActivity extends AppCompatActivity {
     }
 
     /*******************************************************************************
-     * !!!!!!!! currently only used for SmartWatch connection !!!!!!!!
+     * used for result handling of activities inside of fragments
      *******************************************************************************/
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
