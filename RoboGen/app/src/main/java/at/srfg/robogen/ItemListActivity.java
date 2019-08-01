@@ -89,16 +89,16 @@ public class ItemListActivity extends AppCompatActivity {
                 Context context = view.getContext();
                 Intent intent = new Intent(context, ItemDetailActivity.class);
 
-                if(item.toString() == "Q.bo One") {
+                if(item.toString() == "Q.bo") {
                     intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 1
                     intent.putExtra(ItemDetailRobot.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 1
                 }
-                else if(item.toString() == "FitBit-Uhr")
+                else if(item.toString() == "FitBit")
                 {
                     intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 2
                     intent.putExtra(ItemDetailWatch.m_sARG_ITEM_ID, item.m_sEntryID); // id = 2
                 }
-                else if(item.toString() == "Anki Vector")
+                else if(item.toString() == "Vector")
                 {
                     intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 3
                     intent.putExtra(ItemDetailVector.m_sARG_ITEM_ID, item.m_sEntryID); // id = 3

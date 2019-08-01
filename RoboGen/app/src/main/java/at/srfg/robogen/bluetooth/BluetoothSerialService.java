@@ -276,7 +276,7 @@ public class BluetoothSerialService {
                     Log.e(TAG, "unable to close() socket during connection failure", e2);
                 }
                 // Start the service over to restart listening mode
-                //BluetoothSerialService.this.start();
+                BluetoothSerialService.this.start();
                 return;
             }
 

@@ -117,5 +117,15 @@ public class ItemDetailActivity extends AppCompatActivity {
                 // Handle other activity results, if needed
             }
         }
+        else if(currentFragment instanceof ItemDetailRobot) {
+
+            /**
+             *  When the bluetooth Search returns with a user selected device to connect to
+             *  we can bind the device with the app by calling BluetoothManager.onScanResult()
+             */
+
+            ItemDetailRobot robotFragment = (ItemDetailRobot)currentFragment;
+            robotFragment.getBluetoothManager().onScanResult(requestCode, resultCode, data);
+        }
     }
 }

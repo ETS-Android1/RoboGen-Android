@@ -40,8 +40,7 @@ public class ItemDetailRobot extends ItemDetailBase {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      ******************************************************************************/
-    public ItemDetailRobot() {
-    }
+    public ItemDetailRobot() {}
 
     /*******************************************************************************
      * creating view for robot detail page
@@ -102,9 +101,9 @@ public class ItemDetailRobot extends ItemDetailBase {
     }
 
     /*******************************************************************************
-     * on result bluetooth search select
-     *******************************************************************************/
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        m_cBluetoothManager.onScanResult(requestCode, resultCode, data);
+     * getter
+     ******************************************************************************/
+    public BluetoothManager getBluetoothManager() {
+        return m_cBluetoothManager;
     }
 }

@@ -19,9 +19,9 @@ public class ItemContent {
 
     static {
         // Add some sample items.
-        addItem(new ItemEntry("1.", "Q.bo One", "Management-Seite für Q.bo One - Roboter", false));
-        addItem(new ItemEntry("2.", "FitBit-Uhr", "Management-Seite für Fitbit Charge 2 - Smart Watches", false));
-        addItem(new ItemEntry("3.", "Anki Vector", "Management-Seite für Anki Vector Roboter", false));
+        addItem(new ItemEntry("1.", "Q.bo", "Management-Seite für Q.bo One - Roboter", false));
+        addItem(new ItemEntry("2.", "FitBit", "Management-Seite für Fitbit Charge 2 - Smart Watches", false));
+        addItem(new ItemEntry("3.", "Vector", "Management-Seite für Anki Vector Roboter", false));
     }
 
     private static void addItem(ItemEntry item) {

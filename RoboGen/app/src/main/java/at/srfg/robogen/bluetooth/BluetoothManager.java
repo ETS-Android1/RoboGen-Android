@@ -64,7 +64,10 @@ public class BluetoothManager {
     {
         m_actParent = act;
         m_ctxParent = ct;
-        m_cDeviceListActivity = new DeviceListActivity();
+
+        // Launch the DeviceListActivity to see devices and do scan
+        Intent serverIntent = new Intent(act, DeviceListActivity.class);
+        act.startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
 
         m_cSerialService = new BluetoothSerialService(m_ctxParent, mHandlerBT);
         m_cBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
