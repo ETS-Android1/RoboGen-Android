@@ -91,8 +91,7 @@ public class BluetoothManager {
                 if (resultCode == Activity.RESULT_OK) {
 
                     // Get the device MAC address
-                    String address = data.getExtras()
-                            .getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+                    String address = data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
 
                     // Get the BluetoothDevice object
                     BluetoothDevice device = m_cBluetoothAdapter.getRemoteDevice(address);
@@ -217,13 +216,13 @@ public class BluetoothManager {
             		//mEmulatorView.write(writeBuf, msg.arg1);
             	}
                 break;
-/*                
+
             case MESSAGE_READ:
-                byte[] readBuf = (byte[]) msg.obj;              
-                mEmulatorView.write(readBuf, msg.arg1);
+                //byte[] readBuf = (byte[]) msg.obj;
+                //mEmulatorView.write(readBuf, msg.arg1);
                 
                 break;
-*/                
+
             case MESSAGE_DEVICE_NAME:
                 // save the connected device's name
                 mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
@@ -231,6 +230,7 @@ public class BluetoothManager {
                                + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
                 break;
             case MESSAGE_TOAST:
+
                 Toast.makeText(m_ctxParent, msg.getData().getString(TOAST),
                                Toast.LENGTH_SHORT).show();
                 break;

@@ -28,6 +28,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.ParcelUuid;
 import android.util.Log;
 
 import at.srfg.robogen.R;
@@ -39,10 +40,13 @@ import at.srfg.robogen.R;
  * thread for performing data transmissions when connected.
  ******************************************************************************/
 public class BluetoothSerialService {
+
     // Debugging
     private static final String TAG = "BluetoothReadService";
     private static final boolean D = true;
-	private static final UUID SerialPortServiceClass_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+
+    // old static UUID -> use this if dynamic UUID from ParcelUuid array is not working
+	//private static final UUID DefaultPortServiceClass_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     // Member fields
     private final BluetoothAdapter m_cAdapter;
@@ -245,10 +249,12 @@ public class BluetoothSerialService {
             mmDevice = device;
             BluetoothSocket tmp = null;
 
-            // Get a BluetoothSocket for a connection with the
-            // given BluetoothDevice
+            // Get a BluetoothSocket for a connection with the given BluetoothDevice
+            // (use static member UUID in case of any socket related problems)
             try {
-                tmp = device.createRfcommSocketToServiceRecord(SerialPortServiceClass_UUID);
+                final ParcelUuid[] uuidArray = device.getUuids();
+                tmp = device.createRfcommSocketToServiceRecord(uuidArray[0].getUuid());
+
             } catch (IOException e) {
                 Log.e(TAG, "create() failed", e);
             }
@@ -276,7 +282,7 @@ public class BluetoothSerialService {
                     Log.e(TAG, "unable to close() socket during connection failure", e2);
                 }
                 // Start the service over to restart listening mode
-                BluetoothSerialService.this.start();
+                //BluetoothSerialService.this.start();
                 return;
             }
 
