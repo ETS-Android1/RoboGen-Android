@@ -10,6 +10,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationManager;
+import at.srfg.robogen.itemdetail.ItemDetailAlexa;
 import at.srfg.robogen.itemdetail.ItemDetailBase;
 import at.srfg.robogen.itemdetail.ItemDetailRobot;
 import at.srfg.robogen.itemdetail.ItemDetailWatch;
@@ -47,21 +48,28 @@ public class ItemDetailActivity extends AppCompatActivity {
             Bundle arguments = new Bundle();
             String itemID = getIntent().getStringExtra(ItemDetailBase.m_sARG_ITEM_ID);
 
-            if(itemID.equals("1."))
+            if(itemID.equals("1.")) // Q.bo robot
             {
                 arguments.putString(ItemDetailRobot.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailRobot.m_sARG_ITEM_ID));
                 ItemDetailRobot fragment = new ItemDetailRobot();
                 fragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
             }
-            else if(itemID.equals("2."))
+            else if(itemID.equals("2.")) // FitBit watch
             {
                 arguments.putString(ItemDetailWatch.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailWatch.m_sARG_ITEM_ID));
                 ItemDetailWatch fragment = new ItemDetailWatch();
                 fragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
             }
-            else if(itemID.equals("3."))
+            else if(itemID.equals("3.")) // Alexa
+            {
+                arguments.putString(ItemDetailAlexa.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailAlexa.m_sARG_ITEM_ID));
+                ItemDetailAlexa fragment = new ItemDetailAlexa();
+                fragment.setArguments(arguments);
+                getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
+            }
+            else if(itemID.equals("4.")) // Vector
             {
                 arguments.putString(ItemDetailVector.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailVector.m_sARG_ITEM_ID));
                 ItemDetailVector fragment = new ItemDetailVector();

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import at.srfg.robogen.itemdetail.ItemDetailAlexa;
 import at.srfg.robogen.itemdetail.ItemDetailBase;
 import at.srfg.robogen.itemdetail.ItemDetailRobot;
 import at.srfg.robogen.itemdetail.ItemDetailWatch;
@@ -97,6 +98,11 @@ public class ItemListActivity extends AppCompatActivity {
                 {
                     intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 2
                     intent.putExtra(ItemDetailWatch.m_sARG_ITEM_ID, item.m_sEntryID); // id = 2
+                }
+                else if(item.toString() == "Alexa")
+                {
+                    intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 3
+                    intent.putExtra(ItemDetailAlexa.m_sARG_ITEM_ID, item.m_sEntryID); // id = 3
                 }
                 else if(item.toString() == "Vector")
                 {
