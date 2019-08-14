@@ -13,7 +13,7 @@ import com.amazonaws.mobileconnectors.lambdainvoker.LambdaFunctionException;
 import com.amazonaws.mobileconnectors.lambdainvoker.LambdaInvokerFactory;
 import com.amazonaws.regions.Regions;
 
-import at.srfg.robogen.alexa.data.UserInfos;
+import at.srfg.robogen.alexa.data.AndroidIdentification;
 
 // allow function invoke access in 'LambdaAndroidAccess' - Permission
 // https://console.aws.amazon.com/iam/home?region=us-east-1#/policies
@@ -39,7 +39,7 @@ public class AlexaManager {
     /*******************************************************************************
      * will initialize the lambda function invocation
      ******************************************************************************/
-    public void InitAlexaInvocation()
+    public void InitAlexaSkillInvocation()
     {
         // Create an instance of CognitoCachingCredentialsProvider
         CognitoCachingCredentialsProvider credentialsProvider =
@@ -54,21 +54,21 @@ public class AlexaManager {
         final LambdaInterface lambdaInterface = factory.build(LambdaInterface.class);
 
         // Create an instance of the POJO to transfer data
-        final UserInfos nameInfo = new UserInfos("John", "Doe");
+        final AndroidIdentification androidID = new AndroidIdentification("Android", "RoboGen");
 
         // The Lambda function invocation results in a network call
         // Make sure it is not called from the main thread
-        new AsyncTask<UserInfos, Void, String>() {
+        new AsyncTask<AndroidIdentification, Void, String>() {
 
             @Override
-            protected String doInBackground(UserInfos... params) {
+            protected String doInBackground(AndroidIdentification... params) {
 
                 // invoke "echo" method. In case it fails, it will throw a LambdaFunctionException
                 try {
-                    return lambdaInterface.echo(params[0]);
+                    return lambdaInterface.Chatbot_Stress_Exercise(params[0]);
                 }
                 catch (LambdaFunctionException lfe) {
-                    Log.e(TAG, "Failed to invoke echo", lfe);
+                    Log.e(TAG, "Failed to invoke chatbot skill", lfe);
                     return null;
                 }
             }
@@ -80,6 +80,6 @@ public class AlexaManager {
                     Toast.makeText(m_actParent, result, Toast.LENGTH_LONG).show();
                 }
             }
-        }.execute(nameInfo);
+        }.execute(androidID);
     }
 }

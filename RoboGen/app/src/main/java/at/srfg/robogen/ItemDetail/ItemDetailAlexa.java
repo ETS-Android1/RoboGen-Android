@@ -11,13 +11,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import at.srfg.robogen.R;
 import at.srfg.robogen.alexa.AlexaManager;
-import at.srfg.robogen.fitnesswatch.FitBitManager;
 
 public class ItemDetailAlexa extends ItemDetailBase {
 
     private AlexaManager mAlexaManager;
 
-    private final String m_sStartAlexa = "Test-Schritt) Verbindung aufbauen mit Alexa:";
+    private final String m_sStartAlexa = "Schritt 1) Eine Verbindung aufbauen mit AWS-Lambda Backend-Server. "+
+                                         "Sobald der Server zur Verfügung steht, können die Alexa-Entscheidungsbäume verwendet werden:";
     public FloatingActionButton m_btnStartAlexa;
 
     /*******************************************************************************
@@ -54,7 +54,7 @@ public class ItemDetailAlexa extends ItemDetailBase {
 
                 makeSnackbarMessage(view, "Starte Alexa-Kommunikation..");
 
-                mAlexaManager.InitAlexaInvocation();
+                mAlexaManager.InitAlexaSkillInvocation();
 
                 mItem.m_bEntryIsConnected = !mItem.m_bEntryIsConnected;
             }
