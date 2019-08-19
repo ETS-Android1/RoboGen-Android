@@ -227,7 +227,7 @@ public class BluetoothManager {
 
             case MESSAGE_READ:
                 byte[] readBuf = (byte[]) msg.obj;
-                String text = RECEIVE_MSG_PREFIX + readBuf.toString();
+                String text = RECEIVE_MSG_PREFIX + ASCII2String(readBuf);
                 m_cReceiverTextView.setText(text);
                 
                 break;
@@ -245,8 +245,27 @@ public class BluetoothManager {
                 break;
             }
         }
-    };    
+    };
 
-    
+    /*******************************************************************************
+     * helper function to convert hex based byte array to readable string
+     ******************************************************************************/
+    private String ASCII2String(byte input[])
+    {
+        // create integer array from byte array
+        int[] num = new int[input.length];
+        for (int i = 0; i < input.length; i++)
+        {
+            num[i] = input[i] & 0xff; // Range 0 to 255, not -128 to 127
+        }
 
+        // create readable string from byte array
+        String str = "";
+        for(int i: num){
+            if(i != 0) {
+                str += Character.toString((char) i);
+            }
+        }
+        return str;
+    }
 }
