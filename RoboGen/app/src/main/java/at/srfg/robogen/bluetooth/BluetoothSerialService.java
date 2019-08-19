@@ -343,7 +343,7 @@ public class BluetoothSerialService {
                     // Read from the InputStream
                     bytes = mmInStream.read(buffer);
 
-                    if (D) Log.d(TAG, buffer.toString()); // TODO: instead of: mEmulatorView.write(buffer, bytes);
+                    if (D) Log.d(TAG, buffer.toString());
 
                     // Send the obtained bytes to the UI Activity
                     m_cHandler.obtainMessage(BluetoothManager.MESSAGE_READ, bytes, -1, buffer).sendToTarget(); // TODO: needed?

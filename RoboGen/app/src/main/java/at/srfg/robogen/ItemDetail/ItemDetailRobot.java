@@ -73,7 +73,7 @@ public class ItemDetailRobot extends ItemDetailBase {
 
         // init bluetooth manager
         Activity activity = this.getActivity();
-        m_cBluetoothManager = new BluetoothManager(activity, activity.getBaseContext());
+        m_cBluetoothManager = new BluetoothManager(activity, activity.getBaseContext(), rootView);
         m_cBluetoothManager.RequestExtraPermissionsForBluetooth(activity);
 
 

@@ -12,6 +12,8 @@ import android.content.DialogInterface;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -23,6 +25,7 @@ import androidx.core.app.ActivityCompat;
 public class BluetoothManager {
 
     private static final String QBO_MAC_ADDRESS = "B8:27:EB:8E:B5:18";
+    private static final String RECEIVE_MSG_PREFIX = "Q.bo-Antwort: ";
 
     // Key names received from the BluetoothChatService Handler
     public static final String DEVICE_NAME = "device_name";
@@ -51,6 +54,8 @@ public class BluetoothManager {
     private Context m_ctxParent = null;
     private boolean m_bHasExtraPermissions = false;
 
+    private TextView m_cReceiverTextView = null;
+
     /**
      * logging and debugging
      */
@@ -60,10 +65,13 @@ public class BluetoothManager {
     /*******************************************************************************
      * CTOR init with Activity and Context information of caller/user class
      ******************************************************************************/
-    public BluetoothManager(Activity act, Context ct)
+    public BluetoothManager(Activity act, Context ct, final View rootView)
     {
         m_actParent = act;
         m_ctxParent = ct;
+
+        m_cReceiverTextView = (TextView) rootView.findViewById(R.id.receiverText);
+        m_cReceiverTextView.setText(RECEIVE_MSG_PREFIX + "keine");
 
         // Launch the DeviceListActivity to see devices and do scan
         Intent serverIntent = new Intent(act, DeviceListActivity.class);
@@ -218,8 +226,9 @@ public class BluetoothManager {
                 break;
 
             case MESSAGE_READ:
-                //byte[] readBuf = (byte[]) msg.obj;
-                //mEmulatorView.write(readBuf, msg.arg1);
+                byte[] readBuf = (byte[]) msg.obj;
+                String text = RECEIVE_MSG_PREFIX + readBuf.toString();
+                m_cReceiverTextView.setText(text);
                 
                 break;
 
