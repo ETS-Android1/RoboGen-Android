@@ -16,9 +16,11 @@ public class ItemDetailAlexa extends ItemDetailBase {
 
     private AlexaManager mAlexaManager;
 
-    private final String m_sStartAlexa = "Schritt 1) Eine Verbindung aufbauen mit AWS-Lambda Backend-Server. "+
-                                         "Sobald der Server zur Verfügung steht, können die Alexa-Entscheidungsbäume verwendet werden:";
+    private final String m_sStartAlexa = "Verbindung aufbauen mit Lambda-Server um gespeicherte Nutzerdaten anzuzeigen " +
+                                         "(Daten können im Alexa-Entscheidungsbäume Skill aufgenommen oder gelöscht werden):";
     public FloatingActionButton m_btnStartAlexa;
+
+    private final String m_sDataAlexa = "Die über den Skill erhobenen Nutzerdaten können der folgenden Liste entnommen werden:";
 
     /*******************************************************************************
      * creating view for anki alexa detail page
@@ -46,6 +48,7 @@ public class ItemDetailAlexa extends ItemDetailBase {
 
         ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.m_sEntryHeader);
         ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(m_sStartAlexa);
+        ((TextView) rootView.findViewById(R.id.item_detail_data)).setText(m_sDataAlexa);
 
         m_btnStartAlexa = (FloatingActionButton) rootView.findViewById(R.id.bt_start);
         m_btnStartAlexa.setOnClickListener(new View.OnClickListener() {
