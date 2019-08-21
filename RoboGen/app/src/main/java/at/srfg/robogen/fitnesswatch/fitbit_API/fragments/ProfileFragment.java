@@ -5,10 +5,13 @@ import at.srfg.robogen.R;
 import at.srfg.robogen.fitnesswatch.fitbit_API.common.loaders.ResourceLoaderResult;
 import at.srfg.robogen.fitnesswatch.fitbit_API.models.user_summary.User;
 import at.srfg.robogen.fitnesswatch.fitbit_API.models.user_summary.UserContainer;
+import at.srfg.robogen.fitnesswatch.fitbit_API.models.weight_logs.Weight;
 import at.srfg.robogen.fitnesswatch.fitbit_API.services.UserService;
 
 import androidx.loader.content.Loader;
 import android.os.Bundle;
+
+import java.util.List;
 
 
 /*******************************************************************************
@@ -44,15 +47,15 @@ public class ProfileFragment extends InfoFragment<UserContainer> {
      * bindProfileInfo
      ******************************************************************************/
     public void bindProfileInfo(User user) {
-        StringBuilder stringBuilder = new StringBuilder();
-        printKeys(stringBuilder, user);
 
-        if(stringBuilder.length() == 0) { // Keine Daten
-            stringBuilder.append("<b>&nbsp;&nbsp;</b>");
-            stringBuilder.append(getString(R.string.no_data));
-            stringBuilder.append("<br><br>");
+        clearList();
+
+        // if no data, inform user
+        if (user == null) {
+            addTextToList(getString(R.string.no_data));
         }
 
-        setMainText(stringBuilder.toString());
+        StringBuilder stringBuilder = new StringBuilder();
+        printKeys(stringBuilder, user);
     }
 }

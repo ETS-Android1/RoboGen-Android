@@ -44,49 +44,32 @@ public class HeartrateFragment extends InfoFragment<HeartContainer> {
      ******************************************************************************/
     public void bindHeartInfo(HeartContainer heartActivities) {
 
-        StringBuilder stringBuilder = new StringBuilder();
+        clearList();
 
+        // if no data, inform user
         ActivitiesHeart[] activitiesHeart = heartActivities.getActivityHeart();
+        if (activitiesHeart.length == 0) {
+            addTextToList(getString(R.string.no_data));
+        }
+
+        // run through data and create list entries
         for(ActivitiesHeart act: activitiesHeart)
         {
             final HeartRateZone[] heartRateZones = act.getValue().getHeartRateZones();
             for(HeartRateZone zone: heartRateZones)
             {
-                stringBuilder.append("<b>CaloriesOut:</b> ");
-                stringBuilder.append(zone.getCaloriesOut());
-                stringBuilder.append("<br>");
+                String listEntry =
+                        "Kalorien (Out) = " + zone.getCaloriesOut() + "\n" +
+                        "Maxima = " + zone.getMax()+ "\n" +
+                        "Minima = " + zone.getMin() + "\n" +
+                        "Minuten = " + zone.getMinutes() + "\n" +
+                        "Name/Art/Typ = " + zone.getName() + "\n";
 
-                stringBuilder.append("<b>max:</b> ");
-                stringBuilder.append(zone.getMax());
-                stringBuilder.append("<br>");
-
-                stringBuilder.append("<b>min:</b> ");
-                stringBuilder.append(zone.getMin());
-                stringBuilder.append("<br>");
-
-                stringBuilder.append("<b>minutes:</b> ");
-                stringBuilder.append(zone.getMinutes());
-                stringBuilder.append("<br>");
-
-                stringBuilder.append("<b>name</b> ");
-                stringBuilder.append(zone.getName());
-                stringBuilder.append("<br><hr>");
+                addTextToList(listEntry);
             }
         }
 
         // TODO: response currently does not include Intraday data -> permissions requested by FitBit Forum
         //ActivitiesHeartIntra activitiesHeartIntra = heartActivities.getActivityHeartIntra();
-
-
-        if (stringBuilder.length() > 0) {
-            stringBuilder.replace(stringBuilder.length() - 8, stringBuilder.length(), "");
-        }
-        else { // Keine Daten
-            stringBuilder.append("<b>&nbsp;&nbsp;</b>");
-            stringBuilder.append(getString(R.string.no_data));
-            stringBuilder.append("<br><br>");
-        }
-
-        setMainText(stringBuilder.toString());
     }
 }

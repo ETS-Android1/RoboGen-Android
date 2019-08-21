@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
@@ -35,6 +37,8 @@ public abstract class InfoFragment<T> extends Fragment
 
     private TextView m_viewTitleText;
     private WebView m_viewWebContent;
+    private ListView m_viewListContent;
+    private ArrayAdapter<String> m_cListContentArrayAdapter;
     protected final String TAG = getClass().getSimpleName();
 
     /*******************************************************************************
@@ -45,7 +49,14 @@ public abstract class InfoFragment<T> extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         final View rootView = inflater.inflate(R.layout.fitbit_fragment_info, container, false);
+
+        m_cListContentArrayAdapter = new ArrayAdapter<String>(rootView.getContext(), R.layout.fitbit_datalist_entry);
+        m_viewListContent = rootView.findViewById(R.id.fitbit_listview);
+        m_viewListContent.setAdapter(m_cListContentArrayAdapter);
+
         m_viewWebContent = rootView.findViewById(R.id.layout_webview);
+        m_viewWebContent.bringToFront();
+
         m_viewTitleText = rootView.findViewById(R.id.layout_title_text);
         m_viewTitleText.setText(getActivity().getString(getTitleResourceId()));
         return rootView;
@@ -100,18 +111,23 @@ public abstract class InfoFragment<T> extends Fragment
                         || string.endsWith("png")));
     }
 
-    protected void setMainText(String text) {
+    private void setMainText(String text) {
         m_viewWebContent.loadData(text, "text/html", "UTF-8");
     }
+
+    protected void addTextToList(String text) {
+        m_cListContentArrayAdapter.add(text);
+    }
+    protected void clearList() {m_cListContentArrayAdapter.clear();}
 
     /*******************************************************************************
      * printKeys function
      * will run through every entry of JsonObject and call print helpers
      ******************************************************************************/
     protected void printKeys(StringBuilder stringBuilder, Object object) {
-        JSONObject jsonObject = null;
+
         try {
-            jsonObject = new JSONObject(new Gson().toJson(object));
+            JSONObject jsonObject = new JSONObject(new Gson().toJson(object));
             Iterator<String> keys = jsonObject.keys();
 
             while (keys.hasNext()) {
@@ -121,53 +137,33 @@ public abstract class InfoFragment<T> extends Fragment
                 if (!(value instanceof JSONObject) && !(value instanceof JSONArray)) {
 
                     if (isImageUrl(value.toString())) {
-                        printSingleImageReversed(stringBuilder, key, value);
+                        printSingleImageReversed(key, value);
                     }
                     else if (value instanceof Number) {
-                        printSingleKey(stringBuilder, key);
-                        stringBuilder.append(formatNumber((Number) value));
-                        stringBuilder.append("<br/>");
+                        stringBuilder.append( key + " = " + formatNumber((Number) value)  + "\n");
                     }
                     else {
-                        printSingleKey(stringBuilder, key);
-                        stringBuilder.append(value.toString());
-                        stringBuilder.append("<br/>");
+                        stringBuilder.append(key + " = " + value.toString() + "\n");
                     }
                 }
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 
-    /*******************************************************************************
-     * print a simple value's key
-     ******************************************************************************/
-    private void printSingleKey(StringBuilder stringBuilder, String key)
-    {
-        stringBuilder.append("&nbsp;&nbsp;&nbsp;&nbsp;<b>");
-        stringBuilder.append(key);
-        stringBuilder.append(":</b>&nbsp;");
+            addTextToList(stringBuilder.toString());
+
+        } catch (JSONException e) { e.printStackTrace(); }
     }
 
     /*******************************************************************************
      * print an image reversed at the beginning of the stringbuilder
      * (to ensure that images are always printed at the beginning)
      ******************************************************************************/
-    private void printSingleImageReversed(StringBuilder stringBuilder, String key, Object value)
+    private void printSingleImageReversed(String key, Object value)
     {
-        // avatar currently is the last image we get from JSON object
-        // so if entry is avatar: stop here and add separator line
-        if(key.equals("avatar")) {
-            stringBuilder.insert(0, "<br/><hr><br/>");
-        }
-
+        StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.insert(0, "\" width=\"150\" height=\"150\"></div>");
         stringBuilder.insert(0, value.toString());
         stringBuilder.insert(0, "<div style=\"display: inline-block;\"><img src=\"");
 
-        stringBuilder.insert(0, ":</b>&nbsp;");
-        stringBuilder.insert(0, key);
-        stringBuilder.insert(0, "&nbsp;&nbsp;&nbsp;&nbsp;<b>");
+        setMainText(stringBuilder.toString());
     }
 }

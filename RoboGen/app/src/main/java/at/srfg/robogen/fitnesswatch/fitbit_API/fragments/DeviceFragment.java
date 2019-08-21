@@ -43,35 +43,24 @@ public class DeviceFragment extends InfoFragment<Device[]> {
      * bindDevices
      ******************************************************************************/
     public void bindDevices(Device[] devices) {
-        StringBuilder stringBuilder = new StringBuilder();
 
+        clearList();
+
+        // if no data, inform user
+        if (devices.length == 0) {
+            addTextToList(getString(R.string.no_data));
+        }
+
+        // run through data and create list entries
         for (Device device : devices) {
-            stringBuilder.append("<b>FITBIT ");
-            stringBuilder.append(device.getDeviceVersion().toUpperCase());
-            stringBuilder.append("&trade;</b><br>");
 
-            stringBuilder.append("<b>&nbsp;&nbsp;Type: </b>");
-            stringBuilder.append(device.getType().toLowerCase());
-            stringBuilder.append("<br>");
+            String listEntry =
+                    "Geräte-Name = " + device.getDeviceVersion().toUpperCase() + "\n" +
+                    "Geräte-Typ = " + device.getType().toLowerCase() + "\n" +
+                    "Letzer Sync = " + device.getLastSyncTime() + "\n" +
+                    "Batterie-Level = " + device.getBattery() + "\n";
 
-            stringBuilder.append("<b>&nbsp;&nbsp;Last Sync: </b>");
-            stringBuilder.append(device.getLastSyncTime());
-            stringBuilder.append("<br>");
-
-            stringBuilder.append("<b>&nbsp;&nbsp;Battery Level: </b>");
-            stringBuilder.append(device.getBattery());
-            stringBuilder.append("<br><br><hr>");
+            addTextToList(listEntry);
         }
-
-        if (stringBuilder.length() > 0) {
-            stringBuilder.replace(stringBuilder.length() - 8, stringBuilder.length(), "");
-        }
-        else { // Keine Daten
-            stringBuilder.append("<b>&nbsp;&nbsp;</b>");
-            stringBuilder.append(getString(R.string.no_data));
-            stringBuilder.append("<br><br>");
-        }
-
-        setMainText(stringBuilder.toString());
     }
 }

@@ -28,15 +28,6 @@
         app:rippleColor="@color/cardview_dark_background"
         app:backgroundTint= "@color/colorPrimary" />
 
-    <!--
-    <ProgressBar
-        android:id="@+id/data_progressBar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"/>
-     -->
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

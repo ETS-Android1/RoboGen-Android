@@ -61,53 +61,28 @@ public class WeightLogFragment extends InfoFragment<WeightLogs> {
      ******************************************************************************/
     public void bindWeightLogs(WeightLogs weightLogs) {
 
-        StringBuilder stringBuilder = new StringBuilder();
-        List<Weight> weights = weightLogs.getWeight();
+        clearList();
 
+        // if no data, inform user
+        List<Weight> weights = weightLogs.getWeight();
+        if (weights.size() == 0) {
+            addTextToList(getString(R.string.no_data));
+        }
+
+        // run through data and create list entries
         for (Weight weight : weights) {
 
-            stringBuilder.append("<b>&nbsp;&nbsp;BMI: </b>");
-            stringBuilder.append(weight.getBmi());
-            stringBuilder.append("<br>");
+            String listEntry =
+                    "BMI = " + weight.getBmi() + "\n" +
+                    "Datum = " + weight.getDate() + "\n" +
+                    "Datumszeit = " + weight.getDateTime() + "\n" +
+                    "Fat = " + weight.getFat() + "\n" +
+                    "LogID = " + weight.getLogId() + "\n" +
+                    "Datenquelle = " + weight.getSource() + "\n" +
+                    "Uhrzeit = " + weight.getTime() + "\n" +
+                    "Gewicht = " + weight.getWeight().doubleValue() + "\n" ;
 
-            stringBuilder.append("<b>&nbsp;&nbsp;Date: </b>");
-            stringBuilder.append(weight.getDate());
-            stringBuilder.append("<br>");
-
-            stringBuilder.append("<b>&nbsp;&nbsp;DateTime: </b>");
-            stringBuilder.append(weight.getDateTime());
-            stringBuilder.append("<br>");
-
-            stringBuilder.append("<b>&nbsp;&nbsp;Fat: </b>");
-            stringBuilder.append(weight.getFat());
-            stringBuilder.append("<br>");
-
-            stringBuilder.append("<b>&nbsp;&nbsp;LogID: </b>");
-            stringBuilder.append(weight.getLogId());
-            stringBuilder.append("<br>");
-
-            stringBuilder.append("<b>&nbsp;&nbsp;Source: </b>");
-            stringBuilder.append(weight.getSource());
-            stringBuilder.append("<br>");
-
-            stringBuilder.append("<b>&nbsp;&nbsp;Time: </b>");
-            stringBuilder.append(weight.getTime());
-            stringBuilder.append("<br>");
-
-            stringBuilder.append("<b>&nbsp;&nbsp;Weight: </b>");
-            stringBuilder.append(weight.getWeight().doubleValue());
-            stringBuilder.append("<br><hr>");
+            addTextToList(listEntry);
         }
-
-        if (stringBuilder.length() > 0) {
-            stringBuilder.replace(stringBuilder.length() - 8, stringBuilder.length(), "");
-        }
-        else { // Keine Daten
-            stringBuilder.append("<b>&nbsp;&nbsp;</b>");
-            stringBuilder.append(getString(R.string.no_data));
-            stringBuilder.append("<br><br>");
-        }
-
-        setMainText(stringBuilder.toString());
     }
 }

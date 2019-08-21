@@ -48,20 +48,17 @@ public class ActivitiesFragment extends InfoFragment<DailyActivitySummary> {
      * bindActivityData
      ******************************************************************************/
     public void bindActivityData(DailyActivitySummary dailyActivitySummary) {
-        StringBuilder stringBuilder = new StringBuilder();
+
+        clearList();
 
         Summary summary = dailyActivitySummary.getSummary();
+        StringBuilder stringBuilderSummary = new StringBuilder();
+        stringBuilderSummary.append("Heute \n");
+        printKeys(stringBuilderSummary, summary);
+
         Goals goals = dailyActivitySummary.getGoals();
-
-        stringBuilder.append("<b>TODAY</b> ");
-        stringBuilder.append("<br />");
-        printKeys(stringBuilder, summary);
-
-        stringBuilder.append("<br /><br /><hr>");
-        stringBuilder.append("<b>GOALS</b> ");
-        stringBuilder.append("<br />");
-        printKeys(stringBuilder, goals);
-
-        setMainText(stringBuilder.toString());
+        StringBuilder stringBuilderGoals = new StringBuilder();
+        stringBuilderGoals.append("Ziele \n");
+        printKeys(stringBuilderGoals, goals);
     }
 }
