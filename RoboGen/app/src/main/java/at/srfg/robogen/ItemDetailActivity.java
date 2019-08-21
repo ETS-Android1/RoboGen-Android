@@ -36,11 +36,11 @@ public class ItemDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
-        // Show the Up button in the action bar.
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        // Show the Up button in the action bar (reuse if back-arrow ever needed again)
+        //ActionBar actionBar = getSupportActionBar();
+        //if (actionBar != null) {
+            //actionBar.setDisplayHomeAsUpEnabled(true);
+        //}
 
         // Create the detail fragment and add it to the activity using a fragment transaction.
         if (savedInstanceState == null) {

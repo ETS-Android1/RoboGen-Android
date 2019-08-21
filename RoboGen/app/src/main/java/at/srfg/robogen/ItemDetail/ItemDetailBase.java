@@ -3,7 +3,6 @@ package at.srfg.robogen.itemdetail;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;

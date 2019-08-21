@@ -9,7 +9,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/robogen_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:screenOrientation="landscape">
 
         <meta-data
             android:name="at.srfg.robogen.fitnesswatch.CLIENT_ID"
@@ -21,7 +22,8 @@
         <activity
             android:name=".ItemListActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,22 +34,28 @@
             android:name=".ItemDetailActivity"
             android:label="@string/title_item_detail"
             android:parentActivityName=".ItemListActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="landscape">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="at.srfg.robogen.ItemListActivity" />
         </activity>
-        <activity android:name=".bluetooth.DeviceListActivity"
+        <activity
+            android:name=".bluetooth.DeviceListActivity"
             android:label="@string/select_device"
             android:theme="@android:style/Theme.Dialog"
-            android:configChanges="orientation|keyboardHidden">
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape">
         </activity>
         <activity
             android:name="at.srfg.robogen.fitnesswatch.fitbit_Auth.LoginActivity"
-            android:theme="@style/Theme.Fitbit.Teal">
+            android:theme="@style/Theme.Fitbit.Teal"
+            android:screenOrientation="landscape">
         </activity>
-        <activity android:name="at.srfg.robogen.fitnesswatch.UserDataActivity"
-            android:theme="@style/AppTheme">
+        <activity
+            android:name="at.srfg.robogen.fitnesswatch.UserDataActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="landscape">
         </activity>
     </application>
 
