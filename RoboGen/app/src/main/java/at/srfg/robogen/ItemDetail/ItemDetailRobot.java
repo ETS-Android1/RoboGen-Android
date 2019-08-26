@@ -37,6 +37,7 @@ public class ItemDetailRobot extends ItemDetailBase {
     public FloatingActionButton m_btnSendRobot_Code1;
     public FloatingActionButton m_btnSendRobot_Code2;
     public FloatingActionButton m_btnSendRobot_Code3;
+    public FloatingActionButton m_btnSendRobot_Code4;
     public FloatingActionButton m_btnSendRobot_Quit;
 
     /*******************************************************************************
@@ -111,6 +112,14 @@ public class ItemDetailRobot extends ItemDetailBase {
             public void onClick(View view) {
 
                 SendSingleByteToDevice(view, (byte) 3);
+            }
+        });
+
+        m_btnSendRobot_Code4 = (FloatingActionButton) rootView.findViewById(R.id.bt_send_code4);
+        m_btnSendRobot_Code4.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+
+                SendSingleByteToDevice(view, (byte) 4);
             }
         });
 
