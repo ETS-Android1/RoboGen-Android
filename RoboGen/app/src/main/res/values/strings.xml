@@ -46,6 +46,7 @@
     <string name="weight_info">Gewicht-Infos</string>
     <string name="devices_info">Geräte-Infos</string>
     <string name="heartrate_info">Herzrate-Infos</string>
+    <string name="sleep_info">Schlaf-Infos</string>
     <string name="login_title">Login</string>
     <string name="missing_scopes_error">Fehler beim Login. Folgende Scopes fehlen: </string>
     <string name="login_dismissed">Login-Versuch abgebrochen oder keine Scopes ausgewählt</string>

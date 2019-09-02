@@ -7,8 +7,6 @@ import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationManager;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.ClientCredentials;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.Scope;
 
-import static at.srfg.robogen.fitnesswatch.fitbit_Auth.Scope.activity;
-
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -65,7 +63,7 @@ public class FitbitAuthApplication extends Application {
                     .setTokenExpiresIn(2592000L) // 30 days
                     .setBeforeLoginActivity(new Intent(context, mainActivityClass))
                     .addRequiredScopes(Scope.profile, Scope.settings)
-                    .addOptionalScopes(Scope.activity, Scope.weight, Scope.heartrate)
+                    .addOptionalScopes(Scope.activity, Scope.weight, Scope.heartrate, Scope.sleep)
                     .setLogoutOnAuthFailure(true)
                     .build();
 

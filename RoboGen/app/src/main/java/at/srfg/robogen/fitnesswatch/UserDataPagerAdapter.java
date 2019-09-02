@@ -1,5 +1,6 @@
 package at.srfg.robogen.fitnesswatch;
 
+import at.srfg.robogen.fitnesswatch.fitbit_API.fragments.SleepFragment;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationManager;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.Scope;
 import at.srfg.robogen.fitnesswatch.fitbit_API.fragments.ActivitiesFragment;
@@ -45,6 +46,9 @@ public class UserDataPagerAdapter extends FragmentPagerAdapter {
         }
         if (containsScope(Scope.heartrate)) {
             m_listFragments.add(new HeartrateFragment());
+        }
+        if (containsScope(Scope.sleep)) {
+            m_listFragments.add(new SleepFragment());
         }
     }
 
