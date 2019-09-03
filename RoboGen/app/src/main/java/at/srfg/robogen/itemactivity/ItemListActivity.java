@@ -1,4 +1,4 @@
-package at.srfg.robogen;
+package at.srfg.robogen.itemactivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import at.srfg.robogen.itemcontent.ItemContent;
+import at.srfg.robogen.R;
 import at.srfg.robogen.itemdetail.ItemDetailAlexa;
 import at.srfg.robogen.itemdetail.ItemDetailBase;
 import at.srfg.robogen.itemdetail.ItemDetailRobot;

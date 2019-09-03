@@ -10,7 +10,7 @@
     android:layout_marginBottom="16dp"
     android:baselineAligned="false"
     android:orientation="vertical"
-    tools:context=".ItemListActivity">
+    tools:context=".itemactivity.ItemListActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -25,7 +25,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context="ItemListActivity"
+        tools:context=".itemactivity.ItemListActivity"
         tools:listitem="@layout/main_itemlist_content"/>
 
 </LinearLayout>

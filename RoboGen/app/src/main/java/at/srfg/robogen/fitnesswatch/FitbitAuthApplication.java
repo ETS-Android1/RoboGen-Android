@@ -1,6 +1,6 @@
 package at.srfg.robogen.fitnesswatch;
 
-import at.srfg.robogen.ItemDetailActivity;
+import at.srfg.robogen.itemactivity.ItemDetailActivity;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationConfiguration;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationConfigurationBuilder;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationManager;

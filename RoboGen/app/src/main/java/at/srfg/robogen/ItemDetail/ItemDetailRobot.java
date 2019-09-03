@@ -1,7 +1,5 @@
 package at.srfg.robogen.itemdetail;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -11,9 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import at.srfg.robogen.ItemDetailActivity;
-import at.srfg.robogen.ItemListActivity;
+import at.srfg.robogen.itemactivity.ItemDetailActivity;
+import at.srfg.robogen.itemactivity.ItemListActivity;
 import at.srfg.robogen.R;
+import at.srfg.robogen.RoboGen_App;
 import at.srfg.robogen.bluetooth.BluetoothManager;
 
 /*******************************************************************************
@@ -24,7 +23,7 @@ import at.srfg.robogen.bluetooth.BluetoothManager;
  ******************************************************************************/
 public class ItemDetailRobot extends ItemDetailBase {
 
-    private BluetoothManager m_cBluetoothManager = null;
+    private RoboGen_App m_cRoboGenApp;
 
     private final String m_sConnectRobot = "Schritt 1) Verbindung aufbauen mit Q.Bo One via Bluetooth. " +
                                    "Das Gerät muss zuerst gekoppelt werden und dann verbunden. " +
@@ -54,7 +53,9 @@ public class ItemDetailRobot extends ItemDetailBase {
             Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.main_itemdetail_robot, container, false);
 
-        if (mItem != null) {
+        if (mItem != null)
+        {
+            m_cRoboGenApp = ((RoboGen_App)getActivity().getApplication());
             initGUIComponents(rootView);
         }
 
@@ -73,9 +74,7 @@ public class ItemDetailRobot extends ItemDetailBase {
         ((TextView) rootView.findViewById(R.id.item_detail_text_3)).setText(m_sQuitRobot);
 
         // init bluetooth manager
-        Activity activity = this.getActivity();
-        m_cBluetoothManager = new BluetoothManager(activity, activity.getBaseContext(), rootView);
-        m_cBluetoothManager.RequestExtraPermissionsForBluetooth(activity);
+        m_cRoboGenApp.getRoboGenManager().InitBlueToothManager(this.getActivity(), rootView);
 
 
         // init bluetooth buttons
@@ -85,7 +84,7 @@ public class ItemDetailRobot extends ItemDetailBase {
             public void onClick(View view) {
 
                 makeSnackbarMessage(view, "Prüfung auf vorhandene Bluetooth-Verbindung..");
-                m_cBluetoothManager.doConnect();
+                m_cRoboGenApp.getRoboGenManager().BlueToothConnect();
 
                 // set icon to connected
                 mItem.m_bEntryIsConnected = !mItem.m_bEntryIsConnected;
@@ -138,16 +137,13 @@ public class ItemDetailRobot extends ItemDetailBase {
     private void SendSingleByteToDevice(View view, byte data)
     {
         makeSnackbarMessage(view, "Sende Daten-Kommando an Gerät: " + data);
-
-        byte[] buffer = new byte[1];
-        buffer[0] = data;
-        m_cBluetoothManager.send(buffer);
+        m_cRoboGenApp.getRoboGenManager().BlueToothSend(data);
     }
 
     /*******************************************************************************
      * getter
      ******************************************************************************/
     public BluetoothManager getBluetoothManager() {
-        return m_cBluetoothManager;
+       return m_cRoboGenApp.getRoboGenManager().getBluetoothManager();
     }
 }

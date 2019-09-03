@@ -1,6 +1,5 @@
 package at.srfg.robogen.itemdetail;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +9,12 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import at.srfg.robogen.R;
-import at.srfg.robogen.alexa.AlexaManager;
+import at.srfg.robogen.RoboGen_App;
+
 
 public class ItemDetailAlexa extends ItemDetailBase {
 
-    private AlexaManager mAlexaManager;
+    private RoboGen_App m_cRoboGenApp;
 
     private final String m_sStartAlexa = "Verbindung aufbauen mit Lambda-Server um gespeicherte Nutzerdaten anzuzeigen " +
                                          "(Daten können im Alexa-Entscheidungsbäume Skill aufgenommen oder gelöscht werden):";
@@ -31,7 +31,9 @@ public class ItemDetailAlexa extends ItemDetailBase {
         final View rootView = inflater.inflate(R.layout.main_itemdetail_alexa, container, false);
 
         // Show the dummy content as text in a TextView.
-        if (mItem != null) {
+        if (mItem != null)
+        {
+            m_cRoboGenApp = ((RoboGen_App)getActivity().getApplication());
             initGUIComponents(rootView);
         }
 
@@ -43,8 +45,7 @@ public class ItemDetailAlexa extends ItemDetailBase {
      ******************************************************************************/
     private void initGUIComponents(final View rootView){
 
-        Activity activity = this.getActivity();
-        mAlexaManager = new AlexaManager(activity, activity.getBaseContext());
+        m_cRoboGenApp.getRoboGenManager().InitAlexaManager(this.getActivity());
 
         ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.m_sEntryHeader);
         ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(m_sStartAlexa);
@@ -57,7 +58,7 @@ public class ItemDetailAlexa extends ItemDetailBase {
 
                 makeSnackbarMessage(view, "Starte Alexa-Kommunikation..");
 
-                mAlexaManager.InitAlexaSkillInvocation();
+                m_cRoboGenApp.getRoboGenManager().InitAlexaSkillInvocation();
 
                 mItem.m_bEntryIsConnected = !mItem.m_bEntryIsConnected;
             }

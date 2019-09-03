@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.snackbar.Snackbar;
 
-import at.srfg.robogen.ItemContent;
+import at.srfg.robogen.itemcontent.ItemContent;
 import at.srfg.robogen.R;
 
 public class ItemDetailBase extends Fragment {

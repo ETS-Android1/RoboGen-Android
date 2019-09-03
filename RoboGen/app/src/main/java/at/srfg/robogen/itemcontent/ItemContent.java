@@ -1,4 +1,4 @@
-package at.srfg.robogen;
+package at.srfg.robogen.itemcontent;
 
 
 import java.util.ArrayList;

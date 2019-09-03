@@ -1,6 +1,5 @@
 package at.srfg.robogen.itemdetail;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +9,12 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import at.srfg.robogen.R;
+import at.srfg.robogen.RoboGen_App;
 import at.srfg.robogen.fitnesswatch.FitBitManager;
 
 public class ItemDetailWatch extends ItemDetailBase {
+
+    private RoboGen_App m_cRoboGenApp;
 
     private final String m_sConnectWatch = "Schritt 1) Verbindung aufbauen mit einem Account für FitBit-Geräte:";
     public FloatingActionButton m_btnConnectWatch;
@@ -21,11 +23,12 @@ public class ItemDetailWatch extends ItemDetailBase {
     public FloatingActionButton m_btnUserDataWatch;
 
 
-    private FitBitManager mWatchManager = null;
-
+    /*******************************************************************************
+     * Getter
+     ******************************************************************************/
     public FitBitManager getWatchManager()
     {
-        return mWatchManager;
+       return m_cRoboGenApp.getRoboGenManager().getWatchManager();
     }
 
     /*******************************************************************************
@@ -37,7 +40,9 @@ public class ItemDetailWatch extends ItemDetailBase {
         final View rootView = inflater.inflate(R.layout.main_itemdetail_watch, container, false);
 
         // Show the dummy content as text in a TextView.
-        if (mItem != null) {
+        if (mItem != null)
+        {
+            m_cRoboGenApp = ((RoboGen_App)getActivity().getApplication());
             initGUIComponents(rootView);
         }
 
@@ -49,8 +54,7 @@ public class ItemDetailWatch extends ItemDetailBase {
      ******************************************************************************/
     private void initGUIComponents(final View rootView){
 
-        Activity activity = this.getActivity();
-        mWatchManager = new FitBitManager(activity, activity.getBaseContext());
+        m_cRoboGenApp.getRoboGenManager().InitFitBitManager(this.getActivity());
 
         ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.m_sEntryHeader);
         ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(m_sConnectWatch);
@@ -63,7 +67,7 @@ public class ItemDetailWatch extends ItemDetailBase {
                 makeSnackbarMessage(view, "Starte Verbindung mit Uhr..");
 
                 // starte Verbindung mit Uhr
-                mWatchManager.logIn(rootView);
+                m_cRoboGenApp.getRoboGenManager().FitBitLogin(rootView);
                 mItem.m_bEntryIsConnected = !mItem.m_bEntryIsConnected;
 
                 makeSnackbarMessage(view, "Verbindung erfolgreich aufgebaut!");
@@ -79,7 +83,7 @@ public class ItemDetailWatch extends ItemDetailBase {
             public void onClick(View view) {
 
                 // starte Streaming von infos von Uhr
-                mWatchManager.startUserDataStream();
+                m_cRoboGenApp.getRoboGenManager().FitBitStartDataStream();
 
                 makeSnackbarMessage(view,"Benutzerdaten angefordert..");
             }
