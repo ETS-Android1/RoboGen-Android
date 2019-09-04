@@ -26,22 +26,6 @@ public class WeightService {
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
     public static androidx.loader.content.Loader<ResourceLoaderResult<WeightLogs>> getWeightLogLoader(Activity activityContext, Date startDate, int calendarDateType, int number) throws MissingScopesException, TokenExpiredException {
-        //String periodSuffix = "d";
-        //switch (calendarDateType) {
-        //    case Calendar.WEEK_OF_YEAR:
-        //        periodSuffix = "w";
-        //        break;
-        //    case Calendar.MONTH:
-        //        periodSuffix = "m";
-        //        break;
-        //}
-//
-        //return WEIGHT_LOG_LOADER_FACTORY.newResourceLoader(
-        //        activityContext,
-        //        new Scope[]{Scope.weight},
-        //        dateFormat.format(startDate),
-        //        String.format(Locale.US, "%d%s", number, periodSuffix));
-
         return WEIGHT_LOG_LOADER_FACTORY.newResourceLoader(activityContext, new Scope[]{Scope.weight});
     }
 }
