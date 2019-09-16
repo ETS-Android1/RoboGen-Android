@@ -39,12 +39,12 @@ public class RoboGen_Manager {
     /*******************************************************************************
      * Alexa
      ******************************************************************************/
-    public void InitAlexaManager(Activity act)
+    public void Alexa_Init(Activity act)
     {
         m_cAlexaManager = new AlexaManager(act, act.getBaseContext());
     }
 
-    public void InitAlexaSkillInvocation()
+    public void Alexa_SkillInvocation()
     {
         m_cAlexaManager.InitAlexaSkillInvocation();
     }
@@ -54,18 +54,18 @@ public class RoboGen_Manager {
     /*******************************************************************************
      * QBO Bluetooth
      ******************************************************************************/
-    public void InitBlueToothManager(Activity act, final View rootView)
+    public void BlueTooth_Init(Activity act, final View rootView)
     {
         m_cBluetoothManager = new BluetoothManager(act, act.getBaseContext(), rootView);
         m_cBluetoothManager.RequestExtraPermissionsForBluetooth(act);
     }
 
-    public void BlueToothConnect()
+    public void BlueTooth_Connect()
     {
         m_cBluetoothManager.doConnect();
     }
 
-    public void BlueToothSend(byte data)
+    public void BlueTooth_Send(byte data)
     {
         byte[] buffer = new byte[1];
         buffer[0] = data;
@@ -77,18 +77,49 @@ public class RoboGen_Manager {
     /*******************************************************************************
      * FitBit
      ******************************************************************************/
-    public void InitFitBitManager(Activity act)
+    public void FitBit_Init(Activity act)
     {
         m_cWatchManager = new FitBitManager(act, act.getBaseContext());
     }
 
-    public void FitBitLogin(final View rootView)
+    public void FitBit_Login(final View rootView)
     {
         m_cWatchManager.logIn(rootView);
     }
 
-    public void FitBitStartDataStream()
+    public void FitBit_StartDataStream()
     {
         m_cWatchManager.startUserDataStream();
     }
+
+
+
+    /*******************************************************************************
+     * Analyser Functions (TODO)
+     ******************************************************************************/
+    //public void AnalyseSleep(int sleepVal) // triggered by Fitbit
+    //{
+    //    if(sleepVal < 70)
+    //    {
+    //        //Alexa_SkillInvocation("1");
+    //    }
+    //}
+
+    //public void AnalyseHeart(int heartVal) // triggered by Fitbit
+    //{
+    //    if(heartVal < 70)
+    //    {
+    //        //Alexa_SkillInvocation("2");
+    //    }
+    //}
+
+    //public void AnalyseEmotion(String emotionVal) // triggered by QBO
+    //{
+    //    if(emotionVal == "traurig")
+    //    {
+    //        // TODO: check for FitBit data and do something if bad
+
+    //        //Alexa_SkillInvocation("3");
+    //    }
+    //}
 }

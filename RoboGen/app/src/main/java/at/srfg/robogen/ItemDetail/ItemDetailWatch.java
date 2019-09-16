@@ -19,7 +19,7 @@ public class ItemDetailWatch extends ItemDetailBase {
     private final String m_sConnectWatch = "Schritt 1) Verbindung aufbauen mit einem Account für FitBit-Geräte:";
     public FloatingActionButton m_btnConnectWatch;
 
-    private final String m_sUserDataWatch = "Schritt 2) FitBit-Daten ansehen zu Benutzer, Geäten, Aktivitäten und Gewicht:";
+    private final String m_sUserDataWatch = "Schritt 2) FitBit-Daten ansehen zu Benutzer, Geräten, Aktivitäten und Gewicht:";
     public FloatingActionButton m_btnUserDataWatch;
 
 
@@ -54,7 +54,7 @@ public class ItemDetailWatch extends ItemDetailBase {
      ******************************************************************************/
     private void initGUIComponents(final View rootView){
 
-        m_cRoboGenApp.getRoboGenManager().InitFitBitManager(this.getActivity());
+        m_cRoboGenApp.getRoboGenManager().FitBit_Init(this.getActivity());
 
         ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.m_sEntryHeader);
         ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(m_sConnectWatch);
@@ -67,7 +67,7 @@ public class ItemDetailWatch extends ItemDetailBase {
                 makeSnackbarMessage(view, "Starte Verbindung mit Uhr..");
 
                 // starte Verbindung mit Uhr
-                m_cRoboGenApp.getRoboGenManager().FitBitLogin(rootView);
+                m_cRoboGenApp.getRoboGenManager().FitBit_Login(rootView);
                 mItem.m_bEntryIsConnected = !mItem.m_bEntryIsConnected;
 
                 makeSnackbarMessage(view, "Verbindung erfolgreich aufgebaut!");
@@ -83,7 +83,7 @@ public class ItemDetailWatch extends ItemDetailBase {
             public void onClick(View view) {
 
                 // starte Streaming von infos von Uhr
-                m_cRoboGenApp.getRoboGenManager().FitBitStartDataStream();
+                m_cRoboGenApp.getRoboGenManager().FitBit_StartDataStream();
 
                 makeSnackbarMessage(view,"Benutzerdaten angefordert..");
             }

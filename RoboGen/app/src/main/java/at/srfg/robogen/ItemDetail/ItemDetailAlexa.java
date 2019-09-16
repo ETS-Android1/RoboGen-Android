@@ -45,7 +45,7 @@ public class ItemDetailAlexa extends ItemDetailBase {
      ******************************************************************************/
     private void initGUIComponents(final View rootView){
 
-        m_cRoboGenApp.getRoboGenManager().InitAlexaManager(this.getActivity());
+        m_cRoboGenApp.getRoboGenManager().Alexa_Init(this.getActivity());
 
         ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.m_sEntryHeader);
         ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(m_sStartAlexa);
@@ -58,7 +58,7 @@ public class ItemDetailAlexa extends ItemDetailBase {
 
                 makeSnackbarMessage(view, "Starte Alexa-Kommunikation..");
 
-                m_cRoboGenApp.getRoboGenManager().InitAlexaSkillInvocation();
+                m_cRoboGenApp.getRoboGenManager().Alexa_SkillInvocation();
 
                 mItem.m_bEntryIsConnected = !mItem.m_bEntryIsConnected;
             }
