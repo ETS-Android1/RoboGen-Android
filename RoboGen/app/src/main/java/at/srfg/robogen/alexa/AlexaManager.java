@@ -5,9 +5,13 @@ package at.srfg.robogen.alexa;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.text.Html;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
@@ -17,6 +21,7 @@ import com.amazonaws.regions.Regions;
 
 import at.srfg.robogen.R;
 import at.srfg.robogen.alexa.data.AndroidIdentification;
+import at.srfg.robogen.alexa.data.ShownIntervention;
 import at.srfg.robogen.alexa.data.UserDataInfo;
 
 // allow function invoke access in 'LambdaAndroidAccess' - Permission
@@ -84,19 +89,27 @@ public class AlexaManager {
 
                 if (result != null) {
 
-                    m_arrAdapter = new ArrayAdapter<String>(m_actParent.getBaseContext(), R.layout.alexa_datalist_entry);
-                    m_arrAdapter.add("Name des Anwenders/in: " + result.getUserName());
-                    m_arrAdapter.add("Benutzer/in ist an einem Gespräch interessiert: " + result.getUserWantsToTalk());
-                    m_arrAdapter.add("Benutzer/in fühlt sich gestresst: " + result.isStressed());
-                    m_arrAdapter.add("Benutzer/in hat Diabetes: " + result.isHasDiabetes());
-                    m_arrAdapter.add("Es ist noch ein Wordpress-Thema offen: " + result.getRequiredTopic());
-                    m_arrAdapter.add("Stress-Grund: " + result.getStressReasons());
-                    m_arrAdapter.add("Stressquelle: " + result.getStressSources());
-                    m_arrAdapter.add("Sport-Ausmaß: " + result.getSportVolume());
-                    m_arrAdapter.add("Grund für zu wenig Sport: " + result.getSportUnderstateReason());
-                    m_arrAdapter.add("Grund für zu viel Sport: " + result.getSportOverstateReason());
-                    m_arrAdapter.add("Grund warum Sport keinen Spaß macht: " + result.getSportUnhappyReason());
-                    m_arrAdapter.add("Weitere Sport-Informationen: " + result.getSportAdditionalReasons());
+                    m_arrAdapter = new ArrayAdapter<String>(m_actParent.getBaseContext(), R.layout.alexa_datalist_entry){
+                        public View getView(int position, View view, ViewGroup viewGroup)
+                        {
+                            View v = super.getView(position, view, viewGroup);
+                            ((TextView)v).setText(Html.fromHtml((String)this.getItem(position)));
+                            return v;
+                        }
+                    };
+
+                    m_arrAdapter.add("Themen mit Bezug auf Diabetes: " + (result.isShowDiabetes()? "Ja":"Nein"));
+                    m_arrAdapter.add("Themen mit Bezug für Senioren/Seniorinnen: " + (result.isShowSenior()? "Ja":"Nein"));
+
+                    for(ShownIntervention intervention: result.getShownInterventions())
+                    {
+                        if(intervention.isRemember())
+                        {
+                            m_arrAdapter.add(intervention.getShownIntervention() + ": \n" +
+                                    "<b><a href=\"" + intervention.getAdditionalLink() + "\">Link zum gemerkten Thema</a></b>");
+                        }
+                    }
+
 
                     ListView listView = (ListView) m_actParent.findViewById(R.id.alexa_datalist);
                     listView.setAdapter(m_arrAdapter);
