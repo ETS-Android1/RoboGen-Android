@@ -4,8 +4,10 @@ package at.srfg.robogen.alexa;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,6 +96,8 @@ public class AlexaManager {
                         {
                             View v = super.getView(position, view, viewGroup);
                             ((TextView)v).setText(Html.fromHtml((String)this.getItem(position)));
+                            ((TextView)v).setMovementMethod(LinkMovementMethod.getInstance());
+                            ((TextView)v).setLinkTextColor(Color.parseColor("#5E8ACB")); // R.color.colorPrimary
                             return v;
                         }
                     };
