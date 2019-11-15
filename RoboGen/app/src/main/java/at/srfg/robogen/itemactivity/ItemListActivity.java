@@ -22,6 +22,7 @@ import at.srfg.robogen.itemcontent.ItemContent;
 import at.srfg.robogen.R;
 import at.srfg.robogen.itemdetail.ItemDetailAlexa;
 import at.srfg.robogen.itemdetail.ItemDetailBase;
+import at.srfg.robogen.itemdetail.ItemDetailContacts;
 import at.srfg.robogen.itemdetail.ItemDetailRobot;
 import at.srfg.robogen.itemdetail.ItemDetailWatch;
 import at.srfg.robogen.itemdetail.ItemDetailVector;
@@ -110,6 +111,11 @@ public class ItemListActivity extends AppCompatActivity {
                 {
                     intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 3
                     intent.putExtra(ItemDetailVector.m_sARG_ITEM_ID, item.m_sEntryID); // id = 3
+                }
+                else if(item.toString() == "Kontakte")
+                {
+                    intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 4
+                    intent.putExtra(ItemDetailContacts.m_sARG_ITEM_ID, item.m_sEntryID); // id = 4
                 }
                 else
                 {

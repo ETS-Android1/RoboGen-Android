@@ -6,6 +6,7 @@ import android.view.View;
 import at.srfg.robogen.alexa.AlexaManager;
 import at.srfg.robogen.bluetooth.BluetoothManager;
 import at.srfg.robogen.fitnesswatch.FitBitManager;
+import at.srfg.robogen.contacts.ContactManager;
 
 /*******************************************************************************
  * The AI_Center class is responsible for all combinatoric logic
@@ -18,6 +19,7 @@ public class RoboGen_Manager {
     private AlexaManager m_cAlexaManager = null;
     private BluetoothManager m_cBluetoothManager = null;
     private FitBitManager m_cWatchManager = null;
+    private ContactManager m_cContactManager = null;
 
 
     /*******************************************************************************
@@ -26,13 +28,14 @@ public class RoboGen_Manager {
     public AlexaManager getAlexaManager() {
         return m_cAlexaManager;
     }
-
     public BluetoothManager getBluetoothManager() {
         return m_cBluetoothManager;
     }
-
     public FitBitManager getWatchManager() {
         return m_cWatchManager;
+    }
+    public ContactManager getCallManager() {
+        return m_cContactManager;
     }
 
 
@@ -92,6 +95,14 @@ public class RoboGen_Manager {
         m_cWatchManager.startUserDataStream();
     }
 
+
+    /*******************************************************************************
+     * Contacts
+     ******************************************************************************/
+    public void Contacts_Init(Activity act, View listView)
+    {
+        m_cContactManager = new ContactManager(act, listView);
+    }
 
 
     /*******************************************************************************

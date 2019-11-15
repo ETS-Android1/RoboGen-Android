@@ -23,6 +23,7 @@ public class ItemContent {
         addItem(new ItemEntry("2.", "FitBit", "Management-Seite für Fitbit Charge 2 - Smart Watches", false));
         addItem(new ItemEntry("3.", "Alexa", "Management-Seite für Alexa Entscheidungsbäume", false));
         addItem(new ItemEntry("4.", "Vector", "Management-Seite für Anki Vector Roboter", false));
+        addItem(new ItemEntry("5.", "Kontakte", "Management-Seite für Notfallkontakte", false));
     }
 
     private static void addItem(ItemEntry item) {

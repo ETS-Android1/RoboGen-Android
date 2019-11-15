@@ -12,6 +12,7 @@ import at.srfg.robogen.R;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationManager;
 import at.srfg.robogen.itemdetail.ItemDetailAlexa;
 import at.srfg.robogen.itemdetail.ItemDetailBase;
+import at.srfg.robogen.itemdetail.ItemDetailContacts;
 import at.srfg.robogen.itemdetail.ItemDetailRobot;
 import at.srfg.robogen.itemdetail.ItemDetailWatch;
 import at.srfg.robogen.itemdetail.ItemDetailVector;
@@ -73,6 +74,13 @@ public class ItemDetailActivity extends AppCompatActivity {
             {
                 arguments.putString(ItemDetailVector.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailVector.m_sARG_ITEM_ID));
                 ItemDetailVector fragment = new ItemDetailVector();
+                fragment.setArguments(arguments);
+                getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
+            }
+            else if(itemID.equals("5.")) // Contacts
+            {
+                arguments.putString(ItemDetailContacts.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailContacts.m_sARG_ITEM_ID));
+                ItemDetailContacts fragment = new ItemDetailContacts();
                 fragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
             }
