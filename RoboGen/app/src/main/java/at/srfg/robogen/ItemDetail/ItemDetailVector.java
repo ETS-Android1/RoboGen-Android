@@ -47,7 +47,6 @@ public class ItemDetailVector extends ItemDetailBase {
                 makeSnackbarMessage(view, "Starte Vector-Kommunikation..");
 
                 // TODO:
-                mItem.m_bEntryIsConnected = !mItem.m_bEntryIsConnected;
             }
         });
     }

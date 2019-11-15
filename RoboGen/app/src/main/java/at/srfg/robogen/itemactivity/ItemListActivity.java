@@ -71,8 +71,11 @@ public class ItemListActivity extends AppCompatActivity {
 
         private final List<ItemContent.ItemEntry> m_listValues;
 
-        public Drawable mDrawableConnected = null;
-        public Drawable mDrawableNotConnected = null;
+        public Drawable mDrawableIcon_QBO = null;
+        public Drawable mDrawableIcon_FitBit = null;
+        public Drawable mDrawableIcon_Alexa = null;
+        public Drawable mDrawableIcon_Vector = null;
+        public Drawable mDrawableIcon_Contacts = null;
 
         /*******************************************************************************
          * CTOR will init all entry ImageViews, representing state of connection
@@ -109,13 +112,13 @@ public class ItemListActivity extends AppCompatActivity {
                 }
                 else if(item.toString() == "Vector")
                 {
-                    intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 3
-                    intent.putExtra(ItemDetailVector.m_sARG_ITEM_ID, item.m_sEntryID); // id = 3
+                    intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 4
+                    intent.putExtra(ItemDetailVector.m_sARG_ITEM_ID, item.m_sEntryID); // id = 4
                 }
                 else if(item.toString() == "Kontakte")
                 {
-                    intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 4
-                    intent.putExtra(ItemDetailContacts.m_sARG_ITEM_ID, item.m_sEntryID); // id = 4
+                    intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 5
+                    intent.putExtra(ItemDetailContacts.m_sARG_ITEM_ID, item.m_sEntryID); // id = 5
                 }
                 else
                 {
@@ -131,8 +134,11 @@ public class ItemListActivity extends AppCompatActivity {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.main_itemlist_content, parent, false);
 
-            mDrawableConnected = view.getResources().getDrawable(R.drawable.main_connected);
-            mDrawableNotConnected = view.getResources().getDrawable(R.drawable.main_not_connected);
+            mDrawableIcon_QBO = view.getResources().getDrawable(R.drawable.icon_qbo);
+            mDrawableIcon_FitBit = view.getResources().getDrawable(R.drawable.icon_fitbit);
+            mDrawableIcon_Alexa = view.getResources().getDrawable(R.drawable.icon_alexa);
+            mDrawableIcon_Vector = view.getResources().getDrawable(R.drawable.icon_vector);
+            mDrawableIcon_Contacts = view.getResources().getDrawable(R.drawable.icon_contacts);
 
             return new ViewHolder(view);
         }
@@ -140,11 +146,20 @@ public class ItemListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
 
-            if(m_listValues.get(position).m_bEntryIsConnected) {
-                holder.mConnectionView.setImageDrawable(mDrawableConnected);
+            if(position == 0) {
+                holder.mConnectionView.setImageDrawable(mDrawableIcon_QBO);
             }
-            else{
-                holder.mConnectionView.setImageDrawable(mDrawableNotConnected);
+            else if(position == 1) {
+                holder.mConnectionView.setImageDrawable(mDrawableIcon_FitBit);
+            }
+            else if(position == 2) {
+                holder.mConnectionView.setImageDrawable(mDrawableIcon_Alexa);
+            }
+            else if(position == 3) {
+                holder.mConnectionView.setImageDrawable(mDrawableIcon_Vector);
+            }
+            else if(position == 4) {
+                holder.mConnectionView.setImageDrawable(mDrawableIcon_Contacts);
             }
 
             holder.mIdView.setText(m_listValues.get(position).m_sEntryID);

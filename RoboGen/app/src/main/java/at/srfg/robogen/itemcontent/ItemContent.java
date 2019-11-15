@@ -19,11 +19,11 @@ public class ItemContent {
 
     static {
         // Add some sample items.
-        addItem(new ItemEntry("1.", "Q.bo", "Management-Seite für Q.bo One - Roboter", false));
-        addItem(new ItemEntry("2.", "FitBit", "Management-Seite für Fitbit Charge 2 - Smart Watches", false));
-        addItem(new ItemEntry("3.", "Alexa", "Management-Seite für Alexa Entscheidungsbäume", false));
-        addItem(new ItemEntry("4.", "Vector", "Management-Seite für Anki Vector Roboter", false));
-        addItem(new ItemEntry("5.", "Kontakte", "Management-Seite für Notfallkontakte", false));
+        addItem(new ItemEntry("1.", "Q.bo", "Management-Seite für Q.bo One - Roboter"));
+        addItem(new ItemEntry("2.", "FitBit", "Management-Seite für Fitbit Charge 2 - Smart Watches"));
+        addItem(new ItemEntry("3.", "Alexa", "Management-Seite für Alexa Entscheidungsbäume"));
+        addItem(new ItemEntry("4.", "Vector", "Management-Seite für Anki Vector Roboter"));
+        addItem(new ItemEntry("5.", "Kontakte", "Management-Seite für Notfallkontakte"));
     }
 
     private static void addItem(ItemEntry item) {
@@ -38,13 +38,11 @@ public class ItemContent {
         public final String m_sEntryID;
         public final String m_sEntryTitle;
         public final String m_sEntryHeader;
-        public boolean m_bEntryIsConnected;
 
-        public ItemEntry(String id, String title, String header, boolean connected) {
+        public ItemEntry(String id, String title, String header) {
             this.m_sEntryID = id;
             this.m_sEntryTitle = title;
             this.m_sEntryHeader = header;
-            this.m_bEntryIsConnected = connected;
         }
 
         @Override

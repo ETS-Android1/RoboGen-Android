@@ -59,8 +59,6 @@ public class ItemDetailAlexa extends ItemDetailBase {
                 makeSnackbarMessage(view, "Starte Alexa-Kommunikation..");
 
                 m_cRoboGenApp.getRoboGenManager().Alexa_SkillInvocation();
-
-                mItem.m_bEntryIsConnected = !mItem.m_bEntryIsConnected;
             }
         });
     }

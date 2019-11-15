@@ -68,7 +68,6 @@ public class ItemDetailWatch extends ItemDetailBase {
 
                 // starte Verbindung mit Uhr
                 m_cRoboGenApp.getRoboGenManager().FitBit_Login(rootView);
-                mItem.m_bEntryIsConnected = !mItem.m_bEntryIsConnected;
 
                 makeSnackbarMessage(view, "Verbindung erfolgreich aufgebaut!");
             }

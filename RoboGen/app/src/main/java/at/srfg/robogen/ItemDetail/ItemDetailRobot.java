@@ -85,9 +85,6 @@ public class ItemDetailRobot extends ItemDetailBase {
 
                 makeSnackbarMessage(view, "Prüfung auf vorhandene Bluetooth-Verbindung..");
                 m_cRoboGenApp.getRoboGenManager().BlueTooth_Connect();
-
-                // set icon to connected
-                mItem.m_bEntryIsConnected = !mItem.m_bEntryIsConnected;
             }
         });
         m_btnSendRobot_Code1 = (FloatingActionButton) rootView.findViewById(R.id.bt_send_code1);
