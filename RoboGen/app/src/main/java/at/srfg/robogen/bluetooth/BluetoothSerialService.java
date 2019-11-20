@@ -19,7 +19,6 @@ package at.srfg.robogen.bluetooth;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.UUID;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -270,19 +269,20 @@ public class BluetoothSerialService {
 
             // Make a connection to the BluetoothSocket
             try {
-                // This is a blocking call and will only return on a
-                // successful connection or an exception
+                // blocking call that will only return on a successful connection or an exception
                 mmSocket.connect();
             } catch (IOException e) {
                 connectionFailed();
+
                 // Close the socket
                 try {
                     mmSocket.close();
                 } catch (IOException e2) {
                     Log.e(TAG, "unable to close() socket during connection failure", e2);
                 }
+
                 // Start the service over to restart listening mode
-                //BluetoothSerialService.this.start();
+                // BluetoothSerialService.this.start();
                 return;
             }
 

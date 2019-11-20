@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import at.srfg.robogen.R;
+import at.srfg.robogen.RoboGen_Constants;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationManager;
 import at.srfg.robogen.itemdetail.ItemDetailAlexa;
 import at.srfg.robogen.itemdetail.ItemDetailBase;
@@ -37,47 +38,41 @@ public class ItemDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
-        // Show the Up button in the action bar (reuse if back-arrow ever needed again)
-        //ActionBar actionBar = getSupportActionBar();
-        //if (actionBar != null) {
-            //actionBar.setDisplayHomeAsUpEnabled(true);
-        //}
-
         // Create the detail fragment and add it to the activity using a fragment transaction.
         if (savedInstanceState == null) {
 
             Bundle arguments = new Bundle();
             String itemID = getIntent().getStringExtra(ItemDetailBase.m_sARG_ITEM_ID);
 
-            if(itemID.equals("1.")) // Q.bo robot
+            if(itemID.equals(RoboGen_Constants.ItemListID_QBO))
             {
                 arguments.putString(ItemDetailRobot.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailRobot.m_sARG_ITEM_ID));
                 ItemDetailRobot fragment = new ItemDetailRobot();
                 fragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
             }
-            else if(itemID.equals("2.")) // FitBit watch
+            else if(itemID.equals(RoboGen_Constants.ItemListID_FitBit))
             {
                 arguments.putString(ItemDetailWatch.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailWatch.m_sARG_ITEM_ID));
                 ItemDetailWatch fragment = new ItemDetailWatch();
                 fragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
             }
-            else if(itemID.equals("3.")) // Alexa
+            else if(itemID.equals(RoboGen_Constants.ItemListID_Alexa))
             {
                 arguments.putString(ItemDetailAlexa.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailAlexa.m_sARG_ITEM_ID));
                 ItemDetailAlexa fragment = new ItemDetailAlexa();
                 fragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
             }
-            else if(itemID.equals("4.")) // Vector
+            else if(itemID.equals(RoboGen_Constants.ItemListID_Vector))
             {
                 arguments.putString(ItemDetailVector.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailVector.m_sARG_ITEM_ID));
                 ItemDetailVector fragment = new ItemDetailVector();
                 fragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
             }
-            else if(itemID.equals("5.")) // Contacts
+            else if(itemID.equals(RoboGen_Constants.ItemListID_Contacts))
             {
                 arguments.putString(ItemDetailContacts.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailContacts.m_sARG_ITEM_ID));
                 ItemDetailContacts fragment = new ItemDetailContacts();

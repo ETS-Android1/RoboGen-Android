@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import at.srfg.robogen.RoboGen_Constants;
+
 /*******************************************************************************
  * Helper class for providing sample content for user interfaces created by
  ******************************************************************************/
@@ -18,12 +20,11 @@ public class ItemContent {
     public static final Map<String, ItemEntry> m_mapItems = new HashMap<String, ItemEntry>();
 
     static {
-        // Add some sample items.
-        addItem(new ItemEntry("1.", "Q.bo", "Management-Seite für Q.bo One - Roboter"));
-        addItem(new ItemEntry("2.", "FitBit", "Management-Seite für Fitbit Charge 2 - Smart Watches"));
-        addItem(new ItemEntry("3.", "Alexa", "Management-Seite für Alexa Entscheidungsbäume"));
-        addItem(new ItemEntry("4.", "Vector", "Management-Seite für Anki Vector Roboter"));
-        addItem(new ItemEntry("5.", "Kontakte", "Management-Seite für Notfallkontakte"));
+        addItem(new ItemEntry(RoboGen_Constants.ItemListID_QBO, RoboGen_Constants.ItemListEntry_QBO, "Management-Seite für Q.bo One - Roboter"));
+        addItem(new ItemEntry(RoboGen_Constants.ItemListID_FitBit, RoboGen_Constants.ItemListEntry_FitBit, "Management-Seite für Fitbit Charge 2 - Smart Watches"));
+        addItem(new ItemEntry(RoboGen_Constants.ItemListID_Alexa, RoboGen_Constants.ItemListEntry_Alexa, "Management-Seite für Alexa Entscheidungsbäume"));
+        addItem(new ItemEntry(RoboGen_Constants.ItemListID_Vector, RoboGen_Constants.ItemListEntry_Vector, "Management-Seite für Anki Vector Roboter"));
+        addItem(new ItemEntry(RoboGen_Constants.ItemListID_Contacts, RoboGen_Constants.ItemListEntry_Contacts, "Management-Seite für Notfallkontakte"));
     }
 
     private static void addItem(ItemEntry item) {

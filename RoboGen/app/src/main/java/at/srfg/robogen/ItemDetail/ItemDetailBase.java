@@ -36,9 +36,8 @@ public class ItemDetailBase extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(m_sARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
+
+            // Load the dummy content specified by the fragment arguments.
             mItem = ItemContent.m_mapItems.get(getArguments().getString(m_sARG_ITEM_ID));
 
             Activity activity = this.getActivity();

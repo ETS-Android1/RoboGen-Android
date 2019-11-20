@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import at.srfg.robogen.RoboGen_Constants;
 import at.srfg.robogen.itemcontent.ItemContent;
 import at.srfg.robogen.R;
 import at.srfg.robogen.itemdetail.ItemDetailAlexa;
@@ -96,26 +97,26 @@ public class ItemListActivity extends AppCompatActivity {
                 Context context = view.getContext();
                 Intent intent = new Intent(context, ItemDetailActivity.class);
 
-                if(item.toString() == "Q.bo") {
+                if(item.toString() == RoboGen_Constants.ItemListEntry_QBO) {
                     intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 1
                     intent.putExtra(ItemDetailRobot.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 1
                 }
-                else if(item.toString() == "FitBit")
+                else if(item.toString() == RoboGen_Constants.ItemListEntry_FitBit)
                 {
                     intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 2
                     intent.putExtra(ItemDetailWatch.m_sARG_ITEM_ID, item.m_sEntryID); // id = 2
                 }
-                else if(item.toString() == "Alexa")
+                else if(item.toString() == RoboGen_Constants.ItemListEntry_Alexa)
                 {
                     intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 3
                     intent.putExtra(ItemDetailAlexa.m_sARG_ITEM_ID, item.m_sEntryID); // id = 3
                 }
-                else if(item.toString() == "Vector")
+                else if(item.toString() == RoboGen_Constants.ItemListEntry_Vector)
                 {
                     intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 4
                     intent.putExtra(ItemDetailVector.m_sARG_ITEM_ID, item.m_sEntryID); // id = 4
                 }
-                else if(item.toString() == "Kontakte")
+                else if(item.toString() == RoboGen_Constants.ItemListEntry_Contacts)
                 {
                     intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 5
                     intent.putExtra(ItemDetailContacts.m_sARG_ITEM_ID, item.m_sEntryID); // id = 5
@@ -146,19 +147,19 @@ public class ItemListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
 
-            if(position == 0) {
+            if(position == RoboGen_Constants.ItemListPos_QBO) {
                 holder.mConnectionView.setImageDrawable(mDrawableIcon_QBO);
             }
-            else if(position == 1) {
+            else if(position == RoboGen_Constants.ItemListPos_FitBit) {
                 holder.mConnectionView.setImageDrawable(mDrawableIcon_FitBit);
             }
-            else if(position == 2) {
+            else if(position == RoboGen_Constants.ItemListPos_Alexa) {
                 holder.mConnectionView.setImageDrawable(mDrawableIcon_Alexa);
             }
-            else if(position == 3) {
+            else if(position == RoboGen_Constants.ItemListPos_Vector) {
                 holder.mConnectionView.setImageDrawable(mDrawableIcon_Vector);
             }
-            else if(position == 4) {
+            else if(position == RoboGen_Constants.ItemListPos_Contacts) {
                 holder.mConnectionView.setImageDrawable(mDrawableIcon_Contacts);
             }
 
