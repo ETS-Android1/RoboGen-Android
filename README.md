@@ -6,7 +6,7 @@ Applikation verbindet den Roboter Q.Bo One mit Anki Vector, der Fitbit-Uhr und A
 
 # Build Dependencies and Version Info
 
-`code`
+```
 apply plugin: 'com.android.application'
 
 android {
@@ -46,4 +46,4 @@ dependencies {
     implementation 'com.amazonaws:aws-android-sdk-core:2.14.+'
     implementation 'com.amazonaws:aws-android-sdk-lambda:2.14.+'
 }
-`code`
+```
