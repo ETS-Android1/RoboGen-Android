@@ -6,6 +6,8 @@ Applikation verbindet den Roboter Q.Bo One mit Anki Vector, der Fitbit-Uhr und A
 
 # Build Dependencies and Version Info
 
+From Gradle Build File, based on 15th of May in 2020:
+
 ```
 apply plugin: 'com.android.application'
 
