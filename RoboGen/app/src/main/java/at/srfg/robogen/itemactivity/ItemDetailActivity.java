@@ -17,6 +17,7 @@ import at.srfg.robogen.itemdetail.ItemDetailContacts;
 import at.srfg.robogen.itemdetail.ItemDetailRobot;
 import at.srfg.robogen.itemdetail.ItemDetailWatch;
 import at.srfg.robogen.itemdetail.ItemDetailVector;
+import at.srfg.robogen.itemdetail.ItemDetailSettings;
 
 /*******************************************************************************
  * An activity representing a single Item detail screen. This
@@ -76,6 +77,13 @@ public class ItemDetailActivity extends AppCompatActivity {
             {
                 arguments.putString(ItemDetailContacts.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailContacts.m_sARG_ITEM_ID));
                 ItemDetailContacts fragment = new ItemDetailContacts();
+                fragment.setArguments(arguments);
+                getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
+            }
+            else if(itemID.equals(RoboGen_Constants.ItemListID_Settings))
+            {
+                arguments.putString(ItemDetailSettings.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailSettings.m_sARG_ITEM_ID));
+                ItemDetailSettings fragment = new ItemDetailSettings();
                 fragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
             }

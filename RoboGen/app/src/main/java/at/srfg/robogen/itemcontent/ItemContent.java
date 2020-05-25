@@ -25,6 +25,7 @@ public class ItemContent {
         addItem(new ItemEntry(RoboGen_Constants.ItemListID_Alexa, RoboGen_Constants.ItemListEntry_Alexa, "Management-Seite für Alexa Entscheidungsbäume"));
         addItem(new ItemEntry(RoboGen_Constants.ItemListID_Vector, RoboGen_Constants.ItemListEntry_Vector, "Management-Seite für Anki Vector Roboter"));
         addItem(new ItemEntry(RoboGen_Constants.ItemListID_Contacts, RoboGen_Constants.ItemListEntry_Contacts, "Management-Seite für Notfallkontakte"));
+        addItem(new ItemEntry(RoboGen_Constants.ItemListID_Settings, RoboGen_Constants.ItemListEntry_Settings, "Einstellungen und persönliche Daten"));
     }
 
     private static void addItem(ItemEntry item) {
