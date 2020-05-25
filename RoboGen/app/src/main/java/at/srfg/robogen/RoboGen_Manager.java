@@ -102,6 +102,12 @@ public class RoboGen_Manager {
         m_cContactManager = new ContactManager(act, listView);
     }
 
+    public void Contacts_SendSMS()
+    {
+        // For Testing: Test Phone of Armin
+        m_cContactManager.messageEmergencyContact("06781287128", "Test-Telefon Armin");
+    }
+
 
     /*******************************************************************************
      * Analyser Functions (TODO)

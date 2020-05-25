@@ -74,4 +74,8 @@
     <!-- Permissions for emergency calls -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <!-- Permissions for sending SMS -->
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+
 </manifest>
