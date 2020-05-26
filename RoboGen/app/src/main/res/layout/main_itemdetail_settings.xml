@@ -197,51 +197,51 @@
     </LinearLayout>
 
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
-        android:layout_width="fill_parent" android:layout_height="wrap_content">
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-            android:textSize="@dimen/text_font_size" android:text="Benutzer-Alter: "/>
+                  android:textSize="@dimen/text_font_size" android:text="Benutzer-Alter: "/>
 
         <EditText android:id="@+id/userAge" android:hint="meinAlter"
-            android:layout_width="fill_parent" android:layout_height="wrap_content"
-            android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
-            android:background="@android:drawable/editbox_background"/>
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
-        android:layout_width="fill_parent" android:layout_height="wrap_content">
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-            android:textSize="@dimen/text_font_size" android:text="Benutzer-Geschlecht: "/>
+                  android:textSize="@dimen/text_font_size" android:text="Benutzer-Geschlecht: "/>
 
-        <CheckBox android:id="@+id/userGender"
-                  android:textSize="@dimen/text_font_size" android:text="An/Aus"
-                  android:layout_width="fill_parent" android:layout_height="fill_parent"
-                  android:buttonTint="@color/colorPrimary" android:layout_marginLeft="16dp"/>
+        <EditText android:id="@+id/userGender" android:hint="meinGeschlecht"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
-        android:layout_width="fill_parent" android:layout_height="wrap_content">
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-            android:textSize="@dimen/text_font_size" android:text="Benutzer-Familienstatus: "/>
+                  android:textSize="@dimen/text_font_size" android:text="Benutzer-Familienstatus: "/>
 
         <EditText android:id="@+id/userFamilyStatus" android:hint="meinFamilienstatus"
-            android:layout_width="fill_parent" android:layout_height="wrap_content"
-            android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
-            android:background="@android:drawable/editbox_background"/>
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
-        android:layout_width="fill_parent" android:layout_height="wrap_content">
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-            android:textSize="@dimen/text_font_size" android:text="Benutzer-Bildungsstatus: "/>
+                  android:textSize="@dimen/text_font_size" android:text="Benutzer-Bildungsstatus: "/>
 
         <EditText android:id="@+id/userEducationStatus" android:hint="meineBildung"
-            android:layout_width="fill_parent" android:layout_height="wrap_content"
-            android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
-            android:background="@android:drawable/editbox_background"/>
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
 
@@ -437,15 +437,15 @@
     </LinearLayout>
 
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
-        android:layout_width="fill_parent" android:layout_height="wrap_content">
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-            android:textSize="@dimen/text_font_size" android:text="Persönliche Erkrankungen: "/>
+                  android:textSize="@dimen/text_font_size" android:text="Persönliche Erkrankungen: "/>
 
         <EditText android:id="@+id/userKnownDiseases" android:hint="meineKrankheiten"
-            android:layout_width="fill_parent" android:layout_height="wrap_content"
-            android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
-            android:background="@android:drawable/editbox_background"/>
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
 
