@@ -1,40 +1,466 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/item_detail_title"
-        style="?android:attr/textAppearanceLarge"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        android:textSize="@dimen/title_font_size"
-        android:textIsSelectable="true"
-        tools:context=".ItemDetail.ItemDetailSettings" />
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/item_detail_title"
+              style="?android:attr/textAppearanceLarge"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="16dp"
+              android:textSize="@dimen/title_font_size"
+              android:textIsSelectable="true"
+              tools:context=".ItemDetail.ItemDetailSettings" />
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/item_detail_text_1"
-        style="?android:attr/textAppearanceLarge"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        android:textSize="@dimen/text_font_size"
-        android:textIsSelectable="true"
-        tools:context=".ItemDetail.ItemDetailSettings" />
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/item_detail_text_1"
+              style="?android:attr/textAppearanceLarge"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="16dp"
+              android:textSize="@dimen/text_font_size"
+              android:textIsSelectable="true"
+              tools:context=".ItemDetail.ItemDetailSettings" />
 
+
+    <!-- ************************************************************************* -->
+    <!-- **************************** robot info area **************************** -->
+    <!-- ************************************************************************* -->
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#3f3f3f"
+          android:layout_marginLeft="16dp" android:layout_marginRight="16dp" android:layout_marginTop="36dp"/>
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/item_detail_robotinfos"
+              style="?android:attr/textAppearanceLarge"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="16dp"
+              android:textSize="@dimen/title_font_size"
+              android:text="Informationen über den Roboter"
+              android:textIsSelectable="true"
+              tools:context=".ItemDetail.ItemDetailSettings" />
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Roboter-Name: "/>
+
+        <EditText android:id="@+id/robotName" android:hint="meinRoboterName"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Roboter-Stimme: "/>
+
+        <EditText android:id="@+id/robotVoice" android:hint="meineRoboterStimme"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Roboter-Lautstärke: "/>
+
+        <EditText android:id="@+id/robotAudioVolume" android:hint="meineRoboterLautstärke"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Roboter-Infoanzeige: "/>
+
+        <EditText android:id="@+id/robotInfoDisplayLocation" android:hint="meineRoboterInfoanzeige"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Roboter-InfoSchriftgröße: "/>
+
+        <EditText android:id="@+id/robotInfoDisplayFontSize" android:hint="meineRoboterInfoSchriftgröße"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Roboter-Stressgrenzwert: "/>
+
+        <EditText android:id="@+id/robotThresholdStress" android:hint="meinRoboterStressgrenzwert"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Roboter-Schlafgrenzwert: "/>
+
+        <EditText android:id="@+id/robotThresholdSleep" android:hint="meinRoboterSchlafgrenzwert"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="AudioGefühlserkennung: "/>
+
+        <CheckBox android:id="@+id/doRecognizeFeelingsFromAudio"
+                  android:textSize="@dimen/text_font_size" android:text="An/Aus"
+                  android:layout_width="fill_parent" android:layout_height="fill_parent"
+                  android:buttonTint="@color/colorPrimary" android:layout_marginLeft="16dp"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="VideoGefühlserkennung: "/>
+
+        <CheckBox android:id="@+id/doRecognizeFeelingsFromVideo"
+                  android:textSize="@dimen/text_font_size" android:text="An/Aus"
+                  android:layout_width="fill_parent" android:layout_height="fill_parent"
+                  android:buttonTint="@color/colorPrimary" android:layout_marginLeft="16dp"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Lebendigkeit / Status: "/>
+
+        <CheckBox android:id="@+id/isAlive"
+                  android:textSize="@dimen/text_font_size" android:text="An/Aus"
+                  android:layout_width="fill_parent" android:layout_height="fill_parent"
+                  android:buttonTint="@color/colorPrimary" android:layout_marginLeft="16dp"/>
+    </LinearLayout>
+
+
+    <!-- ************************************************************************* -->
+    <!-- ***************************** user info area **************************** -->
+    <!-- ************************************************************************* -->
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#3f3f3f"
+          android:layout_marginLeft="16dp" android:layout_marginRight="16dp" android:layout_marginTop="36dp"/>
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/item_detail_userinfos"
+              style="?android:attr/textAppearanceLarge"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="16dp"
+              android:textSize="@dimen/title_font_size"
+              android:text="Informationen über den Benutzer"
+              android:textIsSelectable="true"
+              tools:context=".ItemDetail.ItemDetailSettings" />
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Benutzer-Name: "/>
+
+        <EditText android:id="@+id/userName" android:hint="meinName"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:text="Benutzer-Alter: "/>
+
+        <EditText android:id="@+id/userAge" android:hint="meinAlter"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+            android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:text="Benutzer-Geschlecht: "/>
+
+        <CheckBox android:id="@+id/userGender"
+                  android:textSize="@dimen/text_font_size" android:text="An/Aus"
+                  android:layout_width="fill_parent" android:layout_height="fill_parent"
+                  android:buttonTint="@color/colorPrimary" android:layout_marginLeft="16dp"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:text="Benutzer-Familienstatus: "/>
+
+        <EditText android:id="@+id/userFamilyStatus" android:hint="meinFamilienstatus"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+            android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:text="Benutzer-Bildungsstatus: "/>
+
+        <EditText android:id="@+id/userEducationStatus" android:hint="meineBildung"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+            android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+
+    <!-- ************************************************************************* -->
+    <!-- *************************** user address area *************************** -->
+    <!-- ************************************************************************* -->
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#3f3f3f"
+          android:layout_marginLeft="16dp" android:layout_marginRight="16dp" android:layout_marginTop="36dp"/>
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/item_detail_useraddress"
+              style="?android:attr/textAppearanceLarge"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="16dp"
+              android:textSize="@dimen/title_font_size"
+              android:text="Benutzer-Kontaktdaten"
+              android:textIsSelectable="true"
+              tools:context=".ItemDetail.ItemDetailSettings" />
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Benutzer-Email: "/>
+
+        <EditText android:id="@+id/userEmailAccount" android:hint="meinEmailAccount"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Adresse-Straße: "/>
+
+        <EditText android:id="@+id/streetAddress" android:hint="meineStraße"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Adresse-Stadt: "/>
+
+        <EditText android:id="@+id/city" android:hint="meineStadt"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Adresse-Bundesland: "/>
+
+        <EditText android:id="@+id/state" android:hint="meinBundesland"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Adresse-Postleitzahl: "/>
+
+        <EditText android:id="@+id/postalCode" android:hint="meinePostleitzahl"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Adresse-Telefon: "/>
+
+        <EditText android:id="@+id/userPhoneNumbers" android:hint="meineTelefonnummer"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+
+    <!-- ************************************************************************* -->
+    <!-- ************************** user personal data *************************** -->
+    <!-- ************************************************************************* -->
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#3f3f3f"
+          android:layout_marginLeft="16dp" android:layout_marginRight="16dp" android:layout_marginTop="36dp"/>
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/item_detail_userpersonaldata"
+              style="?android:attr/textAppearanceLarge"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="16dp"
+              android:textSize="@dimen/title_font_size"
+              android:text="Persönliche Daten"
+              android:textIsSelectable="true"
+              tools:context=".ItemDetail.ItemDetailSettings" />
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Persönliche Wohnsituation: "/>
+
+        <EditText android:id="@+id/userHousingSituation" android:hint="meineWohnsituation"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Persönliche Arbeitssituation: "/>
+
+        <EditText android:id="@+id/userEmploymentSituation" android:hint="meineArbeitssituation"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Persönliche Religion: "/>
+
+        <EditText android:id="@+id/userReligionState" android:hint="meineReligion"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Persönlicher Tagesaufenthalt: "/>
+
+        <EditText android:id="@+id/userResidenceDuringDay" android:hint="meinTagesAufenthalt"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Persönliches Einkommen: "/>
+
+        <EditText android:id="@+id/userAverageIncome" android:hint="meinEinkommen"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Persönlicher Migrationshintergrund: "/>
+
+        <EditText android:id="@+id/userMigrationBackground" android:hint="meineMigration"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="Persönliche Regionalität: "/>
+
+        <EditText android:id="@+id/userRegionalityScale" android:hint="meineRegionalität"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:text="Persönliche Erkrankungen: "/>
+
+        <EditText android:id="@+id/userKnownDiseases" android:hint="meineKrankheiten"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:layout_marginLeft="16dp"
+            android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+
+    <!-- ************************************************************************* -->
+    <!-- ***************************** submit button ***************************** -->
+    <!-- ************************************************************************* -->
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#3f3f3f"
+          android:layout_marginLeft="16dp" android:layout_marginRight="16dp" android:layout_marginTop="36dp"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/bt_sendUserData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/alexa_start"
+        app:srcCompat="@drawable/icon_settings"
         app:fabSize="normal"
         app:rippleColor="@color/cardview_dark_background"
         app:backgroundTint= "@color/colorPrimary" />

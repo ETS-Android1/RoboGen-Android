@@ -15,8 +15,8 @@ public class ItemDetailSettings extends ItemDetailBase {
 
     private final String m_sShowSettings = "Hier können Sie ihre persönlichen Daten angeben und ihren QBO " +
                                            "individuell konfigurieren. Füllen Sie alle Felder aus und " +
-                                           "drücken Sie dann auf die Senden-Schaltfläche um die eingetragenen " +
-                                           "Informationen an QBO zu senden!";
+                                           "drücken Sie dann auf die Speicher-Schaltfläche um die eingetragenen " +
+                                           "Informationen auf dem Tablet zu speichern!";
     private RoboGen_App m_cRoboGenApp;
 
     public FloatingActionButton m_btnStartSettings;
@@ -54,7 +54,7 @@ public class ItemDetailSettings extends ItemDetailBase {
             @Override
             public void onClick(View view) {
 
-                makeSnackbarMessage(view, "Sende Daten...");
+                makeSnackbarMessage(view, "Speichere Daten auf Ihrem Gerät...");
 
                 //m_cRoboGenApp.getRoboGenManager().Contacts_SendSMS();
             }
