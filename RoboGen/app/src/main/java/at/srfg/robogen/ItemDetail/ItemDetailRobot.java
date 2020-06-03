@@ -28,18 +28,12 @@ public class ItemDetailRobot extends ItemDetailBase {
 
     private RoboGen_App m_cRoboGenApp;
 
-    private final String m_sConnectRobot = "Schritt 1) Verbindung aufbauen mit Q.Bo One via Bluetooth. " +
-                                   "Das Gerät muss zuerst gekoppelt werden und dann verbunden. " +
-                                    "Beides kann mit dem folgenden Schalter erledigt werden:";
-    private final String m_sSendRobot = "Schritt 2) Nach einem erfolgreichen Verbindungsaufbau können Testdaten versendet werden. " +
-                                   "Mit den folgenden Schaltern können Daten an den Roboter gesendet werden:";
-    private final String m_sQuitRobot = "Schritt 3) Die Kommunikation kann mit dem folgenden Schalter beendet werden: ";
+    private final String m_sConnectRobot = "Schritt 1) Das Tablet muss mit dem Roboter verbunden werden (linker Schalter)\n" +
+                                           "Schritt 2) Die gespeicherten Einstellungen können versendet werden (mittlerer Schalter)\n" +
+                                           "Schritt 3) Die Verbindung kann nach erfolgreichem Senden beendet werden (rechter Schalter)";
 
     public FloatingActionButton m_btnConnectRobot;
     public FloatingActionButton m_btnSendRobot_Code1;
-    public FloatingActionButton m_btnSendRobot_Code2;
-    public FloatingActionButton m_btnSendRobot_Code3;
-    public FloatingActionButton m_btnSendRobot_Code4;
     public FloatingActionButton m_btnSendRobot_Quit;
 
     /*******************************************************************************
@@ -73,8 +67,6 @@ public class ItemDetailRobot extends ItemDetailBase {
         // init text
         ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.m_sEntryHeader);
         ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(m_sConnectRobot);
-        ((TextView) rootView.findViewById(R.id.item_detail_text_2)).setText(m_sSendRobot);
-        ((TextView) rootView.findViewById(R.id.item_detail_text_3)).setText(m_sQuitRobot);
 
         // init bluetooth manager
         m_cRoboGenApp.getRoboGenManager().BlueTooth_Init(this.getActivity(), rootView);
@@ -94,31 +86,7 @@ public class ItemDetailRobot extends ItemDetailBase {
         m_btnSendRobot_Code1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
-                SendSingleByteToDevice(view, (byte) 1);
-            }
-        });
-
-        m_btnSendRobot_Code2 = (FloatingActionButton) rootView.findViewById(R.id.bt_send_code2);
-        m_btnSendRobot_Code2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-
-                SendSingleByteToDevice(view, (byte) 2);
-            }
-        });
-
-        m_btnSendRobot_Code3 = (FloatingActionButton) rootView.findViewById(R.id.bt_send_code3);
-        m_btnSendRobot_Code3.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-
-                SendSingleByteToDevice(view, (byte) 3);
-            }
-        });
-
-        m_btnSendRobot_Code4 = (FloatingActionButton) rootView.findViewById(R.id.bt_send_code4);
-        m_btnSendRobot_Code4.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-
-                //SendSingleByteToDevice(view, (byte) 4);
+                makeSnackbarMessage(view, "Sende Benutzer-Einstellungen an Gerät!");
                 SendSettingsFileToDevice(view);
             }
         });
@@ -127,6 +95,7 @@ public class ItemDetailRobot extends ItemDetailBase {
         m_btnSendRobot_Quit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
+                makeSnackbarMessage(view, "Beende vorhandene Bluetooth-Verbindung..");
                 SendSingleByteToDevice(view, (byte) 'q');
             }
         });
@@ -137,7 +106,6 @@ public class ItemDetailRobot extends ItemDetailBase {
      ******************************************************************************/
     private void SendSingleByteToDevice(View view, byte data)
     {
-        makeSnackbarMessage(view, "Sende Daten-Kommando an Gerät: " + data);
         m_cRoboGenApp.getRoboGenManager().BlueTooth_SendSingleByte(data);
     }
 
@@ -153,7 +121,6 @@ public class ItemDetailRobot extends ItemDetailBase {
             is.read(buffer);
             is.close();
 
-            makeSnackbarMessage(view, "Sende Benutzer-Einstellungen an Gerät!");
             m_cRoboGenApp.getRoboGenManager().BlueTooth_SendMultipleBytes(buffer);
         }
         catch (IOException ex) {

@@ -31,29 +31,6 @@
         android:textIsSelectable="true"
         tools:context=".ItemDetail.ItemDetailRobot" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/bt_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/bluetooth_connect"
-        app:fabSize="normal"
-        app:rippleColor="@color/cardview_dark_background"
-        app:backgroundTint= "@color/colorPrimary" />
-
-    <TextView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/item_detail_text_2"
-        style="?android:attr/textAppearanceLarge"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        android:textSize="@dimen/text_font_size"
-        android:textIsSelectable="true"
-        tools:context=".ItemDetail.ItemDetailRobot" />
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,45 +41,34 @@
         app:layout_dodgeInsetEdges="bottom">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/bt_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/bluetooth"
+            app:fabSize="normal"
+            app:rippleColor="@color/cardview_dark_background"
+            app:backgroundTint= "@color/colorPrimary" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/bt_send_code1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@drawable/bluetooth_send_1"
+            app:srcCompat="@drawable/bluetooth_send"
             app:fabSize="normal"
             app:rippleColor="@color/cardview_dark_background"
             app:backgroundTint= "@color/colorPrimary" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/bt_send_code2"
+            android:id="@+id/bt_quit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@drawable/bluetooth_send_2"
-            app:fabSize="normal"
-            app:rippleColor="@color/cardview_dark_background"
-            app:backgroundTint= "@color/colorPrimary" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/bt_send_code3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@drawable/bluetooth_send_3"
-            app:fabSize="normal"
-            app:rippleColor="@color/cardview_dark_background"
-            app:backgroundTint= "@color/colorPrimary" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/bt_send_code4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@drawable/bluetooth_send_4"
+            app:srcCompat="@drawable/bluetooth_send_q"
             app:fabSize="normal"
             app:rippleColor="@color/cardview_dark_background"
             app:backgroundTint= "@color/colorPrimary" />
@@ -130,29 +96,6 @@
             android:textColor="@color/colorPrimary"
             tools:context=".ItemDetail.ItemDetailRobot" />
     </LinearLayout>
-
-    <TextView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/item_detail_text_3"
-        style="?android:attr/textAppearanceLarge"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        android:textSize="@dimen/text_font_size"
-        android:textIsSelectable="true"
-        tools:context=".ItemDetail.ItemDetailRobot" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/bt_quit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/bluetooth_send_q"
-        app:fabSize="normal"
-        app:rippleColor="@color/cardview_dark_background"
-        app:backgroundTint= "@color/colorPrimary" />
 
 </LinearLayout>
 
