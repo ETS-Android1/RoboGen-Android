@@ -365,8 +365,7 @@ public class BluetoothSerialService {
                 mmOutStream.write(buffer);
 
                 // Share the sent message back to the UI Activity
-                m_cHandler.obtainMessage(BluetoothManager.MESSAGE_WRITE, buffer.length, -1, buffer)
-                        .sendToTarget();
+                m_cHandler.obtainMessage(BluetoothManager.MESSAGE_WRITE, buffer.length, -1, buffer).sendToTarget();
             } catch (IOException e) {
                 Log.e(TAG, "Exception during write", e);
             }

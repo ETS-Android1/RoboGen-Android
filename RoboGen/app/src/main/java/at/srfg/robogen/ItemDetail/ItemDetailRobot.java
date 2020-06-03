@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import at.srfg.robogen.itemactivity.ItemDetailActivity;
 import at.srfg.robogen.itemactivity.ItemListActivity;
 import at.srfg.robogen.R;
@@ -115,7 +118,8 @@ public class ItemDetailRobot extends ItemDetailBase {
         m_btnSendRobot_Code4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
-                SendSingleByteToDevice(view, (byte) 4);
+                //SendSingleByteToDevice(view, (byte) 4);
+                SendSettingsFileToDevice(view);
             }
         });
 
@@ -134,7 +138,27 @@ public class ItemDetailRobot extends ItemDetailBase {
     private void SendSingleByteToDevice(View view, byte data)
     {
         makeSnackbarMessage(view, "Sende Daten-Kommando an Gerät: " + data);
-        m_cRoboGenApp.getRoboGenManager().BlueTooth_Send(data);
+        m_cRoboGenApp.getRoboGenManager().BlueTooth_SendSingleByte(data);
+    }
+
+    /*******************************************************************************
+     * sending data to the connected bluetooth device
+     ******************************************************************************/
+    private void SendSettingsFileToDevice(View view)
+    {
+        try {
+            InputStream is = view.getContext().openFileInput("settings.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+
+            makeSnackbarMessage(view, "Sende Benutzer-Einstellungen an Gerät!");
+            m_cRoboGenApp.getRoboGenManager().BlueTooth_SendMultipleBytes(buffer);
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /*******************************************************************************

@@ -67,11 +67,16 @@ public class RoboGen_Manager {
         m_cBluetoothManager.doConnect();
     }
 
-    public void BlueTooth_Send(byte data)
+    public void BlueTooth_SendSingleByte(byte data)
     {
         byte[] buffer = new byte[1];
         buffer[0] = data;
         m_cBluetoothManager.send(buffer);
+    }
+
+    public void BlueTooth_SendMultipleBytes(byte[] data)
+    {
+        m_cBluetoothManager.send(data);
     }
 
 
