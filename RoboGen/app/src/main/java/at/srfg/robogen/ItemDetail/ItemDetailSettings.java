@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -58,6 +59,7 @@ public class ItemDetailSettings extends ItemDetailBase {
         ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.m_sEntryHeader);
         ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(m_sShowSettings);
 
+        addSeekBarListeners(rootView);
         assignSettingsToFields(rootView);
 
         m_btnStartSettings = (FloatingActionButton) rootView.findViewById(R.id.bt_sendUserData);
@@ -67,6 +69,48 @@ public class ItemDetailSettings extends ItemDetailBase {
 
                 makeSnackbarMessage(view, "Speichere Daten auf Ihrem Gerät...");
                 assignFieldsToSettings(rootView);
+            }
+        });
+    }
+
+    /*******************************************************************************
+     * init GUI components
+     ******************************************************************************/
+    private void addSeekBarListeners(final View rootView){
+
+        // AudioVolume
+        ((SeekBar) rootView.findViewById(R.id.robotAudioVolume)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override public void onStopTrackingTouch(SeekBar seekBar) {}
+            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+                ((TextView)rootView.findViewById(R.id.robotAudioVolumeText)).setText(Integer.toString(progress));
+            }
+        });
+
+        // StressThreshold
+        ((SeekBar) rootView.findViewById(R.id.robotThresholdStress)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override public void onStopTrackingTouch(SeekBar seekBar) {}
+            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+                ((TextView)rootView.findViewById(R.id.robotThresholdStressText)).setText(Integer.toString(progress));
+            }
+        });
+
+        // SleepThreshold
+        ((SeekBar) rootView.findViewById(R.id.robotThresholdSleep)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override public void onStopTrackingTouch(SeekBar seekBar) {}
+            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+                ((TextView)rootView.findViewById(R.id.robotThresholdSleepText)).setText(Integer.toString(progress));
             }
         });
     }
@@ -115,9 +159,7 @@ public class ItemDetailSettings extends ItemDetailBase {
         JSONObject robotSettings = null;
         JSONObject userSettings = null;
         JSONObject userAddress = null;
-        JSONArray userPhoneNumbers = null;
         JSONObject userPersonalData = null;
-        JSONArray userKnownDiseases = null;
 
         try {
             String jsonString = readSettingsJSON(this.getActivity().getBaseContext());
@@ -128,9 +170,7 @@ public class ItemDetailSettings extends ItemDetailBase {
             userSettings = obj.getJSONObject("userSettings");
 
             userAddress = userSettings.getJSONObject("userAddress");
-            userPhoneNumbers = userSettings.getJSONArray("userPhoneNumbers");
             userPersonalData = userSettings.getJSONObject("userPersonalData");
-            userKnownDiseases = userPersonalData.getJSONArray("userKnownDiseases");
         }
         catch(JSONException ex)
         {
@@ -140,11 +180,11 @@ public class ItemDetailSettings extends ItemDetailBase {
         // assign json entries to robot fields
         ((TextView) rootView.findViewById(R.id.robotName)).setText(robotSettings.optString("robotName"));
         ((Spinner) rootView.findViewById(R.id.robotVoice)).setSelection(robotSettings.optInt("robotVoice"));
-        ((TextView) rootView.findViewById(R.id.robotAudioVolume)).setText(robotSettings.optString("robotAudioVolume"));
+        ((SeekBar) rootView.findViewById(R.id.robotAudioVolume)).setProgress(robotSettings.optInt("robotAudioVolume"));
         ((Spinner) rootView.findViewById(R.id.robotInfoDisplayLocation)).setSelection(robotSettings.optInt("robotInfoDisplayLocation"));
         ((TextView) rootView.findViewById(R.id.robotInfoDisplayFontSize)).setText(robotSettings.optString("robotInfoDisplayFontSize"));
-        ((TextView) rootView.findViewById(R.id.robotThresholdStress)).setText(robotSettings.optString("robotThresholdStress"));
-        ((TextView) rootView.findViewById(R.id.robotThresholdSleep)).setText(robotSettings.optString("robotThresholdSleep"));
+        ((SeekBar) rootView.findViewById(R.id.robotThresholdStress)).setProgress(robotSettings.optInt("robotThresholdStress"));
+        ((SeekBar) rootView.findViewById(R.id.robotThresholdSleep)).setProgress(robotSettings.optInt("robotThresholdSleep"));
         ((CheckBox) rootView.findViewById(R.id.doRecognizeFeelingsFromAudio)).setChecked(robotSettings.optBoolean("doRecognizeFeelingsFromAudio"));
         ((CheckBox) rootView.findViewById(R.id.doRecognizeFeelingsFromVideo)).setChecked(robotSettings.optBoolean("doRecognizeFeelingsFromVideo"));
         ((CheckBox) rootView.findViewById(R.id.isAlive)).setChecked(robotSettings.optBoolean("isAlive"));
@@ -156,12 +196,11 @@ public class ItemDetailSettings extends ItemDetailBase {
         ((Spinner) rootView.findViewById(R.id.userFamilyStatus)).setSelection(userSettings.optInt("userFamilyStatus"));
         ((Spinner) rootView.findViewById(R.id.userEducationStatus)).setSelection(userSettings.optInt("userEducationStatus"));
         ((TextView) rootView.findViewById(R.id.userEmailAccount)).setText(userSettings.optString("userEmailAccount"));
+        ((TextView) rootView.findViewById(R.id.userPhoneNumber)).setText(userSettings.optString("userPhoneNumber"));
         ((TextView) rootView.findViewById(R.id.streetAddress)).setText(userAddress.optString("streetAddress"));
         ((TextView) rootView.findViewById(R.id.city)).setText(userAddress.optString("city"));
         ((TextView) rootView.findViewById(R.id.state)).setText(userAddress.optString("state"));
         ((TextView) rootView.findViewById(R.id.postalCode)).setText(userAddress.optString("postalCode"));
-
-        // TODO: phone numbers
 
         // assign json entries to personal user fields
         ((TextView) rootView.findViewById(R.id.userHousingSituation)).setText(userPersonalData.optString("userHousingSituation"));
@@ -171,8 +210,7 @@ public class ItemDetailSettings extends ItemDetailBase {
         ((TextView) rootView.findViewById(R.id.userAverageIncome)).setText(userPersonalData.optString("userAverageIncome"));
         ((TextView) rootView.findViewById(R.id.userMigrationBackground)).setText(userPersonalData.optString("userMigrationBackground"));
         ((TextView) rootView.findViewById(R.id.userRegionalityScale)).setText(userPersonalData.optString("userRegionalityScale"));
-
-        // TODO: user diseases
+        ((TextView) rootView.findViewById(R.id.userKnownDiseases)).setText(userPersonalData.optString("userKnownDiseases"));
     }
 
     /*******************************************************************************
@@ -184,19 +222,17 @@ public class ItemDetailSettings extends ItemDetailBase {
         JSONObject robotSettings = new JSONObject();
         JSONObject userSettings = new JSONObject();
         JSONObject userAddress = new JSONObject();
-        JSONArray userPhoneNumbers = new JSONArray();
         JSONObject userPersonalData = new JSONObject();
-        JSONArray userKnownDiseases = new JSONArray();
 
         try {
             // assign json entries to robot fields
             robotSettings.put("robotName",((TextView) rootView.findViewById(R.id.robotName)).getText());
             robotSettings.put("robotVoice", ((Spinner) rootView.findViewById(R.id.robotVoice)).getSelectedItemPosition());
-            robotSettings.put("robotAudioVolume", ((TextView) rootView.findViewById(R.id.robotAudioVolume)).getText());
+            robotSettings.put("robotAudioVolume", ((SeekBar) rootView.findViewById(R.id.robotAudioVolume)).getProgress());
             robotSettings.put("robotInfoDisplayLocation", ((Spinner) rootView.findViewById(R.id.robotInfoDisplayLocation)).getSelectedItemPosition());
             robotSettings.put("robotInfoDisplayFontSize", ((TextView) rootView.findViewById(R.id.robotInfoDisplayFontSize)).getText());
-            robotSettings.put("robotThresholdStress", ((TextView) rootView.findViewById(R.id.robotThresholdStress)).getText());
-            robotSettings.put("robotThresholdSleep", ((TextView) rootView.findViewById(R.id.robotThresholdSleep)).getText());
+            robotSettings.put("robotThresholdStress", ((SeekBar) rootView.findViewById(R.id.robotThresholdStress)).getProgress());
+            robotSettings.put("robotThresholdSleep", ((SeekBar) rootView.findViewById(R.id.robotThresholdSleep)).getProgress());
             robotSettings.put("doRecognizeFeelingsFromAudio", ((CheckBox) rootView.findViewById(R.id.doRecognizeFeelingsFromAudio)).isChecked());
             robotSettings.put("doRecognizeFeelingsFromVideo", ((CheckBox) rootView.findViewById(R.id.doRecognizeFeelingsFromVideo)).isChecked());
             robotSettings.put("isAlive", ((CheckBox) rootView.findViewById(R.id.isAlive)).isChecked());
@@ -208,12 +244,11 @@ public class ItemDetailSettings extends ItemDetailBase {
             userSettings.put("userFamilyStatus", ((Spinner) rootView.findViewById(R.id.userFamilyStatus)).getSelectedItemPosition());
             userSettings.put("userEducationStatus", ((Spinner) rootView.findViewById(R.id.userEducationStatus)).getSelectedItemPosition());
             userSettings.put("userEmailAccount", ((TextView) rootView.findViewById(R.id.userEmailAccount)).getText());
+            userSettings.put("userPhoneNumber", ((TextView) rootView.findViewById(R.id.userPhoneNumber)).getText());
             userAddress.put("streetAddress", ((TextView) rootView.findViewById(R.id.streetAddress)).getText());
             userAddress.put("city", ((TextView) rootView.findViewById(R.id.city)).getText());
             userAddress.put("state", ((TextView) rootView.findViewById(R.id.state)).getText());
             userAddress.put("postalCode", ((TextView) rootView.findViewById(R.id.postalCode)).getText());
-
-            // TODO: phone numbers
 
             // assign json entries to personal user fields
             userPersonalData.put("userHousingSituation", ((TextView) rootView.findViewById(R.id.userHousingSituation)).getText());
@@ -223,14 +258,11 @@ public class ItemDetailSettings extends ItemDetailBase {
             userPersonalData.put("userAverageIncome", ((TextView) rootView.findViewById(R.id.userAverageIncome)).getText());
             userPersonalData.put("userMigrationBackground", ((TextView) rootView.findViewById(R.id.userMigrationBackground)).getText());
             userPersonalData.put("userRegionalityScale", ((TextView) rootView.findViewById(R.id.userRegionalityScale)).getText());
-
-            // TODO: user diseases
+            userPersonalData.put("userKnownDiseases", ((TextView) rootView.findViewById(R.id.userKnownDiseases)).getText());
 
 
             // finally puttin everything together
-            userPersonalData.put("userKnownDiseases", userKnownDiseases);
             userSettings.put("userAddress", userAddress);
-            userSettings.put("userPhoneNumbers", userPhoneNumbers);
             userSettings.put("userPersonalData", userPersonalData);
             jsonObj.put("robotSettings", robotSettings);
             jsonObj.put("userSettings", userSettings);

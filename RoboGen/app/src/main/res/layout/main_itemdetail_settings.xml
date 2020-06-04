@@ -46,6 +46,7 @@
               android:textIsSelectable="true"
               tools:context=".ItemDetail.ItemDetailSettings" />
 
+    <!-- **************************** robot name **************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -58,6 +59,7 @@
                   android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
+    <!-- **************************** robot voice **************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -74,18 +76,28 @@
         </LinearLayout>
     </LinearLayout>
 
+    <!-- **************************** robot audio volume **************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
                   android:textSize="@dimen/text_font_size" android:text="Roboter-Lautstärke: "/>
 
-        <EditText android:id="@+id/robotAudioVolume" android:hint="meineRoboterLautstärke"
-                  android:layout_width="fill_parent" android:layout_height="wrap_content"
-                  android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
-                  android:background="@android:drawable/editbox_background"/>
+        <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
+                      android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+            <TextView android:layout_width="50dp" android:layout_height="wrap_content"
+                      android:textSize="@dimen/editfield_font_size" android:textColor="@color/colorPrimary"
+                      android:id="@+id/robotAudioVolumeText"/>
+
+            <SeekBar android:id="@+id/robotAudioVolume" android:hint="meineRoboterLautstärke"
+                     android:layout_width="fill_parent" android:layout_height="wrap_content"
+                     android:max="100" android:maxHeight="3dp" android:minHeight="3dp"
+                     android:thumbTint="@color/colorPrimary" android:progressDrawable="@drawable/custom_seekbar"/>
+        </LinearLayout>
     </LinearLayout>
 
+    <!-- **************************** robot info display **************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -102,6 +114,7 @@
         </LinearLayout>
     </LinearLayout>
 
+    <!-- **************************** robot info display font size **************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -114,30 +127,49 @@
                   android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
+    <!-- **************************** robot stress threshold **************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
                   android:textSize="@dimen/text_font_size" android:text="Roboter-Stressgrenzwert: "/>
 
-        <EditText android:id="@+id/robotThresholdStress" android:hint="meinRoboterStressgrenzwert"
-                  android:layout_width="fill_parent" android:layout_height="wrap_content"
-                  android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
-                  android:background="@android:drawable/editbox_background"/>
+        <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
+                      android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+            <TextView android:layout_width="50dp" android:layout_height="wrap_content"
+                      android:textSize="@dimen/editfield_font_size" android:textColor="@color/colorPrimary"
+                      android:id="@+id/robotThresholdStressText"/>
+
+            <SeekBar android:id="@+id/robotThresholdStress" android:hint="meinRoboterStressgrenzwert"
+                     android:layout_width="fill_parent" android:layout_height="wrap_content"
+                     android:max="100" android:maxHeight="3dp" android:minHeight="3dp"
+                     android:thumbTint="@color/colorPrimary" android:progressDrawable="@drawable/custom_seekbar"/>
+        </LinearLayout>
     </LinearLayout>
 
+    <!-- **************************** robot sleep threshold **************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
                   android:textSize="@dimen/text_font_size" android:text="Roboter-Schlafgrenzwert: "/>
 
-        <EditText android:id="@+id/robotThresholdSleep" android:hint="meinRoboterSchlafgrenzwert"
-                  android:layout_width="fill_parent" android:layout_height="wrap_content"
-                  android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
-                  android:background="@android:drawable/editbox_background"/>
+        <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
+                      android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+            <TextView android:layout_width="50dp" android:layout_height="wrap_content"
+                      android:textSize="@dimen/editfield_font_size" android:textColor="@color/colorPrimary"
+                      android:id="@+id/robotThresholdSleepText"/>
+
+            <SeekBar android:id="@+id/robotThresholdSleep" android:hint="meinRoboterSchlafgrenzwert"
+                     android:layout_width="fill_parent" android:layout_height="wrap_content"
+                     android:max="100" android:maxHeight="3dp" android:minHeight="3dp"
+                     android:thumbTint="@color/colorPrimary" android:progressDrawable="@drawable/custom_seekbar"/>
+        </LinearLayout>
     </LinearLayout>
 
+    <!-- **************************** robot emotion detection audio **************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -150,6 +182,7 @@
                   android:buttonTint="@color/colorPrimary" android:layout_marginLeft="16dp"/>
     </LinearLayout>
 
+    <!-- **************************** robot emotion detection video **************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -162,6 +195,7 @@
                   android:buttonTint="@color/colorPrimary" android:layout_marginLeft="16dp"/>
     </LinearLayout>
 
+    <!-- **************************** robot alive status **************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -192,6 +226,7 @@
               android:textIsSelectable="true"
               tools:context=".ItemDetail.ItemDetailSettings" />
 
+    <!-- ***************************** user info name **************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -204,6 +239,7 @@
                   android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
+    <!-- ***************************** user info age **************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -216,6 +252,7 @@
                   android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
+    <!-- ***************************** user info gender **************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -232,6 +269,7 @@
         </LinearLayout>
     </LinearLayout>
 
+    <!-- ***************************** user info family status **************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -248,6 +286,7 @@
         </LinearLayout>
     </LinearLayout>
 
+    <!-- ***************************** user info education **************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -283,6 +322,7 @@
               android:textIsSelectable="true"
               tools:context=".ItemDetail.ItemDetailSettings" />
 
+    <!-- *************************** user address email *************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -295,6 +335,7 @@
                   android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
+    <!-- *************************** user address street *************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -307,6 +348,7 @@
                   android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
+    <!-- *************************** user address city *************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -319,6 +361,7 @@
                   android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
+    <!-- *************************** user address state *************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -331,6 +374,7 @@
                   android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
+    <!-- *************************** user address postal code *************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -343,13 +387,14 @@
                   android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
+    <!-- *************************** user address phone number *************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
                   android:textSize="@dimen/text_font_size" android:text="Adresse-Telefon: "/>
 
-        <EditText android:id="@+id/userPhoneNumbers" android:hint="meineTelefonnummer"
+        <EditText android:id="@+id/userPhoneNumber" android:hint="meineTelefonnummer"
                   android:layout_width="fill_parent" android:layout_height="wrap_content"
                   android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
                   android:background="@android:drawable/editbox_background"/>
@@ -373,6 +418,7 @@
               android:textIsSelectable="true"
               tools:context=".ItemDetail.ItemDetailSettings" />
 
+    <!-- ************************** user data housing *************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -385,6 +431,7 @@
                   android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
+    <!-- ************************** user data work *************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -397,6 +444,7 @@
                   android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
+    <!-- ************************** user data religion *************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -409,6 +457,7 @@
                   android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
+    <!-- ************************** user data day residence *************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -421,6 +470,7 @@
                   android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
+    <!-- ************************** user data average income *************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -433,6 +483,7 @@
                   android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
+    <!-- ************************** user data migration *************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -445,6 +496,7 @@
                   android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
+    <!-- ************************** user data region *************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
@@ -457,6 +509,7 @@
                   android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
+    <!-- ************************** user data diseases *************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
