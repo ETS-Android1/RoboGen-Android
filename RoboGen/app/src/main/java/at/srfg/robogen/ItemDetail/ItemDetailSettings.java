@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -137,9 +139,9 @@ public class ItemDetailSettings extends ItemDetailBase {
 
         // assign json entries to robot fields
         ((TextView) rootView.findViewById(R.id.robotName)).setText(robotSettings.optString("robotName"));
-        ((TextView) rootView.findViewById(R.id.robotVoice)).setText(robotSettings.optString("robotVoice"));
+        ((Spinner) rootView.findViewById(R.id.robotVoice)).setSelection(robotSettings.optInt("robotVoice"));
         ((TextView) rootView.findViewById(R.id.robotAudioVolume)).setText(robotSettings.optString("robotAudioVolume"));
-        ((TextView) rootView.findViewById(R.id.robotInfoDisplayLocation)).setText(robotSettings.optString("robotInfoDisplayLocation"));
+        ((Spinner) rootView.findViewById(R.id.robotInfoDisplayLocation)).setSelection(robotSettings.optInt("robotInfoDisplayLocation"));
         ((TextView) rootView.findViewById(R.id.robotInfoDisplayFontSize)).setText(robotSettings.optString("robotInfoDisplayFontSize"));
         ((TextView) rootView.findViewById(R.id.robotThresholdStress)).setText(robotSettings.optString("robotThresholdStress"));
         ((TextView) rootView.findViewById(R.id.robotThresholdSleep)).setText(robotSettings.optString("robotThresholdSleep"));
@@ -150,9 +152,9 @@ public class ItemDetailSettings extends ItemDetailBase {
         // assign json entries to user fields
         ((TextView) rootView.findViewById(R.id.userName)).setText(userSettings.optString("userName"));
         ((TextView) rootView.findViewById(R.id.userAge)).setText(userSettings.optString("userAge"));
-        ((TextView) rootView.findViewById(R.id.userGender)).setText(userSettings.optString("userGender"));
-        ((TextView) rootView.findViewById(R.id.userFamilyStatus)).setText(userSettings.optString("userFamilyStatus"));
-        ((TextView) rootView.findViewById(R.id.userEducationStatus)).setText(userSettings.optString("userEducationStatus"));
+        ((Spinner) rootView.findViewById(R.id.userGender)).setSelection(userSettings.optInt("userGender"));
+        ((Spinner) rootView.findViewById(R.id.userFamilyStatus)).setSelection(userSettings.optInt("userFamilyStatus"));
+        ((Spinner) rootView.findViewById(R.id.userEducationStatus)).setSelection(userSettings.optInt("userEducationStatus"));
         ((TextView) rootView.findViewById(R.id.userEmailAccount)).setText(userSettings.optString("userEmailAccount"));
         ((TextView) rootView.findViewById(R.id.streetAddress)).setText(userAddress.optString("streetAddress"));
         ((TextView) rootView.findViewById(R.id.city)).setText(userAddress.optString("city"));
@@ -189,9 +191,9 @@ public class ItemDetailSettings extends ItemDetailBase {
         try {
             // assign json entries to robot fields
             robotSettings.put("robotName",((TextView) rootView.findViewById(R.id.robotName)).getText());
-            robotSettings.put("robotVoice", ((TextView) rootView.findViewById(R.id.robotVoice)).getText());
+            robotSettings.put("robotVoice", ((Spinner) rootView.findViewById(R.id.robotVoice)).getSelectedItemPosition());
             robotSettings.put("robotAudioVolume", ((TextView) rootView.findViewById(R.id.robotAudioVolume)).getText());
-            robotSettings.put("robotInfoDisplayLocation", ((TextView) rootView.findViewById(R.id.robotInfoDisplayLocation)).getText());
+            robotSettings.put("robotInfoDisplayLocation", ((Spinner) rootView.findViewById(R.id.robotInfoDisplayLocation)).getSelectedItemPosition());
             robotSettings.put("robotInfoDisplayFontSize", ((TextView) rootView.findViewById(R.id.robotInfoDisplayFontSize)).getText());
             robotSettings.put("robotThresholdStress", ((TextView) rootView.findViewById(R.id.robotThresholdStress)).getText());
             robotSettings.put("robotThresholdSleep", ((TextView) rootView.findViewById(R.id.robotThresholdSleep)).getText());
@@ -202,9 +204,9 @@ public class ItemDetailSettings extends ItemDetailBase {
             // assign json entries to user fields
             userSettings.put("userName", ((TextView) rootView.findViewById(R.id.userName)).getText());
             userSettings.put("userAge", ((TextView) rootView.findViewById(R.id.userAge)).getText());
-            userSettings.put("userGender", ((TextView) rootView.findViewById(R.id.userGender)).getText());
-            userSettings.put("userFamilyStatus", ((TextView) rootView.findViewById(R.id.userFamilyStatus)).getText());
-            userSettings.put("userEducationStatus", ((TextView) rootView.findViewById(R.id.userEducationStatus)).getText());
+            userSettings.put("userGender", ((Spinner) rootView.findViewById(R.id.userGender)).getSelectedItemPosition());
+            userSettings.put("userFamilyStatus", ((Spinner) rootView.findViewById(R.id.userFamilyStatus)).getSelectedItemPosition());
+            userSettings.put("userEducationStatus", ((Spinner) rootView.findViewById(R.id.userEducationStatus)).getSelectedItemPosition());
             userSettings.put("userEmailAccount", ((TextView) rootView.findViewById(R.id.userEmailAccount)).getText());
             userAddress.put("streetAddress", ((TextView) rootView.findViewById(R.id.streetAddress)).getText());
             userAddress.put("city", ((TextView) rootView.findViewById(R.id.city)).getText());

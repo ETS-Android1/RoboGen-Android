@@ -54,4 +54,50 @@
     <string name="loading">Laden…</string>
     <string name="error_loading_data">Daten-Ladefehler. Überprüfen Sie Ihre Internet-Verbindung.</string>
     <string name="logging_you_into_fitbit">Einloggen in Fitbit&#8230;</string>
+
+
+    <!-- ///////////////////////////////////////////////////////////////////////////////////////// -->
+    <!--  From Settings Elements -->
+    <!-- ///////////////////////////////////////////////////////////////////////////////////////// -->
+    <string-array name="robotVoiceOptions">
+        <item>QBO - Standard</item>
+        <item>Männlich - Markus</item>
+        <item>Männlich - Gustav</item>
+        <item>Weiblich - Anita</item>
+        <item>Weiblich - Arabella</item>
+        <item>Geschlechtsneutral</item>
+    </string-array>
+
+    <string-array name="robotInfoDisplayOptions">
+        <item>Auf der Roboter-Ausgabe</item>
+        <item>Auf dem RoboGen-Display</item>
+        <item>Auf meinem eigenen Telefon</item>
+    </string-array>
+
+    <string-array name="userGenderOptions">
+        <item>Männlich</item>
+        <item>Weiblich</item>
+        <item>Neutral</item>
+        <item>Transgender</item>
+    </string-array>
+
+    <string-array name="userFamiliyStatusOptions">
+        <item>Ledig</item>
+        <item>Verlobt</item>
+        <item>Verheiratet</item>
+        <item>Geschieden</item>
+        <item>Sonstiges</item>
+    </string-array>
+
+    <string-array name="userEducationStatusOptions">
+        <item>Pflichtschulabschluß</item>
+        <item>Lehre</item>
+        <item>Meister</item>
+        <item>Matura</item>
+        <item>Univ.-Diplom</item>
+        <item>Univ.-Bachelor</item>
+        <item>Univ.-Master</item>
+        <item>Univ.-Doktor</item>
+    </string-array>
+
 </resources>
