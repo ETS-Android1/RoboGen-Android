@@ -51,7 +51,7 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Roboter-Name: "/>
+                  android:textSize="@dimen/text_font_size" android:text="*Name des Roboters: "/>
 
         <EditText android:id="@+id/robotName" android:hint="meinRoboterName"
                   android:layout_width="fill_parent" android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Roboter-Stimme: "/>
+                  android:textSize="@dimen/text_font_size" android:text="*Stimme des Roboters: "/>
 
         <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
                       android:layout_width="fill_parent" android:layout_height="fill_parent"
@@ -81,7 +81,7 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Roboter-Lautstärke: "/>
+                  android:textSize="@dimen/text_font_size" android:text="*Lautstärke: "/>
 
         <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
                       android:layout_width="fill_parent" android:layout_height="fill_parent">
@@ -102,7 +102,7 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Roboter-Infoanzeige: "/>
+                  android:textSize="@dimen/text_font_size" android:text="*Ort der Anzeige: "/>
 
         <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
                       android:layout_width="fill_parent" android:layout_height="fill_parent"
@@ -119,7 +119,7 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Roboter-InfoSchriftgröße: "/>
+                  android:textSize="@dimen/text_font_size" android:text="*Schriftgröße: "/>
 
         <EditText android:id="@+id/robotInfoDisplayFontSize" android:hint="meineRoboterInfoSchriftgröße"
                   android:layout_width="fill_parent" android:layout_height="wrap_content"
@@ -127,12 +127,30 @@
                   android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
+    <!-- **************************** robot info notification style**************************** -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:text="*Benachrichtigungsart: "/>
+
+        <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
+                      android:layout_width="fill_parent" android:layout_height="fill_parent"
+                      android:background="@android:drawable/editbox_background">
+
+            <Spinner android:id="@+id/robotNotificationStyle" android:hint="meineBenachrichtigungsart"
+                     android:layout_width="fill_parent" android:layout_height="fill_parent"
+                     android:drawSelectorOnTop="true" android:entries="@array/robotNotificationStyleOptions"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
     <!-- **************************** robot stress threshold **************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Roboter-Stressgrenzwert: "/>
+                  android:textSize="@dimen/text_font_size" android:text="*Schwellwert Stress: "/>
 
         <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
                       android:layout_width="fill_parent" android:layout_height="fill_parent">
@@ -153,7 +171,7 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Roboter-Schlafgrenzwert: "/>
+                  android:textSize="@dimen/text_font_size" android:text="*Schwellwert guter Schlaf: "/>
 
         <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
                       android:layout_width="fill_parent" android:layout_height="fill_parent">
@@ -174,7 +192,7 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="AudioGefühlserkennung: "/>
+                  android:textSize="@dimen/text_font_size" android:text="*Emotionen aus Wörtern: "/>
 
         <CheckBox android:id="@+id/doRecognizeFeelingsFromAudio"
                   android:textSize="@dimen/editfield_font_size" android:text="An/Aus"
@@ -187,7 +205,7 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="VideoGefühlserkennung: "/>
+                  android:textSize="@dimen/text_font_size" android:text="*Emotionen aus der Mimik: "/>
 
         <CheckBox android:id="@+id/doRecognizeFeelingsFromVideo"
                   android:textSize="@dimen/editfield_font_size" android:text="An/Aus"
@@ -231,7 +249,7 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Benutzer-Name: "/>
+                  android:textSize="@dimen/text_font_size" android:text="Vorname: "/>
 
         <EditText android:id="@+id/userName" android:hint="meinName"
                   android:layout_width="fill_parent" android:layout_height="wrap_content"
@@ -244,7 +262,7 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Benutzer-Alter: "/>
+                  android:textSize="@dimen/text_font_size" android:text="*Alter: "/>
 
         <EditText android:id="@+id/userAge" android:hint="meinAlter"
                   android:layout_width="fill_parent" android:layout_height="wrap_content"
@@ -257,7 +275,7 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Benutzer-Geschlecht: "/>
+                  android:textSize="@dimen/text_font_size" android:text="*Geschlecht: "/>
 
         <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
             android:layout_width="fill_parent" android:layout_height="fill_parent"
@@ -274,7 +292,7 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Benutzer-Familienstatus: "/>
+                  android:textSize="@dimen/text_font_size" android:text="*Familienstatus: "/>
 
         <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
                       android:layout_width="fill_parent" android:layout_height="fill_parent"
@@ -291,7 +309,7 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Benutzer-Bildungsstatus: "/>
+                  android:textSize="@dimen/text_font_size" android:text="Bildungsstatus: "/>
 
         <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
                       android:layout_width="fill_parent" android:layout_height="fill_parent"
@@ -327,7 +345,7 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Benutzer-Email: "/>
+                  android:textSize="@dimen/text_font_size" android:text="*Email-Adresse: "/>
 
         <EditText android:id="@+id/userEmailAccount" android:hint="meinEmailAccount"
                   android:layout_width="fill_parent" android:layout_height="wrap_content"
@@ -340,7 +358,7 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Adresse-Straße: "/>
+                  android:textSize="@dimen/text_font_size" android:text="Straße: "/>
 
         <EditText android:id="@+id/streetAddress" android:hint="meineStraße"
                   android:layout_width="fill_parent" android:layout_height="wrap_content"
@@ -353,7 +371,7 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Adresse-Stadt: "/>
+                  android:textSize="@dimen/text_font_size" android:text="Stadt: "/>
 
         <EditText android:id="@+id/city" android:hint="meineStadt"
                   android:layout_width="fill_parent" android:layout_height="wrap_content"
@@ -366,7 +384,7 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Adresse-Bundesland: "/>
+                  android:textSize="@dimen/text_font_size" android:text="Bundesland: "/>
 
         <EditText android:id="@+id/state" android:hint="meinBundesland"
                   android:layout_width="fill_parent" android:layout_height="wrap_content"
@@ -379,7 +397,7 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Adresse-Postleitzahl: "/>
+                  android:textSize="@dimen/text_font_size" android:text="Postleitzahl: "/>
 
         <EditText android:id="@+id/postalCode" android:hint="meinePostleitzahl"
                   android:layout_width="fill_parent" android:layout_height="wrap_content"
@@ -392,7 +410,7 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Adresse-Telefon: "/>
+                  android:textSize="@dimen/text_font_size" android:text="*Telefon: "/>
 
         <EditText android:id="@+id/userPhoneNumber" android:hint="meineTelefonnummer"
                   android:layout_width="fill_parent" android:layout_height="wrap_content"
@@ -423,12 +441,16 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Persönliche Wohnsituation: "/>
+                  android:textSize="@dimen/text_font_size" android:text="Wohnsituation: "/>
 
-        <EditText android:id="@+id/userHousingSituation" android:hint="meineWohnsituation"
-                  android:layout_width="fill_parent" android:layout_height="wrap_content"
-                  android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
-                  android:background="@android:drawable/editbox_background"/>
+        <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
+                      android:layout_width="fill_parent" android:layout_height="fill_parent"
+                      android:background="@android:drawable/editbox_background">
+
+            <Spinner android:id="@+id/userHousingSituation" android:hint="meineWohnsituation"
+                     android:layout_width="fill_parent" android:layout_height="fill_parent"
+                     android:drawSelectorOnTop="true" android:entries="@array/userHousingSituationOptions"/>
+        </LinearLayout>
     </LinearLayout>
 
     <!-- ************************** user data work *************************** -->
@@ -436,12 +458,17 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Persönliche Arbeitssituation: "/>
+                  android:textSize="@dimen/text_font_size" android:text="Beschäftigungssituation: "/>
 
-        <EditText android:id="@+id/userEmploymentSituation" android:hint="meineArbeitssituation"
-                  android:layout_width="fill_parent" android:layout_height="wrap_content"
-                  android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
-                  android:background="@android:drawable/editbox_background"/>
+        <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
+                      android:layout_width="fill_parent" android:layout_height="fill_parent"
+                      android:background="@android:drawable/editbox_background">
+
+            <Spinner android:id="@+id/userEmploymentSituation" android:hint="meineArbeitssituation"
+                     android:layout_width="fill_parent" android:layout_height="fill_parent"
+                     android:drawSelectorOnTop="true" android:entries="@array/userEmploymentSituationOptions"/>
+        </LinearLayout>
+
     </LinearLayout>
 
     <!-- ************************** user data religion *************************** -->
@@ -449,12 +476,17 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Persönliche Religion: "/>
+                  android:textSize="@dimen/text_font_size" android:text="Religionszugehörigkeit: "/>
 
-        <EditText android:id="@+id/userReligionState" android:hint="meineReligion"
-                  android:layout_width="fill_parent" android:layout_height="wrap_content"
-                  android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
-                  android:background="@android:drawable/editbox_background"/>
+        <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
+                      android:layout_width="fill_parent" android:layout_height="fill_parent"
+                      android:background="@android:drawable/editbox_background">
+
+            <Spinner android:id="@+id/userReligionState" android:hint="meineReligion"
+                     android:layout_width="fill_parent" android:layout_height="fill_parent"
+                     android:drawSelectorOnTop="true" android:entries="@array/userReligionStateOptions"/>
+        </LinearLayout>
+
     </LinearLayout>
 
     <!-- ************************** user data day residence *************************** -->
@@ -462,12 +494,16 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Persönlicher Tagesaufenthalt: "/>
+                  android:textSize="@dimen/text_font_size" android:text="Aufenthaltsort untertags: "/>
 
-        <EditText android:id="@+id/userResidenceDuringDay" android:hint="meinTagesAufenthalt"
-                  android:layout_width="fill_parent" android:layout_height="wrap_content"
-                  android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
-                  android:background="@android:drawable/editbox_background"/>
+        <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
+                      android:layout_width="fill_parent" android:layout_height="fill_parent"
+                      android:background="@android:drawable/editbox_background">
+
+            <Spinner android:id="@+id/userResidenceDuringDay" android:hint="meinTagesAufenthalt"
+                     android:layout_width="fill_parent" android:layout_height="fill_parent"
+                     android:drawSelectorOnTop="true" android:entries="@array/userResidenceDuringDayOptions"/>
+        </LinearLayout>
     </LinearLayout>
 
     <!-- ************************** user data average income *************************** -->
@@ -475,12 +511,16 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Persönliches Einkommen: "/>
+                  android:textSize="@dimen/text_font_size" android:text="Einkommen: "/>
 
-        <EditText android:id="@+id/userAverageIncome" android:hint="meinEinkommen"
-                  android:layout_width="fill_parent" android:layout_height="wrap_content"
-                  android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
-                  android:background="@android:drawable/editbox_background"/>
+        <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
+                      android:layout_width="fill_parent" android:layout_height="fill_parent"
+                      android:background="@android:drawable/editbox_background">
+
+            <Spinner android:id="@+id/userAverageIncome" android:hint="meinEinkommen"
+                     android:layout_width="fill_parent" android:layout_height="fill_parent"
+                     android:drawSelectorOnTop="true" android:entries="@array/userAverageIncomeOptions"/>
+        </LinearLayout>
     </LinearLayout>
 
     <!-- ************************** user data migration *************************** -->
@@ -490,10 +530,14 @@
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
                   android:textSize="@dimen/text_font_size" android:text="Migrationshintergrund: "/>
 
-        <EditText android:id="@+id/userMigrationBackground" android:hint="meineMigration"
-                  android:layout_width="fill_parent" android:layout_height="wrap_content"
-                  android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
-                  android:background="@android:drawable/editbox_background"/>
+        <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
+                      android:layout_width="fill_parent" android:layout_height="fill_parent"
+                      android:background="@android:drawable/editbox_background">
+
+            <Spinner android:id="@+id/userMigrationBackground" android:hint="meineMigration"
+                     android:layout_width="fill_parent" android:layout_height="fill_parent"
+                     android:drawSelectorOnTop="true" android:entries="@array/userMigrationBackgroundOptions"/>
+        </LinearLayout>
     </LinearLayout>
 
     <!-- ************************** user data region *************************** -->
@@ -501,12 +545,16 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Persönliche Regionalität: "/>
+                  android:textSize="@dimen/text_font_size" android:text="Wohnort/Regionalität: "/>
 
-        <EditText android:id="@+id/userRegionalityScale" android:hint="meineRegionalität"
-                  android:layout_width="fill_parent" android:layout_height="wrap_content"
-                  android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
-                  android:background="@android:drawable/editbox_background"/>
+        <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
+                      android:layout_width="fill_parent" android:layout_height="fill_parent"
+                      android:background="@android:drawable/editbox_background">
+
+            <Spinner android:id="@+id/userRegionalityScale" android:hint="meineRegionalität"
+                     android:layout_width="fill_parent" android:layout_height="fill_parent"
+                     android:drawSelectorOnTop="true" android:entries="@array/userRegionalityScaleOptions"/>
+        </LinearLayout>
     </LinearLayout>
 
     <!-- ************************** user data diseases *************************** -->
@@ -514,13 +562,87 @@
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Persönliche Erkrankungen: "/>
+                  android:textSize="@dimen/text_font_size" android:text="*Erkrankungen: "/>
 
-        <EditText android:id="@+id/userKnownDiseases" android:hint="meineKrankheiten"
-                  android:layout_width="fill_parent" android:layout_height="wrap_content"
-                  android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
-                  android:background="@android:drawable/editbox_background"/>
+        <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
+                      android:layout_width="fill_parent" android:layout_height="fill_parent"
+                      android:background="@android:drawable/editbox_background">
+
+            <Spinner android:id="@+id/userKnownDiseases" android:hint="meineKrankheiten"
+                     android:layout_width="fill_parent" android:layout_height="fill_parent"
+                     android:drawSelectorOnTop="true" android:entries="@array/userKnownDiseasesOptions"/>
+        </LinearLayout>
     </LinearLayout>
+
+    <!-- ************************** user data walking aid *************************** -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="*Gehhilfe: "/>
+
+        <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
+                      android:layout_width="fill_parent" android:layout_height="fill_parent"
+                      android:background="@android:drawable/editbox_background">
+
+            <Spinner android:id="@+id/userWalkingAid" android:hint="meineGehhilfe"
+                     android:layout_width="fill_parent" android:layout_height="fill_parent"
+                     android:drawSelectorOnTop="true" android:entries="@array/userWalkingAidOptions"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- ************************** user data care support *************************** -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:text="*Betreuungssituation: "/>
+
+        <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
+            android:layout_width="fill_parent" android:layout_height="fill_parent"
+            android:background="@android:drawable/editbox_background">
+
+            <Spinner android:id="@+id/userCareSituation" android:hint="meineBetreuung"
+                android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:drawSelectorOnTop="true" android:entries="@array/userCareSituationOptions"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- ************************** user data medicine *************************** -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:text="*Medikamente: "/>
+
+        <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
+            android:layout_width="fill_parent" android:layout_height="fill_parent"
+            android:background="@android:drawable/editbox_background">
+
+            <Spinner android:id="@+id/userMedicine" android:hint="meineMedikamente"
+                android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:drawSelectorOnTop="true" android:entries="@array/userMedicineOptions"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- ************************** user data drinking *************************** -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:text="*Trinken: "/>
+
+        <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
+            android:layout_width="fill_parent" android:layout_height="fill_parent"
+            android:background="@android:drawable/editbox_background">
+
+            <Spinner android:id="@+id/userDrinking" android:hint="meineMedikamente"
+                android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:drawSelectorOnTop="true" android:entries="@array/userDrinkingOptions"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
 
 
     <!-- ************************************************************************* -->

@@ -183,6 +183,7 @@ public class ItemDetailSettings extends ItemDetailBase {
         ((SeekBar) rootView.findViewById(R.id.robotAudioVolume)).setProgress(robotSettings.optInt("robotAudioVolume"));
         ((Spinner) rootView.findViewById(R.id.robotInfoDisplayLocation)).setSelection(robotSettings.optInt("robotInfoDisplayLocation"));
         ((TextView) rootView.findViewById(R.id.robotInfoDisplayFontSize)).setText(robotSettings.optString("robotInfoDisplayFontSize"));
+        ((Spinner) rootView.findViewById(R.id.robotNotificationStyle)).setSelection(robotSettings.optInt("robotNotificationStyle"));
         ((SeekBar) rootView.findViewById(R.id.robotThresholdStress)).setProgress(robotSettings.optInt("robotThresholdStress"));
         ((SeekBar) rootView.findViewById(R.id.robotThresholdSleep)).setProgress(robotSettings.optInt("robotThresholdSleep"));
         ((CheckBox) rootView.findViewById(R.id.doRecognizeFeelingsFromAudio)).setChecked(robotSettings.optBoolean("doRecognizeFeelingsFromAudio"));
@@ -203,14 +204,18 @@ public class ItemDetailSettings extends ItemDetailBase {
         ((TextView) rootView.findViewById(R.id.postalCode)).setText(userAddress.optString("postalCode"));
 
         // assign json entries to personal user fields
-        ((TextView) rootView.findViewById(R.id.userHousingSituation)).setText(userPersonalData.optString("userHousingSituation"));
-        ((TextView) rootView.findViewById(R.id.userEmploymentSituation)).setText(userPersonalData.optString("userEmploymentSituation"));
-        ((TextView) rootView.findViewById(R.id.userReligionState)).setText(userPersonalData.optString("userReligionState"));
-        ((TextView) rootView.findViewById(R.id.userResidenceDuringDay)).setText(userPersonalData.optString("userResidenceDuringDay"));
-        ((TextView) rootView.findViewById(R.id.userAverageIncome)).setText(userPersonalData.optString("userAverageIncome"));
-        ((TextView) rootView.findViewById(R.id.userMigrationBackground)).setText(userPersonalData.optString("userMigrationBackground"));
-        ((TextView) rootView.findViewById(R.id.userRegionalityScale)).setText(userPersonalData.optString("userRegionalityScale"));
-        ((TextView) rootView.findViewById(R.id.userKnownDiseases)).setText(userPersonalData.optString("userKnownDiseases"));
+        ((Spinner) rootView.findViewById(R.id.userHousingSituation)).setSelection(userPersonalData.optInt("userHousingSituation"));
+        ((Spinner) rootView.findViewById(R.id.userEmploymentSituation)).setSelection(userPersonalData.optInt("userEmploymentSituation"));
+        ((Spinner) rootView.findViewById(R.id.userReligionState)).setSelection(userPersonalData.optInt("userReligionState"));
+        ((Spinner) rootView.findViewById(R.id.userResidenceDuringDay)).setSelection(userPersonalData.optInt("userResidenceDuringDay"));
+        ((Spinner) rootView.findViewById(R.id.userAverageIncome)).setSelection(userPersonalData.optInt("userAverageIncome"));
+        ((Spinner) rootView.findViewById(R.id.userMigrationBackground)).setSelection(userPersonalData.optInt("userMigrationBackground"));
+        ((Spinner) rootView.findViewById(R.id.userRegionalityScale)).setSelection(userPersonalData.optInt("userRegionalityScale"));
+        ((Spinner) rootView.findViewById(R.id.userKnownDiseases)).setSelection(userPersonalData.optInt("userKnownDiseases"));
+        ((Spinner) rootView.findViewById(R.id.userWalkingAid)).setSelection(userPersonalData.optInt("userWalkingAid"));
+        ((Spinner) rootView.findViewById(R.id.userCareSituation)).setSelection(userPersonalData.optInt("userCareSituation"));
+        ((Spinner) rootView.findViewById(R.id.userMedicine)).setSelection(userPersonalData.optInt("userMedicine"));
+        ((Spinner) rootView.findViewById(R.id.userDrinking)).setSelection(userPersonalData.optInt("userDrinking"));
     }
 
     /*******************************************************************************
@@ -231,6 +236,7 @@ public class ItemDetailSettings extends ItemDetailBase {
             robotSettings.put("robotAudioVolume", ((SeekBar) rootView.findViewById(R.id.robotAudioVolume)).getProgress());
             robotSettings.put("robotInfoDisplayLocation", ((Spinner) rootView.findViewById(R.id.robotInfoDisplayLocation)).getSelectedItemPosition());
             robotSettings.put("robotInfoDisplayFontSize", ((TextView) rootView.findViewById(R.id.robotInfoDisplayFontSize)).getText());
+            robotSettings.put("robotNotificationStyle", ((Spinner) rootView.findViewById(R.id.robotNotificationStyle)).getSelectedItemPosition());
             robotSettings.put("robotThresholdStress", ((SeekBar) rootView.findViewById(R.id.robotThresholdStress)).getProgress());
             robotSettings.put("robotThresholdSleep", ((SeekBar) rootView.findViewById(R.id.robotThresholdSleep)).getProgress());
             robotSettings.put("doRecognizeFeelingsFromAudio", ((CheckBox) rootView.findViewById(R.id.doRecognizeFeelingsFromAudio)).isChecked());
@@ -251,15 +257,18 @@ public class ItemDetailSettings extends ItemDetailBase {
             userAddress.put("postalCode", ((TextView) rootView.findViewById(R.id.postalCode)).getText());
 
             // assign json entries to personal user fields
-            userPersonalData.put("userHousingSituation", ((TextView) rootView.findViewById(R.id.userHousingSituation)).getText());
-            userPersonalData.put("userEmploymentSituation", ((TextView) rootView.findViewById(R.id.userEmploymentSituation)).getText());
-            userPersonalData.put("userReligionState", ((TextView) rootView.findViewById(R.id.userReligionState)).getText());
-            userPersonalData.put("userResidenceDuringDay", ((TextView) rootView.findViewById(R.id.userResidenceDuringDay)).getText());
-            userPersonalData.put("userAverageIncome", ((TextView) rootView.findViewById(R.id.userAverageIncome)).getText());
-            userPersonalData.put("userMigrationBackground", ((TextView) rootView.findViewById(R.id.userMigrationBackground)).getText());
-            userPersonalData.put("userRegionalityScale", ((TextView) rootView.findViewById(R.id.userRegionalityScale)).getText());
-            userPersonalData.put("userKnownDiseases", ((TextView) rootView.findViewById(R.id.userKnownDiseases)).getText());
-
+            userPersonalData.put("userHousingSituation", ((Spinner) rootView.findViewById(R.id.userHousingSituation)).getSelectedItemPosition());
+            userPersonalData.put("userEmploymentSituation", ((Spinner) rootView.findViewById(R.id.userEmploymentSituation)).getSelectedItemPosition());
+            userPersonalData.put("userReligionState", ((Spinner) rootView.findViewById(R.id.userReligionState)).getSelectedItemPosition());
+            userPersonalData.put("userResidenceDuringDay", ((Spinner) rootView.findViewById(R.id.userResidenceDuringDay)).getSelectedItemPosition());
+            userPersonalData.put("userAverageIncome", ((Spinner) rootView.findViewById(R.id.userAverageIncome)).getSelectedItemPosition());
+            userPersonalData.put("userMigrationBackground", ((Spinner) rootView.findViewById(R.id.userMigrationBackground)).getSelectedItemPosition());
+            userPersonalData.put("userRegionalityScale", ((Spinner) rootView.findViewById(R.id.userRegionalityScale)).getSelectedItemPosition());
+            userPersonalData.put("userKnownDiseases", ((Spinner) rootView.findViewById(R.id.userKnownDiseases)).getSelectedItemPosition());
+            userPersonalData.put("userWalkingAid", ((Spinner) rootView.findViewById(R.id.userWalkingAid)).getSelectedItemPosition());
+            userPersonalData.put("userCareSituation", ((Spinner) rootView.findViewById(R.id.userCareSituation)).getSelectedItemPosition());
+            userPersonalData.put("userMedicine", ((Spinner) rootView.findViewById(R.id.userMedicine)).getSelectedItemPosition());
+            userPersonalData.put("userDrinking", ((Spinner) rootView.findViewById(R.id.userDrinking)).getSelectedItemPosition());
 
             // finally puttin everything together
             userSettings.put("userAddress", userAddress);

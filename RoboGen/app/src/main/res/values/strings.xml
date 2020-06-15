@@ -74,30 +74,117 @@
         <item>Auf meinem eigenen Telefon</item>
     </string-array>
 
+    <string-array name="robotNotificationStyleOptions">
+        <item>Push-Notification</item>
+        <item>eMail</item>
+        <item>Sprachlich</item>
+    </string-array>
+
     <string-array name="userGenderOptions">
         <item>Männlich</item>
         <item>Weiblich</item>
-        <item>Neutral</item>
-        <item>Transgender</item>
+        <item>Divers</item>
+        <item>Keine Antwort</item>
     </string-array>
 
     <string-array name="userFamiliyStatusOptions">
-        <item>Ledig</item>
-        <item>Verlobt</item>
-        <item>Verheiratet</item>
-        <item>Geschieden</item>
-        <item>Sonstiges</item>
+        <item>Alleinlebend</item>
+        <item>In Partnerschaft lebend</item>
+        <item>Im Familienkontext lebend (Verwandte, Kinder)</item>
+        <item>Allein erziehend</item>
     </string-array>
 
     <string-array name="userEducationStatusOptions">
-        <item>Pflichtschulabschluß</item>
-        <item>Lehre</item>
-        <item>Meister</item>
+        <item>Pflichtschule</item>
+        <item>Lehre/Handelsschule</item>
+        <item>Fachschule</item>
         <item>Matura</item>
-        <item>Univ.-Diplom</item>
-        <item>Univ.-Bachelor</item>
-        <item>Univ.-Master</item>
-        <item>Univ.-Doktor</item>
+        <item>Hochschulabschluss</item>
+    </string-array>
+
+    <string-array name="userHousingSituationOptions">
+        <item>In eigener Wohnung oder Haus lebend</item>
+        <item>Bei Verwandten/Kindern lebend</item>
+        <item>Im betreuten Wohnen lebend</item>
+        <item>Im Alters-/Pflegeheim lebend</item>
+        <item>In Wohngemeinschaft lebend</item>
+    </string-array>
+
+    <string-array name="userEmploymentSituationOptions">
+        <item>Erwerbstätig</item>
+        <item>Arbeitssuchend</item>
+        <item>In Pension</item>
+        <item>Haushaltsführend</item>
+        <item>Anders</item>
+    </string-array>
+
+    <string-array name="userReligionStateOptions">
+        <item>Konfessionslos</item>
+        <item>Römisch-katholische Kirche</item>
+        <item>Evangelische Kirche</item>
+        <item>Altkatholische Kirche</item>
+        <item>Orthodoxe Kirche</item>
+        <item>Israelitische Religionsgemeinschaft</item>
+        <item>Islamische Glaubensgemeinschaft</item>
+    </string-array>
+
+    <string-array name="userResidenceDuringDayOptions">
+        <item>Hauptsächlich zuhause</item>
+        <item>Teils/teils</item>
+        <item>Hauptsächlich auswärts</item>
+    </string-array>
+
+    <string-array name="userAverageIncomeOptions">
+        <item>Ich kann von Einkommen/Pension sehr gut leben</item>
+        <item>Ich kann von Einkommen/Pension gut leben</item>
+        <item>Ich kann von Einkommen/Pension weniger leben</item>
+    </string-array>
+
+    <string-array name="userMigrationBackgroundOptions">
+        <item>1. Generation (in einem anderen Land geboren)</item>
+        <item>2. Generation (Eltern sind in einem anderen Land geboren)</item>
+        <item>Kein Migrationshintergrund</item>
+    </string-array>
+
+    <string-array name="userRegionalityScaleOptions">
+        <item>Dorf</item>
+        <item>Kleinstadt</item>
+        <item>Mittelgroße Stadt</item>
+        <item>Großstadt</item>
+    </string-array>
+
+    <string-array name="userKnownDiseasesOptions">
+        <item>Ich habe Diabetes</item>
+        <item>Ich habe Bluthochdruck</item>
+        <item>Ich habe Diabetes und Bluthochdruck</item>
+        <item>Keine Erkrankungen</item>
+    </string-array>
+
+    <string-array name="userWalkingAidOptions">
+        <item>Keine</item>
+        <item>Stock</item>
+        <item>Rollator</item>
+        <item>Andere</item>
+    </string-array>
+
+    <string-array name="userCareSituationOptions">
+        <item>Selbstständig</item>
+        <item>Gelegentliche Unterstützung notwendig</item>
+        <item>Pflege erforderlich</item>
+    </string-array>
+
+    <string-array name="userMedicineOptions">
+        <item>Morgens</item>
+        <item>Mittags</item>
+        <item>Abends</item>
+        <item>Vor dem Schlafengehen</item>
+    </string-array>
+
+    <string-array name="userDrinkingOptions">
+        <item>Morgens</item>
+        <item>Mittags</item>
+        <item>Abends</item>
+        <item>Vor dem Schlafengehen</item>
     </string-array>
 
 </resources>
