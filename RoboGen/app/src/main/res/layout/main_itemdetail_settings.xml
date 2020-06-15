@@ -213,19 +213,35 @@
                   android:buttonTint="@color/colorPrimary" android:layout_marginLeft="16dp"/>
     </LinearLayout>
 
-    <!-- **************************** robot alive status **************************** -->
+    <!-- **************************** robot alive reaction status **************************** -->
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
                   android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
-                  android:textSize="@dimen/text_font_size" android:text="Lebendigkeit / Status: "/>
+                  android:textSize="@dimen/text_font_size" android:text="*Roboter soll nur reagieren? "/>
 
         <CheckBox android:id="@+id/isAlive"
-                  android:textSize="@dimen/editfield_font_size" android:text="An/Aus"
+                  android:textSize="@dimen/editfield_font_size" android:text="Ja/Nein"
                   android:layout_width="fill_parent" android:layout_height="fill_parent"
                   android:buttonTint="@color/colorPrimary" android:layout_marginLeft="16dp"/>
     </LinearLayout>
 
+    <!-- **************************** robot frequency of tips **************************** -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:text="*Häufigkeit von Tipps: "/>
+
+        <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
+                      android:layout_width="fill_parent" android:layout_height="fill_parent"
+                      android:background="@android:drawable/editbox_background">
+
+            <Spinner android:id="@+id/robotFrequencyOfTips" android:hint="meineTippHäufigkeit"
+                     android:layout_width="fill_parent" android:layout_height="fill_parent"
+                     android:drawSelectorOnTop="true" android:entries="@array/robotFrequencyOfTipsOptions"/>
+        </LinearLayout>
+    </LinearLayout>
 
     <!-- ************************************************************************* -->
     <!-- ***************************** user info area **************************** -->

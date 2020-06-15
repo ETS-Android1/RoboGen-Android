@@ -80,6 +80,14 @@
         <item>Sprachlich</item>
     </string-array>
 
+    <string-array name="robotFrequencyOfTipsOptions">
+        <item>1 (immer)</item>
+        <item>2 (häufig)</item>
+        <item>3 (täglich)</item>
+        <item>4 (manchmal)</item>
+        <item>5 (nie)</item>
+    </string-array>
+
     <string-array name="userGenderOptions">
         <item>Männlich</item>
         <item>Weiblich</item>

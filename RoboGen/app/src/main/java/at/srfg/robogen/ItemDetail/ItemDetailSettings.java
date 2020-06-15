@@ -189,6 +189,7 @@ public class ItemDetailSettings extends ItemDetailBase {
         ((CheckBox) rootView.findViewById(R.id.doRecognizeFeelingsFromAudio)).setChecked(robotSettings.optBoolean("doRecognizeFeelingsFromAudio"));
         ((CheckBox) rootView.findViewById(R.id.doRecognizeFeelingsFromVideo)).setChecked(robotSettings.optBoolean("doRecognizeFeelingsFromVideo"));
         ((CheckBox) rootView.findViewById(R.id.isAlive)).setChecked(robotSettings.optBoolean("isAlive"));
+        ((Spinner) rootView.findViewById(R.id.robotFrequencyOfTips)).setSelection(robotSettings.optInt("robotFrequencyOfTips"));
 
         // assign json entries to user fields
         ((TextView) rootView.findViewById(R.id.userName)).setText(userSettings.optString("userName"));
@@ -244,6 +245,7 @@ public class ItemDetailSettings extends ItemDetailBase {
             robotSettings.put("doRecognizeFeelingsFromAudio", ((CheckBox) rootView.findViewById(R.id.doRecognizeFeelingsFromAudio)).isChecked());
             robotSettings.put("doRecognizeFeelingsFromVideo", ((CheckBox) rootView.findViewById(R.id.doRecognizeFeelingsFromVideo)).isChecked());
             robotSettings.put("isAlive", ((CheckBox) rootView.findViewById(R.id.isAlive)).isChecked());
+            robotSettings.put("robotFrequencyOfTips", ((Spinner) rootView.findViewById(R.id.robotFrequencyOfTips)).getSelectedItemPosition());
 
             // assign json entries to user fields
             userSettings.put("userName", ((TextView) rootView.findViewById(R.id.userName)).getText());
