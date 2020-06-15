@@ -642,6 +642,32 @@
         </LinearLayout>
     </LinearLayout>
 
+    <!-- ************************** user data interests *************************** -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="*Interessante Themen: "/>
+
+        <EditText android:id="@+id/userInterests" android:hint="meineInteressen"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <!-- ************************** user data hobbies *************************** -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+                  android:textSize="@dimen/text_font_size" android:text="*Hobbies: "/>
+
+        <EditText android:id="@+id/userHobbies" android:hint="meineHobbies"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
+                  android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
 
 
 

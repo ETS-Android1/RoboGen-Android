@@ -216,6 +216,8 @@ public class ItemDetailSettings extends ItemDetailBase {
         ((Spinner) rootView.findViewById(R.id.userCareSituation)).setSelection(userPersonalData.optInt("userCareSituation"));
         ((Spinner) rootView.findViewById(R.id.userMedicine)).setSelection(userPersonalData.optInt("userMedicine"));
         ((Spinner) rootView.findViewById(R.id.userDrinking)).setSelection(userPersonalData.optInt("userDrinking"));
+        ((TextView) rootView.findViewById(R.id.userInterests)).setText(userPersonalData.optString("userInterests"));
+        ((TextView) rootView.findViewById(R.id.userHobbies)).setText(userPersonalData.optString("userHobbies"));
     }
 
     /*******************************************************************************
@@ -269,6 +271,8 @@ public class ItemDetailSettings extends ItemDetailBase {
             userPersonalData.put("userCareSituation", ((Spinner) rootView.findViewById(R.id.userCareSituation)).getSelectedItemPosition());
             userPersonalData.put("userMedicine", ((Spinner) rootView.findViewById(R.id.userMedicine)).getSelectedItemPosition());
             userPersonalData.put("userDrinking", ((Spinner) rootView.findViewById(R.id.userDrinking)).getSelectedItemPosition());
+            userPersonalData.put("userInterests", ((TextView) rootView.findViewById(R.id.userInterests)).getText());
+            userPersonalData.put("userHobbies", ((TextView) rootView.findViewById(R.id.userHobbies)).getText());
 
             // finally puttin everything together
             userSettings.put("userAddress", userAddress);
