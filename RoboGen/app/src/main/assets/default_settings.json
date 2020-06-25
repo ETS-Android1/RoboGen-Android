@@ -29,6 +29,10 @@
       "postalCode": "5020"
     },
 
+    "emergencyAddress": {
+      "emergencyEmailAccount": "oliver.jung@salzburgresearch.at"
+    },
+
     "userPhoneNumbers": [
       {
         "type": "home",
@@ -62,5 +66,26 @@
         }
       ]
     }
-  }
+  },
+  
+  "fitbitSettings": {
+	"sleepMinValue": 40
+  },
+  
+  "calSettings": [
+	{
+		"title": "Medikamente nehmen",
+		"date": "2020-06-22",
+		"time": "10:15",
+		"repeat": 1,
+		"reminder": "10"
+	},
+	{
+		"title": "Routineuntersuchung beim Hausarzt",
+		"date": "2020-06-19",
+		"time": "08:30",
+		"repeat": 3,
+		"reminder": "60"
+	}
+  ]
 }

@@ -29,7 +29,7 @@ public class ItemDetailRobot extends ItemDetailBase {
     private RoboGen_App m_cRoboGenApp;
 
     private final String m_sConnectRobot = "Schritt 1) Das Tablet muss mit dem Roboter verbunden werden (linker Schalter)\n" +
-                                           "Schritt 2) Die gespeicherten Einstellungen können versendet werden (mittlerer Schalter)\n" +
+                                           "Schritt 2) Die gespeicherten Daten können versendet werden (mittlerer Schalter)\n" +
                                            "Schritt 3) Die Verbindung kann nach erfolgreichem Senden beendet werden (rechter Schalter)";
 
     public FloatingActionButton m_btnConnectRobot;
@@ -86,8 +86,8 @@ public class ItemDetailRobot extends ItemDetailBase {
         m_btnSendRobot_Code1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
-                makeSnackbarMessage(view, "Sende Benutzer-Einstellungen an Gerät!");
-                SendSettingsFileToDevice(view);
+                makeSnackbarMessage(view, "Sende Daten an Gerät!");
+                SendFilesToDevice(view);
             }
         });
 
@@ -112,7 +112,7 @@ public class ItemDetailRobot extends ItemDetailBase {
     /*******************************************************************************
      * sending data to the connected bluetooth device
      ******************************************************************************/
-    private void SendSettingsFileToDevice(View view)
+    private void SendFilesToDevice(View view)
     {
         try {
             InputStream is = view.getContext().openFileInput("settings.json");

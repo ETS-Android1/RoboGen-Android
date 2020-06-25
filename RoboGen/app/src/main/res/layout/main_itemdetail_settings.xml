@@ -434,6 +434,35 @@
                   android:background="@android:drawable/editbox_background"/>
     </LinearLayout>
 
+    <!-- ************************************************************************* -->
+    <!-- *************************** emergency address area ********************** -->
+    <!-- ************************************************************************* -->
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#3f3f3f"
+        android:layout_marginLeft="16dp" android:layout_marginRight="16dp" android:layout_marginTop="36dp"/>
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/item_detail_emergencyaddress"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:textSize="@dimen/title_font_size"
+        android:text="Notfall-Kontaktdaten"
+        android:textIsSelectable="true"
+        tools:context=".ItemDetail.ItemDetailSettings" />
+
+    <!-- *************************** emergency address email *************************** -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:text="*Email-Adresse: "/>
+
+        <EditText android:id="@+id/emergencyEmailAccount" android:hint="notfallEmailAccount"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
+            android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
 
     <!-- ************************************************************************* -->
     <!-- ************************** user personal data *************************** -->

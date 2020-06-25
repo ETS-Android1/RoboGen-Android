@@ -1,9 +1,16 @@
 package at.srfg.robogen.fitnesswatch.fitbit_API.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.loader.content.Loader;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import at.srfg.robogen.R;
@@ -37,6 +44,7 @@ public class SleepFragment extends InfoFragment<SleepLogs> {
         super.onLoadFinished(loader, data);
         if (data.isSuccessful()) {
             bindActivityData(data.getResult());
+            writeMinValue(data.getResult());
         }
     }
 
@@ -71,4 +79,76 @@ public class SleepFragment extends InfoFragment<SleepLogs> {
             addTextToList(listEntry);
         }
     }
+
+    /*******************************************************************************
+     * read fitbit file from asset folder
+     ******************************************************************************/
+    public String readFitbitJSON(Context context) {
+
+        try {
+            InputStream is = context.openFileInput("settings.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+
+            return new String(buffer, "UTF-8");
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    /*******************************************************************************
+     * write fitbit file to asset folder
+     ******************************************************************************/
+    public void writeFitbitJSON(Context context, String json) {
+
+        try {
+            OutputStream os = context.openFileOutput("settings.json", Context.MODE_PRIVATE);
+            os.write(json.getBytes("UTF-8"));
+            os.close();
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /*******************************************************************************
+     * writeMinValue
+     ******************************************************************************/
+    public void writeMinValue(SleepLogs sleepLogs) {
+
+        List<Sleep> sleeps = sleepLogs.getSleeps();
+
+        int min_value = 100;
+        for (Sleep sleep : sleeps) {
+            if (sleep.getEfficiency() < min_value)
+                min_value = sleep.getEfficiency();
+        }
+
+        try {
+
+            String jsonString = readFitbitJSON(this.getActivity().getBaseContext());
+            if(jsonString == null || jsonString.length() == 0) {
+                jsonString = "{'fitbitSettings':{}}";
+            }
+
+            JSONObject jsonObj = new JSONObject(jsonString);
+            JSONObject fitbitSettings = null;
+            if (jsonObj.has("fitbitSettings"))
+                fitbitSettings = jsonObj.getJSONObject("fitbitSettings");
+            else
+                fitbitSettings = new JSONObject();
+            fitbitSettings.put("sleepMinValue",min_value);
+            jsonObj.put("fitbitSettings",fitbitSettings);
+            writeFitbitJSON(this.getActivity().getBaseContext(), jsonObj.toString());
+        }
+        catch(JSONException ex)
+        {
+        }
+
+    }
+
 }

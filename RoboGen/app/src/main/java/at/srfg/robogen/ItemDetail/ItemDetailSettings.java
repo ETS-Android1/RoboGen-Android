@@ -159,6 +159,7 @@ public class ItemDetailSettings extends ItemDetailBase {
         JSONObject robotSettings = null;
         JSONObject userSettings = null;
         JSONObject userAddress = null;
+        JSONObject emergencyAddress = null;
         JSONObject userPersonalData = null;
 
         try {
@@ -170,6 +171,7 @@ public class ItemDetailSettings extends ItemDetailBase {
             userSettings = obj.getJSONObject("userSettings");
 
             userAddress = userSettings.getJSONObject("userAddress");
+            emergencyAddress = userSettings.getJSONObject("emergencyAddress");
             userPersonalData = userSettings.getJSONObject("userPersonalData");
         }
         catch(JSONException ex)
@@ -204,6 +206,9 @@ public class ItemDetailSettings extends ItemDetailBase {
         ((TextView) rootView.findViewById(R.id.state)).setText(userAddress.optString("state"));
         ((TextView) rootView.findViewById(R.id.postalCode)).setText(userAddress.optString("postalCode"));
 
+        // assign json entries to emergency fields
+        ((TextView) rootView.findViewById(R.id.emergencyEmailAccount)).setText(emergencyAddress.optString("emergencyEmailAccount"));
+
         // assign json entries to personal user fields
         ((Spinner) rootView.findViewById(R.id.userHousingSituation)).setSelection(userPersonalData.optInt("userHousingSituation"));
         ((Spinner) rootView.findViewById(R.id.userEmploymentSituation)).setSelection(userPersonalData.optInt("userEmploymentSituation"));
@@ -230,9 +235,18 @@ public class ItemDetailSettings extends ItemDetailBase {
         JSONObject robotSettings = new JSONObject();
         JSONObject userSettings = new JSONObject();
         JSONObject userAddress = new JSONObject();
+        JSONObject emergencyAddress = new JSONObject();
         JSONObject userPersonalData = new JSONObject();
 
         try {
+
+            String jsonString = readSettingsJSON(this.getActivity().getBaseContext());
+            if(jsonString == null || jsonString.length() == 0) {
+                jsonString = "{}";
+            }
+
+            jsonObj = new JSONObject(jsonString);
+
             // assign json entries to robot fields
             robotSettings.put("robotName",((TextView) rootView.findViewById(R.id.robotName)).getText());
             robotSettings.put("robotVoice", ((Spinner) rootView.findViewById(R.id.robotVoice)).getSelectedItemPosition());
@@ -260,6 +274,9 @@ public class ItemDetailSettings extends ItemDetailBase {
             userAddress.put("state", ((TextView) rootView.findViewById(R.id.state)).getText());
             userAddress.put("postalCode", ((TextView) rootView.findViewById(R.id.postalCode)).getText());
 
+            // assign json entries to emergency field
+            emergencyAddress.put("emergencyEmailAccount", ((TextView) rootView.findViewById(R.id.emergencyEmailAccount)).getText());
+
             // assign json entries to personal user fields
             userPersonalData.put("userHousingSituation", ((Spinner) rootView.findViewById(R.id.userHousingSituation)).getSelectedItemPosition());
             userPersonalData.put("userEmploymentSituation", ((Spinner) rootView.findViewById(R.id.userEmploymentSituation)).getSelectedItemPosition());
@@ -278,6 +295,7 @@ public class ItemDetailSettings extends ItemDetailBase {
 
             // finally puttin everything together
             userSettings.put("userAddress", userAddress);
+            userSettings.put("emergencyAddress", emergencyAddress);
             userSettings.put("userPersonalData", userPersonalData);
             jsonObj.put("robotSettings", robotSettings);
             jsonObj.put("userSettings", userSettings);

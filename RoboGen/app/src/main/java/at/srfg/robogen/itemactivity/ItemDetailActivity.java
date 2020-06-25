@@ -14,6 +14,7 @@ import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationManager;
 import at.srfg.robogen.itemdetail.ItemDetailAlexa;
 import at.srfg.robogen.itemdetail.ItemDetailBase;
 import at.srfg.robogen.itemdetail.ItemDetailContacts;
+import at.srfg.robogen.itemdetail.ItemDetailCalendar;
 import at.srfg.robogen.itemdetail.ItemDetailRobot;
 import at.srfg.robogen.itemdetail.ItemDetailWatch;
 import at.srfg.robogen.itemdetail.ItemDetailVector;
@@ -77,6 +78,13 @@ public class ItemDetailActivity extends AppCompatActivity {
             {
                 arguments.putString(ItemDetailContacts.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailContacts.m_sARG_ITEM_ID));
                 ItemDetailContacts fragment = new ItemDetailContacts();
+                fragment.setArguments(arguments);
+                getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
+            }
+            else if(itemID.equals(RoboGen_Constants.ItemListID_Calendar))
+            {
+                arguments.putString(ItemDetailCalendar.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailCalendar.m_sARG_ITEM_ID));
+                ItemDetailCalendar fragment = new ItemDetailCalendar();
                 fragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
             }

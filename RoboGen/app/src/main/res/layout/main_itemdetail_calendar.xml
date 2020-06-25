@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/item_detail_title"
+              style="?android:attr/textAppearanceLarge"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="16dp"
+              android:textSize="@dimen/title_font_size"
+              android:textIsSelectable="true"
+              tools:context=".ItemDetail.ItemDetailCalendar" />
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/item_detail_text_1"
+              style="?android:attr/textAppearanceLarge"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="16dp"
+              android:textSize="@dimen/text_font_size"
+              android:textIsSelectable="true"
+              tools:context=".ItemDetail.ItemDetailCalendar" />
+
+    <!-- ************************************************************************* -->
+    <!-- ************************** new entry ************************************ -->
+    <!-- ************************************************************************* -->
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#3f3f3f"
+        android:layout_marginLeft="16dp" android:layout_marginRight="16dp" android:layout_marginTop="36dp"/>
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/item_detail_calendarnew"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:textSize="@dimen/title_font_size"
+        android:text="Neuer Eintrag"
+        android:textIsSelectable="true"
+        tools:context=".ItemDetail.ItemDetailCalendar" />
+
+    <!-- *************************** title *************************** -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:text="Titel: "/>
+
+        <EditText android:id="@+id/calTitle" android:hint="Titel"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
+            android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <!-- *************************** date *************************** -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight=".70"
+            android:layout_height="wrap_content"
+            android:id="@+id/calDate" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight=".30"
+            android:layout_height="wrap_content"
+            android:text="Datum setzen"
+            android:id="@+id/btn_date" />
+
+    </LinearLayout>
+
+    <!-- *************************** time *************************** -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight=".70"
+            android:layout_height="wrap_content"
+            android:id="@+id/calTime" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight=".30"
+            android:layout_height="wrap_content"
+            android:text="Zeit setzen"
+            android:id="@+id/btn_time" />
+
+    </LinearLayout>
+
+    <!-- ************************** repeat *************************** -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:text="Wiederholen: "/>
+
+        <LinearLayout android:orientation="horizontal" android:layout_marginLeft="16dp"
+            android:layout_width="fill_parent" android:layout_height="fill_parent"
+            android:background="@android:drawable/editbox_background">
+
+            <Spinner android:id="@+id/calRepeat" android:hint="terminWiederholung"
+                android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:drawSelectorOnTop="true" android:entries="@array/calRepeatOptions"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- *************************** reminder *************************** -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:text="Erinnerung: "/>
+
+        <EditText android:id="@+id/calReminder" android:hint="Zeit in Minuten vor dem Ereignis"
+            android:inputType="number"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
+            android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <!-- ************************************************************************* -->
+    <!-- ***************************** add button ******************************** -->
+    <!-- ************************************************************************* -->
+    <View android:layout_width="fill_parent" android:layout_height="1dp" android:background="#3f3f3f"
+        android:layout_marginLeft="16dp" android:layout_marginRight="16dp" android:layout_marginTop="36dp"/>
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/bt_addUserCalendar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/icon_calendar"
+            app:fabSize="normal"
+            app:rippleColor="@color/cardview_dark_background"
+            app:backgroundTint= "@color/colorPrimary" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/bt_removeUserCalendar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/bluetooth_send_q"
+            app:fabSize="normal"
+            app:rippleColor="@color/cardview_dark_background"
+            app:backgroundTint= "@color/colorPrimary" />
+    </LinearLayout>
+
+    <!-- ************************************************************************* -->
+    <!-- ************************** existing entries ***************************** -->
+    <!-- ************************************************************************* -->
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#3f3f3f"
+        android:layout_marginLeft="16dp" android:layout_marginRight="16dp" android:layout_marginTop="36dp"/>
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/item_detail_calendarexisting"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:textSize="@dimen/title_font_size"
+        android:text="Vorhandene Einträge"
+        android:textIsSelectable="true"
+        tools:context=".ItemDetail.ItemDetailCalendar" />
+
+    <!-- *************************** existing entries list *************************** -->
+
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <ListView
+            android:id="@+id/calList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" >
+        </ListView>
+    </LinearLayout>
+
+</LinearLayout>

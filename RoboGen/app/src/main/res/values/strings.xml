@@ -195,4 +195,11 @@
         <item>Vor dem Schlafengehen</item>
     </string-array>
 
+    <string-array name="calRepeatOptions">
+        <item>Einmalig</item>
+        <item>Täglich</item>
+        <item>Wöchentlich</item>
+        <item>Monatlich</item>
+    </string-array>
+
 </resources>
