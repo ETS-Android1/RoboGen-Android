@@ -145,6 +145,16 @@
             app:rippleColor="@color/cardview_dark_background"
             app:backgroundTint= "@color/colorPrimary" />
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/bt_refreshUserCalendar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/icon_refresh"
+            app:fabSize="normal"
+            app:rippleColor="@color/cardview_dark_background"
+            app:backgroundTint= "@color/colorPrimary" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/bt_removeUserCalendar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -153,7 +163,7 @@
             app:srcCompat="@drawable/bluetooth_send_q"
             app:fabSize="normal"
             app:rippleColor="@color/cardview_dark_background"
-            app:backgroundTint= "@color/colorPrimary" />
+            app:backgroundTint= "@color/colorAlertRed" />
     </LinearLayout>
 
     <!-- ************************************************************************* -->
