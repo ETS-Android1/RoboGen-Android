@@ -62,18 +62,13 @@
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
         android:layout_width="fill_parent" android:layout_height="wrap_content">
 
-        <EditText
-            android:layout_width="0dp"
-            android:layout_weight=".70"
-            android:layout_height="wrap_content"
-            android:id="@+id/calDate" />
+        <Button android:layout_width="400dp" android:layout_height="wrap_content"
+            android:text="Datum setzen" android:id="@+id/btn_date" app:backgroundTint= "@color/colorPrimary"/>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight=".30"
-            android:layout_height="wrap_content"
-            android:text="Datum setzen"
-            android:id="@+id/btn_date" />
+        <EditText android:id="@+id/calDate" android:hint="Datum" android:editable="false"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
+            android:background="@android:drawable/editbox_background"/>
 
     </LinearLayout>
 
@@ -81,18 +76,13 @@
     <LinearLayout android:orientation="horizontal" android:padding="16dp"
         android:layout_width="fill_parent" android:layout_height="wrap_content">
 
-        <EditText
-            android:layout_width="0dp"
-            android:layout_weight=".70"
-            android:layout_height="wrap_content"
-            android:id="@+id/calTime" />
+        <Button android:layout_width="400dp" android:layout_height="wrap_content"
+            android:text="Zeit setzen" android:id="@+id/btn_time" app:backgroundTint= "@color/colorPrimary"/>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight=".30"
-            android:layout_height="wrap_content"
-            android:text="Zeit setzen"
-            android:id="@+id/btn_time" />
+        <EditText android:id="@+id/calTime" android:hint="Uhrzeit" android:editable="false"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
+            android:background="@android:drawable/editbox_background"/>
 
     </LinearLayout>
 
@@ -141,6 +131,16 @@
             android:layout_gravity="bottom|center"
             android:layout_margin="@dimen/fab_margin"
             app:srcCompat="@drawable/icon_calendar"
+            app:fabSize="normal"
+            app:rippleColor="@color/cardview_dark_background"
+            app:backgroundTint= "@color/colorPrimary" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/bt_editUserCalendar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/icon_edit"
             app:fabSize="normal"
             app:rippleColor="@color/cardview_dark_background"
             app:backgroundTint= "@color/colorPrimary" />
