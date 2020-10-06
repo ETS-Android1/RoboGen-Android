@@ -19,18 +19,23 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import java.util.Calendar;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import at.srfg.robogen.R;
 import at.srfg.robogen.RoboGen_App;
@@ -45,17 +50,23 @@ public class ItemDetailCalendar extends ItemDetailBase {
     private RoboGen_App m_cRoboGenApp;
 
     public FloatingActionButton m_btnStartCalendar, m_btnRemoveCalendar;
-    Button btnDatePicker, btnTimePicker;
-    EditText txtDate, txtTime;
+    public Button btnDatePicker, btnTimePicker;
+    public EditText txtDate, txtTime;
     private int mYear, mMonth, mDay, mHour, mMinute;
+
+    private String m_urlBase ="https://power2dm.salzburgresearch.at/robogen";
+    private RequestQueue m_requestQueue;
+    private View m_rootView;
 
     /*******************************************************************************
      * creating view for calendar detail page
      ******************************************************************************/
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         final View rootView = inflater.inflate(R.layout.main_itemdetail_calendar, container, false);
+
+        m_requestQueue = Volley.newRequestQueue(this.getActivity().getBaseContext());
 
         // Show the dummy content as text in a TextView.
         if (mItem != null)
@@ -75,7 +86,9 @@ public class ItemDetailCalendar extends ItemDetailBase {
         ((TextView) rootView.findViewById(R.id.item_detail_title)).setText(mItem.m_sEntryHeader);
         ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(m_sShowCalendar);
 
-        assignCalendarToFields(rootView);
+        m_rootView = rootView;
+        readCalendarJSON();
+
         btnDatePicker=(Button)rootView.findViewById(R.id.btn_date);
         btnTimePicker=(Button)rootView.findViewById(R.id.btn_time);
         txtDate=(EditText)rootView.findViewById(R.id.calDate);
@@ -165,73 +178,63 @@ public class ItemDetailCalendar extends ItemDetailBase {
     }
 
     /*******************************************************************************
-     * read calendar file from asset folder
+     * read calendar file from server
      ******************************************************************************/
-    public String readCalendarJSON(Context context) {
+    public void readCalendarJSON() {
 
-        try {
-            InputStream is = context.openFileInput("settings.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-
-            return new String(buffer, "UTF-8");
-        }
-        catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
+        makeRequest(m_urlBase + "/DataBase/DownloadJSON_MyCalendar", Request.Method.POST, "");
     }
 
     /*******************************************************************************
-     * write calendar file to asset folder
+     * write calendar file to server
      ******************************************************************************/
-    public void writeCalendarJSON(Context context, String json) {
+    public void writeCalendarJSON(String json) {
 
-        try {
-            OutputStream os = context.openFileOutput("settings.json", Context.MODE_PRIVATE);
-            os.write(json.getBytes("UTF-8"));
-            os.close();
-        }
-        catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        makeRequest(m_urlBase + "/DataBase/UploadJSON_MyCalendar", Request.Method.POST, json);
+    }
+
+    /*******************************************************************************
+     * delete/reset calendar files on server
+     ******************************************************************************/
+    public void deleteCalendarJSON() {
+
+        makeRequest(m_urlBase + "/DataBase/ResetJSON_MyCalendar", Request.Method.POST, "");
     }
 
 
     /*******************************************************************************
      * assign loaded calendar to fields
      ******************************************************************************/
-    public void assignCalendarToFields(final View rootView) {
+    public void assignCalendarToFields(String jsonString) {
 
         JSONArray calendarObj = null;
 
         try {
-            String jsonString = readCalendarJSON(this.getActivity().getBaseContext());
             if(jsonString == null || jsonString.length() == 0) {
-                jsonString = "{'calSettings':[]}";
+                jsonString = "{'cal':[]}";
             }
 
             JSONObject obj = new JSONObject(jsonString);
-            if (obj.has("calSettings"))
-			    calendarObj = obj.getJSONArray("calSettings");
+            if (obj.has("cal"))
+			    calendarObj = obj.getJSONArray("cal");
 			else
 			    calendarObj = new JSONArray();
-            Log.w("all",obj.toString());
+
+            //Log.w("all",obj.toString());
             //Log.w("cal",calendarObj.toString());
-            ListView listview = (ListView)rootView.findViewById(R.id.calList);
+
+            ListView listview = (ListView)m_rootView.findViewById(R.id.calList);
             final List<String> ListElementsArrayList = new ArrayList<String>();
 			for (int i=0; i<calendarObj.length(); i++) {
-			    JSONObject activity = calendarObj.getJSONObject(i);
-                ListElementsArrayList.add(activity.getString("title"));
+			    JSONArray array = calendarObj.getJSONArray(0);
+			    JSONObject entry = array.getJSONObject(i);
+                ListElementsArrayList.add(entry.getString("title")); // TODO: JSON has two array indicators??
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, ListElementsArrayList);
             listview.setAdapter(adapter);
             listview.setOnItemClickListener(new OnItemClickListener() {
-                public void onItemClick(AdapterView<?> parent, View view,
-                                        int position, long id) {
-                    editCalendarEntry(rootView,position);
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    //editCalendarEntry(rootView,position);
                 }
             });
 
@@ -239,47 +242,45 @@ public class ItemDetailCalendar extends ItemDetailBase {
             params.height = calendarObj.length() * 50;
             listview.setLayoutParams(params);
             listview.requestLayout();
-
         }
         catch(JSONException ex)
         {
-            makeSnackbarMessage(rootView, "Die gespeicherten Informationen konnten nicht gelesen werden");
+            makeSnackbarMessage(m_rootView, "Die gespeicherten Informationen konnten nicht gelesen werden");
         }
-
     }
 
     /*******************************************************************************
      * edit a calendar entry
      ******************************************************************************/
-    public void editCalendarEntry(final View rootView, int idx) {
-        JSONArray calendarObj = null;
-
-        try {
-            String jsonString = readCalendarJSON(this.getActivity().getBaseContext());
-            if(jsonString == null || jsonString.length() == 0) return;
-
-            JSONObject obj = new JSONObject(jsonString);
-            calendarObj = obj.getJSONArray("calSettings");
-            JSONObject tmpObj = calendarObj.getJSONObject(idx);
-
-            ((TextView) rootView.findViewById(R.id.calTitle)).setText(tmpObj.getString("title"));
-            ((TextView) rootView.findViewById(R.id.calDate)).setText(tmpObj.getString("date"));
-            ((TextView) rootView.findViewById(R.id.calTime)).setText(tmpObj.getString("time"));
-            ((Spinner) rootView.findViewById(R.id.calRepeat)).setSelection(tmpObj.getInt("repeat"));
-            ((TextView) rootView.findViewById(R.id.calReminder)).setText(tmpObj.getString("reminder"));
-
-            calendarObj.remove(idx);
-
-            obj.put("cal",calendarObj);
-            writeCalendarJSON(this.getActivity().getBaseContext(), obj.toString());
-            assignCalendarToFields(rootView);
-
-        }
-        catch(JSONException ex)
-        {
-            makeSnackbarMessage(rootView, "Die gespeicherten Informationen konnten nicht gelesen werden");
-        }
-    }
+    //public void editCalendarEntry(final View rootView, int idx) {
+    //    JSONArray calendarObj = null;
+    //
+    //    try {
+    //        String jsonString = readCalendarJSON();
+    //        if(jsonString == null || jsonString.length() == 0) return;
+    //
+    //        JSONObject obj = new JSONObject(jsonString);
+    //        calendarObj = obj.getJSONArray("calSettings");
+    //        JSONObject tmpObj = calendarObj.getJSONObject(idx);
+    //
+    //        ((TextView) rootView.findViewById(R.id.calTitle)).setText(tmpObj.getString("title"));
+    //        ((TextView) rootView.findViewById(R.id.calDate)).setText(tmpObj.getString("date"));
+    //        ((TextView) rootView.findViewById(R.id.calTime)).setText(tmpObj.getString("time"));
+    //        ((Spinner) rootView.findViewById(R.id.calRepeat)).setSelection(tmpObj.getInt("repeat"));
+    //        ((TextView) rootView.findViewById(R.id.calReminder)).setText(tmpObj.getString("reminder"));
+    //
+    //        calendarObj.remove(idx);
+    //
+    //        obj.put("cal",calendarObj);
+    //        writeCalendarJSON(obj.toString());
+    //        assignCalendarToFields(rootView);
+    //
+    //    }
+    //    catch(JSONException ex)
+    //    {
+    //        makeSnackbarMessage(rootView, "Die gespeicherten Informationen konnten nicht gelesen werden");
+    //    }
+    //}
 
     /*******************************************************************************
      * clear input
@@ -291,7 +292,6 @@ public class ItemDetailCalendar extends ItemDetailBase {
         ((TextView) rootView.findViewById(R.id.calTime)).setText("");
         ((Spinner) rootView.findViewById(R.id.calRepeat)).setSelection(0);
         ((TextView) rootView.findViewById(R.id.calReminder)).setText("");
-
     }
 
     /*******************************************************************************
@@ -300,35 +300,54 @@ public class ItemDetailCalendar extends ItemDetailBase {
     public void addEntryToCalendar(final View rootView) {
 
         try {
-            String jsonString = readCalendarJSON(this.getActivity().getBaseContext());
-            if(jsonString == null || jsonString.length() == 0) {
-                jsonString = "{'calSettings':[]}";
-            }
 
-            JSONObject obj = new JSONObject(jsonString);
-            JSONArray calendarObj = null;
-            if (obj.has("calSettings"))
-                calendarObj = obj.getJSONArray("calSettings");
-            else
-                calendarObj = new JSONArray();
             JSONObject newEntry = new JSONObject();
             newEntry.put("title",((TextView) rootView.findViewById(R.id.calTitle)).getText());
             newEntry.put("date",((TextView) rootView.findViewById(R.id.calDate)).getText());
             newEntry.put("time",((TextView) rootView.findViewById(R.id.calTime)).getText());
             newEntry.put("repeat", ((Spinner) rootView.findViewById(R.id.calRepeat)).getSelectedItemPosition());
             newEntry.put("reminder",((TextView) rootView.findViewById(R.id.calReminder)).getText());
-            calendarObj.put(newEntry);
-            obj.put("calSettings",calendarObj);
-            writeCalendarJSON(this.getActivity().getBaseContext(), obj.toString());
-            assignCalendarToFields(rootView);
+
+            writeCalendarJSON(newEntry.toString());
+            readCalendarJSON();
+
             clearCalendarFields(rootView);
             makeSnackbarMessage(rootView, "Eintrag erfolgreich hinzugefügt");
-
         }
         catch(JSONException ex)
         {
             makeSnackbarMessage(rootView, "Der Eintrag konnte nicht hinzugefügt werden");
         }
+    }
 
+    /*******************************************************************************
+     * private internal helper method: makeRequest
+     * handles request answer in main thread
+     ******************************************************************************/
+    private void makeRequest(String requestURL, int requestType, final String jsonParam)
+    {
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(requestType, requestURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        assignCalendarToFields(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.w("ERROR: ", error.toString());
+                    }
+
+                    protected Map<String, String> getParams() throws com.android.volley.AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("param1", jsonParam);
+                        return params;
+                    };
+                }
+        );
+
+        m_requestQueue.add(stringRequest);
     }
 }

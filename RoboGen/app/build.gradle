@@ -36,4 +36,5 @@ dependencies {
     implementation 'com.amazonaws:aws-android-sdk-mobileanalytics:2.14.+'
     implementation 'com.amazonaws:aws-android-sdk-core:2.14.+'
     implementation 'com.amazonaws:aws-android-sdk-lambda:2.14.+'
+    implementation 'com.mcxiaoke.volley:library:1.0.17'
 }

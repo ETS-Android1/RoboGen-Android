@@ -21,7 +21,7 @@ public class ResourceLoaderFactory<T> {
 
         String url = m_sURLFormat;
         if (pathParams != null && pathParams.length > 0) {
-            url = String.format(m_sURLFormat, pathParams);
+            url = String.format(m_sURLFormat, (Object) pathParams);
         }
 
         return new ResourceLoader<T>(contextActivity, url, requiredScopes, new Handler(), m_tClassType);
