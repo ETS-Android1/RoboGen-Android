@@ -199,15 +199,29 @@ public class ItemDetailCalendar extends ItemDetailBase {
             final List<String> ListElementsArrayList = new ArrayList<String>();
 
 			for (int i=0; i<calendarObj.length(); i++) {
-                ListElementsArrayList.add(calendarObj.getJSONObject(i).getString("title"));
-            }
+
+			    String entry =  calendarObj.getJSONObject(i).getString("title") + " | " +
+                                calendarObj.getJSONObject(i).getString("date") + " | " +
+                                calendarObj.getJSONObject(i).getString("time") + " | " +
+                                calendarObj.getJSONObject(i).getString("repeat") + " | " +
+                                calendarObj.getJSONObject(i).getString("reminder");
+
+                ListElementsArrayList.add(entry);
+			}
 
             ListView listview = (ListView)m_rootView.findViewById(R.id.calList);
             listview.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, ListElementsArrayList));
             listview.setOnItemClickListener(new OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                     String data=(String)parent.getItemAtPosition(position);
-                    ((TextView) m_rootView.findViewById(R.id.calTitle)).setText(data);
+                    String[] parts = data.split(" \\| ");
+
+                    ((TextView) m_rootView.findViewById(R.id.calTitle)).setText(parts[0]);
+                    ((TextView) m_rootView.findViewById(R.id.calDate)).setText(parts[1]);
+                    ((TextView) m_rootView.findViewById(R.id.calTime)).setText(parts[2]);
+                    ((Spinner) m_rootView.findViewById(R.id.calRepeat)).setSelection(Integer.parseInt(parts[3]));
+                    ((TextView) m_rootView.findViewById(R.id.calReminder)).setText(parts[4]);
                 }
             });
             ViewGroup.LayoutParams params = listview.getLayoutParams();
