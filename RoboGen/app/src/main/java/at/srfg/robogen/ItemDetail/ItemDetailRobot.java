@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -33,7 +34,10 @@ public class ItemDetailRobot extends ItemDetailBase {
                                            "Schritt 3) Die Verbindung kann nach erfolgreichem Senden beendet werden (rechter Schalter)";
 
     public FloatingActionButton m_btnConnectRobot;
-    public FloatingActionButton m_btnSendRobot_Code1;
+    public FloatingActionButton m_btnSendRobot_Left;
+    public FloatingActionButton m_btnSendRobot_Down;
+    public FloatingActionButton m_btnSendRobot_Up;
+    public FloatingActionButton m_btnSendRobot_Right;
     public FloatingActionButton m_btnSendRobot_Quit;
 
     /*******************************************************************************
@@ -82,12 +86,36 @@ public class ItemDetailRobot extends ItemDetailBase {
                 m_cRoboGenApp.getRoboGenManager().BlueTooth_Connect();
             }
         });
-        m_btnSendRobot_Code1 = (FloatingActionButton) rootView.findViewById(R.id.bt_send_code1);
-        m_btnSendRobot_Code1.setOnClickListener(new View.OnClickListener() {
+        m_btnSendRobot_Left = (FloatingActionButton) rootView.findViewById(R.id.bt_send_left);
+        m_btnSendRobot_Left.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
                 makeSnackbarMessage(view, "Sende Daten an Gerät!");
-                SendFilesToDevice(view);
+                SendFilesToDevice("LEFT");
+            }
+        });
+        m_btnSendRobot_Up = (FloatingActionButton) rootView.findViewById(R.id.bt_send_up);
+        m_btnSendRobot_Up.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+
+                makeSnackbarMessage(view, "Sende Daten an Gerät!");
+                SendFilesToDevice("UP");
+            }
+        });
+        m_btnSendRobot_Down = (FloatingActionButton) rootView.findViewById(R.id.bt_send_down);
+        m_btnSendRobot_Down.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+
+                makeSnackbarMessage(view, "Sende Daten an Gerät!");
+                SendFilesToDevice("DOWN");
+            }
+        });
+        m_btnSendRobot_Right = (FloatingActionButton) rootView.findViewById(R.id.bt_send_right);
+        m_btnSendRobot_Right.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+
+                makeSnackbarMessage(view, "Sende Daten an Gerät!");
+                SendFilesToDevice("RIGHT");
             }
         });
 
@@ -112,10 +140,11 @@ public class ItemDetailRobot extends ItemDetailBase {
     /*******************************************************************************
      * sending data to the connected bluetooth device
      ******************************************************************************/
-    private void SendFilesToDevice(View view)
+    private void SendFilesToDevice(String dir)
     {
-        try {
-            InputStream is = view.getContext().openFileInput("settings.json");
+        try { // TODO: rework BT-connection to control movement instead
+
+            InputStream is = new ByteArrayInputStream(dir.getBytes());
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
