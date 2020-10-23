@@ -1,17 +1,22 @@
 package at.srfg.robogen.fitnesswatch.fitbit_API.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
-
+import android.util.Log;
 import androidx.loader.content.Loader;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import at.srfg.robogen.R;
 import at.srfg.robogen.fitnesswatch.fitbit_API.common.loaders.ResourceLoaderResult;
@@ -20,6 +25,10 @@ import at.srfg.robogen.fitnesswatch.fitbit_API.models.sleep_logs.SleepLogs;
 import at.srfg.robogen.fitnesswatch.fitbit_API.services.SleepService;
 
 public class SleepFragment extends InfoFragment<SleepLogs> {
+
+    private RequestQueue m_requestQueue;
+    private String m_urlDownload = "https://power2dm.salzburgresearch.at/robogen/DataBase/DownloadJSON_MySettings";
+    private String m_urlUpload = "https://power2dm.salzburgresearch.at/robogen/DataBase/UploadJSON_MySettings";
 
     /*******************************************************************************
      * overrides for InfoFragment
@@ -42,9 +51,12 @@ public class SleepFragment extends InfoFragment<SleepLogs> {
     @Override
     public void onLoadFinished(Loader<ResourceLoaderResult<SleepLogs>> loader, ResourceLoaderResult<SleepLogs> data) {
         super.onLoadFinished(loader, data);
+
+        m_requestQueue = Volley.newRequestQueue(this.getActivity().getBaseContext());
+
         if (data.isSuccessful()) {
             bindActivityData(data.getResult());
-            writeMinValue(data.getResult());
+            readFitbitJSON(data.getResult());
         }
     }
 
@@ -83,42 +95,63 @@ public class SleepFragment extends InfoFragment<SleepLogs> {
     /*******************************************************************************
      * read fitbit file from asset folder
      ******************************************************************************/
-    public String readFitbitJSON(Context context) {
+    public void readFitbitJSON(final SleepLogs sleepLogs) {
 
-        try {
-            InputStream is = context.openFileInput("settings.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, m_urlDownload, (String) null,
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response) { writeMinValue(sleepLogs, response.toString()); }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) { Log.e("SETTINGS Download Error: ", error.getMessage(), error); }
+                })
+        {
+            @Override
+            public String getBodyContentType(){ return "application/json"; }
 
-            return new String(buffer, "UTF-8");
-        }
-        catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+                return params;
+            }
+        };
+        m_requestQueue.add(jsonObjectRequest);
     }
 
     /*******************************************************************************
      * write fitbit file to asset folder
      ******************************************************************************/
-    public void writeFitbitJSON(Context context, String json) {
+    public void writeFitbitJSON(String json) {
 
-        try {
-            OutputStream os = context.openFileOutput("settings.json", Context.MODE_PRIVATE);
-            os.write(json.getBytes("UTF-8"));
-            os.close();
-        }
-        catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, m_urlUpload, json,
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response) {} // read and update UI
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) { Log.e("SETTINGS Upload Error: ", error.getMessage(), error); }
+                })
+        {
+            @Override
+            public String getBodyContentType(){ return "application/json"; }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+                return params;
+            }
+        };
+        m_requestQueue.add(jsonObjectRequest);
     }
 
     /*******************************************************************************
      * writeMinValue
      ******************************************************************************/
-    public void writeMinValue(SleepLogs sleepLogs) {
+    public void writeMinValue(SleepLogs sleepLogs, String jsonString) {
 
         List<Sleep> sleeps = sleepLogs.getSleeps();
 
@@ -129,8 +162,6 @@ public class SleepFragment extends InfoFragment<SleepLogs> {
         }
 
         try {
-
-            String jsonString = readFitbitJSON(this.getActivity().getBaseContext());
             if(jsonString == null || jsonString.length() == 0) {
                 jsonString = "{'fitbitSettings':{}}";
             }
@@ -143,7 +174,7 @@ public class SleepFragment extends InfoFragment<SleepLogs> {
                 fitbitSettings = new JSONObject();
             fitbitSettings.put("sleepMinValue",min_value);
             jsonObj.put("fitbitSettings",fitbitSettings);
-            writeFitbitJSON(this.getActivity().getBaseContext(), jsonObj.toString());
+            writeFitbitJSON(jsonObj.toString());
         }
         catch(JSONException ex)
         {
