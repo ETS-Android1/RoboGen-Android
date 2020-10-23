@@ -37,6 +37,8 @@ public class ItemDetailSettings extends ItemDetailBase {
 
     public View m_RootView = null;
 
+    public String JSONInternalRepresentation = "";
+
     private RequestQueue m_requestQueue;
     private String m_urlDownload = "https://power2dm.salzburgresearch.at/robogen/DataBase/DownloadJSON_MySettings";
     private String m_urlUpload = "https://power2dm.salzburgresearch.at/robogen/DataBase/UploadJSON_MySettings";
@@ -76,7 +78,7 @@ public class ItemDetailSettings extends ItemDetailBase {
             public void onClick(View view) {
 
                 makeSnackbarMessage(view, "Speichere Daten auf Ihrem Gerät...");
-                readSettingsJSON();
+                assignFieldsToSettings(JSONInternalRepresentation);
             }
         });
     }
@@ -159,7 +161,7 @@ public class ItemDetailSettings extends ItemDetailBase {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, m_urlUpload, json,
                 new Response.Listener<JSONObject>(){
                     @Override
-                    public void onResponse(JSONObject response) { /*assignFieldsToSettings(response.toString());*/ } // read and update UI
+                    public void onResponse(JSONObject response) { readSettingsJSON(); } // read and update UI
                 },
                 new Response.ErrorListener(){
                     @Override
@@ -184,6 +186,8 @@ public class ItemDetailSettings extends ItemDetailBase {
      * assign loaded settings to fields
      ******************************************************************************/
     public void assignSettingsToFields(String jsonString) {
+
+        JSONInternalRepresentation = jsonString;
 
         JSONObject robotSettings = null;
         JSONObject userSettings = null;
