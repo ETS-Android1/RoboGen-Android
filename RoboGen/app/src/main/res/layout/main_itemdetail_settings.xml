@@ -447,7 +447,7 @@
         android:layout_height="match_parent"
         android:padding="16dp"
         android:textSize="@dimen/title_font_size"
-        android:text="Notfall-Kontaktdaten"
+        android:text="Kontaktperson"
         android:textIsSelectable="true"
         tools:context=".ItemDetail.ItemDetailSettings" />
 
