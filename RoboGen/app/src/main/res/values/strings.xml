@@ -60,12 +60,12 @@
     <!--  From Settings Elements -->
     <!-- ///////////////////////////////////////////////////////////////////////////////////////// -->
     <string-array name="robotVoiceOptions">
-        <item>QBO - Standard</item>
-        <item>Männlich - Markus</item>
-        <item>Männlich - Gustav</item>
-        <item>Weiblich - Anita</item>
-        <item>Weiblich - Arabella</item>
-        <item>Geschlechtsneutral</item>
+        <item>Stimme 1</item>
+        <item>Stimme 2</item>
+        <item>Stimme 3</item>
+        <item>Stimme 4</item>
+        <item>Stimme 5</item>
+        <item>Stimme 6</item>
     </string-array>
 
     <string-array name="robotInfoDisplayOptions">
