@@ -26,6 +26,7 @@ public class ItemContent {
         addItem(new ItemEntry(RoboGen_Constants.ItemListID_Vector, RoboGen_Constants.ItemListEntry_Vector, "Management-Seite für Anki Vector Roboter"));
         addItem(new ItemEntry(RoboGen_Constants.ItemListID_Contacts, RoboGen_Constants.ItemListEntry_Contacts, "Management-Seite für Notfallkontakte"));
         addItem(new ItemEntry(RoboGen_Constants.ItemListID_Calendar, RoboGen_Constants.ItemListEntry_Calendar, "Management-Seite für Kalender und Erinnerungen"));
+        addItem(new ItemEntry(RoboGen_Constants.ItemListID_Nutrition, RoboGen_Constants.ItemListEntry_Nutrition, "Management-Seite für Ernährungstagebuch"));
         addItem(new ItemEntry(RoboGen_Constants.ItemListID_Settings, RoboGen_Constants.ItemListEntry_Settings, "Einstellungen und persönliche Daten"));
     }
 

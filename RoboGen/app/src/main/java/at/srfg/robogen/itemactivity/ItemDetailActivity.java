@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import at.srfg.robogen.ItemDetail.ItemDetailNutrition;
 import at.srfg.robogen.R;
 import at.srfg.robogen.RoboGen_Constants;
 import at.srfg.robogen.fitnesswatch.fitbit_Auth.AuthenticationManager;
@@ -85,6 +86,13 @@ public class ItemDetailActivity extends AppCompatActivity {
             {
                 arguments.putString(ItemDetailCalendar.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailCalendar.m_sARG_ITEM_ID));
                 ItemDetailCalendar fragment = new ItemDetailCalendar();
+                fragment.setArguments(arguments);
+                getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
+            }
+            else if(itemID.equals(RoboGen_Constants.ItemListID_Nutrition))
+            {
+                arguments.putString(ItemDetailNutrition.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailNutrition.m_sARG_ITEM_ID));
+                ItemDetailNutrition fragment = new ItemDetailNutrition();
                 fragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
             }

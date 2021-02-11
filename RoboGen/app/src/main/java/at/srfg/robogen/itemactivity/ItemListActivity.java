@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import at.srfg.robogen.ItemDetail.ItemDetailNutrition;
 import at.srfg.robogen.RoboGen_Constants;
 import at.srfg.robogen.itemcontent.ItemContent;
 import at.srfg.robogen.R;
@@ -80,6 +81,7 @@ public class ItemListActivity extends AppCompatActivity {
         public Drawable mDrawableIcon_Vector = null;
         public Drawable mDrawableIcon_Contacts = null;
         public Drawable mDrawableIcon_Calendar = null;
+        public Drawable mDrawableIcon_Nutrition = null;
         public Drawable mDrawableIcon_Settings = null;
 
         /*******************************************************************************
@@ -100,40 +102,38 @@ public class ItemListActivity extends AppCompatActivity {
 
                 Context context = view.getContext();
                 Intent intent = new Intent(context, ItemDetailActivity.class);
+                intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 1
 
                 if(item.toString() == RoboGen_Constants.ItemListEntry_QBO) {
-                    intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 1
                     intent.putExtra(ItemDetailRobot.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 1
                 }
                 else if(item.toString() == RoboGen_Constants.ItemListEntry_FitBit)
                 {
-                    intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 2
                     intent.putExtra(ItemDetailWatch.m_sARG_ITEM_ID, item.m_sEntryID); // id = 2
                 }
                 else if(item.toString() == RoboGen_Constants.ItemListEntry_Alexa)
                 {
-                    intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 3
                     intent.putExtra(ItemDetailAlexa.m_sARG_ITEM_ID, item.m_sEntryID); // id = 3
                 }
                 else if(item.toString() == RoboGen_Constants.ItemListEntry_Vector)
                 {
-                    intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 4
                     intent.putExtra(ItemDetailVector.m_sARG_ITEM_ID, item.m_sEntryID); // id = 4
                 }
                 else if(item.toString() == RoboGen_Constants.ItemListEntry_Contacts)
                 {
-                    intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 5
                     intent.putExtra(ItemDetailContacts.m_sARG_ITEM_ID, item.m_sEntryID); // id = 5
                 }
                 else if(item.toString() == RoboGen_Constants.ItemListEntry_Calendar)
                 {
-                    intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 6
                     intent.putExtra(ItemDetailCalendar.m_sARG_ITEM_ID, item.m_sEntryID); // id = 6
+                }
+                else if(item.toString() == RoboGen_Constants.ItemListEntry_Nutrition)
+                {
+                    intent.putExtra(ItemDetailNutrition.m_sARG_ITEM_ID, item.m_sEntryID); // id = 7
                 }
                 else if(item.toString() == RoboGen_Constants.ItemListEntry_Settings)
                 {
-                    intent.putExtra(ItemDetailBase.m_sARG_ITEM_ID, item.m_sEntryID); // id  = 7
-                    intent.putExtra(ItemDetailSettings.m_sARG_ITEM_ID, item.m_sEntryID); // id = 7
+                    intent.putExtra(ItemDetailSettings.m_sARG_ITEM_ID, item.m_sEntryID); // id = 8
                 }
                 else
                 {
@@ -155,6 +155,7 @@ public class ItemListActivity extends AppCompatActivity {
             mDrawableIcon_Vector = view.getResources().getDrawable(R.drawable.icon_vector);
             mDrawableIcon_Contacts = view.getResources().getDrawable(R.drawable.icon_contacts);
             mDrawableIcon_Calendar = view.getResources().getDrawable(R.drawable.icon_calendar);
+            mDrawableIcon_Nutrition = view.getResources().getDrawable(R.drawable.icon_nutrition);
             mDrawableIcon_Settings = view.getResources().getDrawable(R.drawable.icon_settings);
 
             return new ViewHolder(view);
@@ -180,6 +181,9 @@ public class ItemListActivity extends AppCompatActivity {
             }
             else if(position == RoboGen_Constants.ItemListPos_Calendar) {
                 holder.mConnectionView.setImageDrawable(mDrawableIcon_Calendar);
+            }
+            else if(position == RoboGen_Constants.ItemListPos_Nutrition) {
+                holder.mConnectionView.setImageDrawable(mDrawableIcon_Nutrition);
             }
             else if(position == RoboGen_Constants.ItemListPos_Settings) {
                 holder.mConnectionView.setImageDrawable(mDrawableIcon_Settings);
