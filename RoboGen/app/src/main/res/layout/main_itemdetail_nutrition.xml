@@ -37,7 +37,7 @@
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
             android:textSize="@dimen/text_font_size" android:text="Bezeichnung des Eintrags: "/>
 
-        <EditText android:id="@+id/calTitle" android:hint="Bezeichnung"
+        <EditText android:id="@+id/nutTitle" android:hint="Bezeichnung"
             android:layout_width="fill_parent" android:layout_height="wrap_content"
             android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
             android:background="@android:drawable/editbox_background"/>
@@ -52,7 +52,7 @@
         <TextView android:layout_width="400dp" android:layout_height="wrap_content"
             android:textSize="@dimen/text_font_size" android:text="Konsumierte Menge [ml/g]: "/>
 
-        <EditText android:id="@+id/amount" android:hint="Menge"
+        <EditText android:id="@+id/nutAmount" android:hint="Menge"
             android:layout_width="fill_parent" android:layout_height="wrap_content"
             android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
             android:background="@android:drawable/editbox_background"/>
@@ -67,7 +67,7 @@
         <Button android:layout_width="400dp" android:layout_height="wrap_content"
             android:text="Datum setzen" android:id="@+id/btn_date" app:backgroundTint= "@color/colorPrimary"/>
 
-        <EditText android:id="@+id/calDate" android:hint="Datum" android:editable="false"
+        <EditText android:id="@+id/nutDate" android:hint="Datum" android:editable="false"
             android:layout_width="fill_parent" android:layout_height="wrap_content"
             android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
             android:background="@android:drawable/editbox_background"/>
@@ -82,7 +82,7 @@
         <Button android:layout_width="400dp" android:layout_height="wrap_content"
             android:text="Zeit setzen" android:id="@+id/btn_time" app:backgroundTint= "@color/colorPrimary"/>
 
-        <EditText android:id="@+id/calTime" android:hint="Uhrzeit" android:editable="false"
+        <EditText android:id="@+id/nutTime" android:hint="Uhrzeit" android:editable="false"
             android:layout_width="fill_parent" android:layout_height="wrap_content"
             android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
             android:background="@android:drawable/editbox_background"/>
@@ -106,16 +106,6 @@
             app:rippleColor="@color/cardview_dark_background"
             app:backgroundTint= "@color/colorPrimary" />
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/bt_editUserCalendar"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@drawable/icon_edit"
-            app:fabSize="normal"
-            app:rippleColor="@color/cardview_dark_background"
-            app:backgroundTint= "@color/colorPrimary" />
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/bt_refreshUserCalendar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -135,6 +125,35 @@
             app:fabSize="normal"
             app:rippleColor="@color/cardview_dark_background"
             app:backgroundTint= "@color/colorAlertRed" />
+    </LinearLayout>
+
+    <!-- ************************************************************************* -->
+    <!-- ************************** existing entries ***************************** -->
+    <!-- ************************************************************************* -->
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#3f3f3f"
+        android:layout_marginLeft="16dp" android:layout_marginRight="16dp" android:layout_marginTop="36dp"/>
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/item_detail_nutritionexisting"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:textSize="@dimen/title_font_size"
+        android:text="Vorhandene Einträge"
+        android:textIsSelectable="true"
+        tools:context=".ItemDetail.ItemDetailCalendar" />
+
+    <!-- *************************** existing entries list *************************** -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <ListView
+            android:id="@+id/nutList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" >
+        </ListView>
     </LinearLayout>
 
 </LinearLayout>

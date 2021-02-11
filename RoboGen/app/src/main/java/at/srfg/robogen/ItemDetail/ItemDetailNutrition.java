@@ -4,21 +4,36 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import at.srfg.robogen.R;
 import at.srfg.robogen.RoboGen_App;
@@ -28,19 +43,16 @@ public class ItemDetailNutrition extends at.srfg.robogen.itemdetail.ItemDetailBa
     private final String m_sShowNutrition = "Hier können Sie ihre Ernährung nachtragen und verwalten!";
     private RoboGen_App m_cRoboGenApp;
 
-    public FloatingActionButton m_btnStartCalendar, m_btnRemoveCalendar, m_btnEditCalendar, m_btnRefreshCalendar;
+    public FloatingActionButton m_btnStartCalendar, m_btnRemoveCalendar, m_btnRefreshCalendar;
     public Button btnDatePicker, btnTimePicker;
     public EditText txtDate, txtTime;
     private int mYear, mMonth, mDay, mHour, mMinute;
 
-    //private String m_urlREAD = "https://power2dm.salzburgresearch.at/robogen/DataBase/DownloadJSON_MyCalendar";
-    //private String m_urlADD = "https://power2dm.salzburgresearch.at/robogen/DataBase/UploadJSON_MyCalendar";
-    //private String m_urlEDIT = "https://power2dm.salzburgresearch.at/robogen/DataBase/EditJSON_MyCalendar";
-    //private String m_urlDELETE = "https://power2dm.salzburgresearch.at/robogen/DataBase/ResetJSON_MyCalendar";
+    private String m_urlREAD = "https://power2dm.salzburgresearch.at/robogen/DataBase/DownloadJSON_MyNutrition";
+    private String m_urlADD = "https://power2dm.salzburgresearch.at/robogen/DataBase/UploadJSON_MyNutrition";
+    private String m_urlDELETE = "https://power2dm.salzburgresearch.at/robogen/DataBase/ResetJSON_MyNutrition";
     private RequestQueue m_requestQueue;
     private View m_rootView;
-
-    private enum WriteMode {ADD, EDIT;}
 
     /*******************************************************************************
      * creating view for calendar detail page
@@ -69,12 +81,12 @@ public class ItemDetailNutrition extends at.srfg.robogen.itemdetail.ItemDetailBa
         ((TextView) rootView.findViewById(R.id.item_detail_text_1)).setText(m_sShowNutrition);
 
         m_rootView = rootView;
-        readNutritionDiaryJSON(); // first read of items
+        readNutritionJSON(); // first read of items
 
         btnDatePicker=(Button)rootView.findViewById(R.id.btn_date);
         btnTimePicker=(Button)rootView.findViewById(R.id.btn_time);
-        txtDate=(EditText)rootView.findViewById(R.id.calDate);
-        txtTime=(EditText)rootView.findViewById(R.id.calTime);
+        txtDate=(EditText)rootView.findViewById(R.id.nutDate);
+        txtTime=(EditText)rootView.findViewById(R.id.nutTime);
 
         btnDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,15 +149,7 @@ public class ItemDetailNutrition extends at.srfg.robogen.itemdetail.ItemDetailBa
             public void onClick(View view) {
 
                 makeSnackbarMessage(view, "Speichere Daten auf Ihrem Gerät...");
-                writeEntryToNutritionDiary(rootView, ItemDetailNutrition.WriteMode.ADD);
-            }
-        });
-
-        m_btnEditCalendar = (FloatingActionButton) rootView.findViewById(R.id.bt_editUserCalendar);
-        m_btnEditCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                writeEntryToNutritionDiary(rootView, ItemDetailNutrition.WriteMode.EDIT);
+                writeEntryToNutrition(rootView);
             }
         });
 
@@ -153,7 +157,7 @@ public class ItemDetailNutrition extends at.srfg.robogen.itemdetail.ItemDetailBa
         m_btnRefreshCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                readNutritionDiaryJSON();
+                readNutritionJSON();
             }
         });
 
@@ -161,8 +165,8 @@ public class ItemDetailNutrition extends at.srfg.robogen.itemdetail.ItemDetailBa
         m_btnRemoveCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteNutritionDiaryJSON();
-                clearNutritionDiary(rootView);
+                deleteNutritionJSON();
+                clearNutritionFields(rootView);
             }
         });
     }
@@ -170,57 +174,158 @@ public class ItemDetailNutrition extends at.srfg.robogen.itemdetail.ItemDetailBa
     /*******************************************************************************
      * assign loaded calendar to fields
      ******************************************************************************/
-    public void assignNutritionDiaryToFields(JSONObject obj) {
+    public void assignNutritionToFields(String str) {
 
-        // TODO: see calender function
+        // remove error message -> bad quick fix... TODO: needs a better solution
+        String allLines = "";
+        if(str.contains("[")) {
+            allLines = str.substring(str.indexOf("["));
+            allLines.trim();
+        }
+        else {
+            allLines = str.replace("org.json.JSONException: End of input at character 0 of ", "");
+        }
+
+        // fill adapter array with entries split by new line
+        final List<String> ListElementsArrayList = new ArrayList<String>();
+        String[] lines = allLines.split("\\r?\\n");
+        for (String line : lines) {
+            ListElementsArrayList.add(line);
+        }
+        ListView listview = (ListView)m_rootView.findViewById(R.id.nutList);
+        listview.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, ListElementsArrayList));
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String data=(String)parent.getItemAtPosition(position);
+                String[] parts = data.split(" \\| ");
+                ((TextView) m_rootView.findViewById(R.id.nutTitle)).setText(parts[0]);
+                ((TextView) m_rootView.findViewById(R.id.nutAmount)).setText(parts[1]);
+                ((TextView) m_rootView.findViewById(R.id.nutDate)).setText(parts[2]);
+                ((TextView) m_rootView.findViewById(R.id.nutTime)).setText(parts[4]);
+            }
+        });
+        ViewGroup.LayoutParams params = listview.getLayoutParams();
+        params.height = ListElementsArrayList.size() * 150;
+        listview.setLayoutParams(params);
+        listview.requestLayout();
     }
 
     /*******************************************************************************
      * add an entry to the calendar
      ******************************************************************************/
-    public void writeEntryToNutritionDiary(final View rootView, ItemDetailNutrition.WriteMode mode) {
+    public void writeEntryToNutrition(final View rootView) {
 
-        // TODO: see calender function
+        try {
+            JSONObject newEntry = new JSONObject();
+            newEntry.put("food",((TextView) rootView.findViewById(R.id.nutTitle)).getText());
+            newEntry.put("amount",((TextView) rootView.findViewById(R.id.nutAmount)).getText());
+            newEntry.put("date",((TextView) rootView.findViewById(R.id.nutDate)).getText());
+            newEntry.put("time",((TextView) rootView.findViewById(R.id.nutTime)).getText());
+
+            addNutritionJSON(newEntry);
+            clearNutritionFields(rootView);
+            makeSnackbarMessage(rootView, "Eintrag erfolgreich hinzugefügt");
+        }
+        catch(JSONException ex)
+        {
+            makeSnackbarMessage(rootView, "Der Eintrag konnte nicht hinzugefügt werden");
+        }
     }
 
     /*******************************************************************************
      * clear input
      ******************************************************************************/
-    public void clearNutritionDiary(final View rootView) {
+    public void clearNutritionFields(final View rootView) {
 
-        // TODO: see calender function
+        ((TextView) rootView.findViewById(R.id.nutTitle)).setText("");
+        ((TextView) rootView.findViewById(R.id.nutAmount)).setText("");
+        ((TextView) rootView.findViewById(R.id.nutDate)).setText("");
+        ((TextView) rootView.findViewById(R.id.nutTime)).setText("");
     }
 
 
     /*******************************************************************************
      * read calendar file from server
      ******************************************************************************/
-    public void readNutritionDiaryJSON() {
+    public void readNutritionJSON() {
 
-        // TODO: see calender function
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, m_urlREAD, (String) null,
+
+                new Response.Listener<JSONObject>(){ // INFO: this will never be called... TODO: needs a better solution
+                    @Override
+                    public void onResponse(JSONObject response) { assignNutritionToFields(""); }
+                },
+                new Response.ErrorListener(){ // INFO: ERROR isnt really an error here.. TODO: needs a better solution
+                    @Override
+                    public void onErrorResponse(VolleyError error) { assignNutritionToFields(error.getMessage());  }
+                })
+        {
+            @Override
+            public String getBodyContentType(){ return "application/json"; }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+                return params;
+            }
+        };
+        m_requestQueue.add(jsonObjectRequest);
     }
 
     /*******************************************************************************
      * add calendar entry to server
      ******************************************************************************/
-    public void addNutritionDiaryJSON(JSONObject json) {
+    public void addNutritionJSON(JSONObject json) {
 
-        // TODO: see calender function
-    }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, m_urlADD, json.toString(),
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response) { readNutritionJSON(); } // read and update UI
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) { Log.e("CAL ADD ERROR:", error.getMessage(), error); }
+                })
+        {
+            @Override
+            public String getBodyContentType(){ return "application/json"; }
 
-    /*******************************************************************************
-     * write calendar file to server
-     ******************************************************************************/
-    public void editNutritionDiaryJSON(JSONObject json) {
-
-        // TODO: see calender function
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+                return params;
+            }
+        };
+        m_requestQueue.add(jsonObjectRequest);
     }
 
     /*******************************************************************************
      * delete/reset calendar files on server
      ******************************************************************************/
-    public void deleteNutritionDiaryJSON() {
+    public void deleteNutritionJSON() {
 
-        // TODO: see calender function
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, m_urlDELETE, (JSONObject) null,
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response) { Log.w("SUCCESS: ", response.toString()); }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) { Log.e("CAL DEL ERROR:", error.getMessage(), error); }
+                })
+        {
+            @Override
+            public String getBodyContentType(){ return "application/json"; }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+                return params;
+            }
+        };
+        m_requestQueue.add(jsonObjectRequest);
     }
 }
