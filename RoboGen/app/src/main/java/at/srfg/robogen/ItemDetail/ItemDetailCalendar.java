@@ -365,7 +365,7 @@ public class ItemDetailCalendar extends ItemDetailBase {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, m_urlDELETE, (JSONObject) null,
                 new Response.Listener<JSONObject>(){
                     @Override
-                    public void onResponse(JSONObject response) { Log.w("SUCCESS: ", response.toString()); }
+                    public void onResponse(JSONObject response) { readCalendarJSON(); } // read and update UI
                 },
                 new Response.ErrorListener(){
                     @Override

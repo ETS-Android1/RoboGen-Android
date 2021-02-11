@@ -23,6 +23,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -176,19 +177,9 @@ public class ItemDetailNutrition extends at.srfg.robogen.itemdetail.ItemDetailBa
      ******************************************************************************/
     public void assignNutritionToFields(String str) {
 
-        // remove error message -> bad quick fix... TODO: needs a better solution
-        String allLines = "";
-        if(str.contains("[")) {
-            allLines = str.substring(str.indexOf("["));
-            allLines.trim();
-        }
-        else {
-            allLines = str.replace("org.json.JSONException: End of input at character 0 of ", "");
-        }
-
         // fill adapter array with entries split by new line
         final List<String> ListElementsArrayList = new ArrayList<String>();
-        String[] lines = allLines.split("\\r?\\n");
+        String[] lines = str.split("\\r?\\n");
         for (String line : lines) {
             ListElementsArrayList.add(line);
         }
@@ -216,11 +207,11 @@ public class ItemDetailNutrition extends at.srfg.robogen.itemdetail.ItemDetailBa
     public void writeEntryToNutrition(final View rootView) {
 
         try {
-            JSONObject newEntry = new JSONObject();
-            newEntry.put("food",((TextView) rootView.findViewById(R.id.nutTitle)).getText());
-            newEntry.put("amount",((TextView) rootView.findViewById(R.id.nutAmount)).getText());
+            JSONObject newEntry = new JSONObject(); // INFO: Food search term should always be supplied in lower case letters
+            newEntry.put("food",((TextView) rootView.findViewById(R.id.nutTitle)).getText().toString().toLowerCase());
             newEntry.put("date",((TextView) rootView.findViewById(R.id.nutDate)).getText());
             newEntry.put("time",((TextView) rootView.findViewById(R.id.nutTime)).getText());
+            newEntry.put("amount",((TextView) rootView.findViewById(R.id.nutAmount)).getText());
 
             addNutritionJSON(newEntry);
             clearNutritionFields(rootView);
@@ -249,17 +240,16 @@ public class ItemDetailNutrition extends at.srfg.robogen.itemdetail.ItemDetailBa
      ******************************************************************************/
     public void readNutritionJSON() {
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, m_urlREAD, (String) null,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, m_urlREAD, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {assignNutritionToFields(response);}
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {Log.e("NUT READ ERROR:", error.getMessage(), error);}
+        }){
+            @Override
+            public byte[] getBody() { return "".toString().getBytes();}
 
-                new Response.Listener<JSONObject>(){ // INFO: this will never be called... TODO: needs a better solution
-                    @Override
-                    public void onResponse(JSONObject response) { assignNutritionToFields(""); }
-                },
-                new Response.ErrorListener(){ // INFO: ERROR isnt really an error here.. TODO: needs a better solution
-                    @Override
-                    public void onErrorResponse(VolleyError error) { assignNutritionToFields(error.getMessage());  }
-                })
-        {
             @Override
             public String getBodyContentType(){ return "application/json"; }
 
@@ -270,7 +260,7 @@ public class ItemDetailNutrition extends at.srfg.robogen.itemdetail.ItemDetailBa
                 return params;
             }
         };
-        m_requestQueue.add(jsonObjectRequest);
+        m_requestQueue.add(stringRequest);
     }
 
     /*******************************************************************************
@@ -285,7 +275,7 @@ public class ItemDetailNutrition extends at.srfg.robogen.itemdetail.ItemDetailBa
                 },
                 new Response.ErrorListener(){
                     @Override
-                    public void onErrorResponse(VolleyError error) { Log.e("CAL ADD ERROR:", error.getMessage(), error); }
+                    public void onErrorResponse(VolleyError error) { Log.e("NUT ADD ERROR:", error.getMessage(), error); }
                 })
         {
             @Override
@@ -309,11 +299,11 @@ public class ItemDetailNutrition extends at.srfg.robogen.itemdetail.ItemDetailBa
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, m_urlDELETE, (JSONObject) null,
                 new Response.Listener<JSONObject>(){
                     @Override
-                    public void onResponse(JSONObject response) { Log.w("SUCCESS: ", response.toString()); }
+                    public void onResponse(JSONObject response) { readNutritionJSON(); } // read and update UI
                 },
                 new Response.ErrorListener(){
                     @Override
-                    public void onErrorResponse(VolleyError error) { Log.e("CAL DEL ERROR:", error.getMessage(), error); }
+                    public void onErrorResponse(VolleyError error) { Log.e("NUT DEL ERROR:", error.getMessage(), error); }
                 })
         {
             @Override
