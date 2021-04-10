@@ -60,12 +60,12 @@
     <!--  From Settings Elements -->
     <!-- ///////////////////////////////////////////////////////////////////////////////////////// -->
     <string-array name="robotVoiceOptions">
-        <item>Stimme 1</item>
-        <item>Stimme 2</item>
-        <item>Stimme 3</item>
-        <item>Stimme 4</item>
-        <item>Stimme 5</item>
-        <item>Stimme 6</item>
+        <item>Standard</item>
+        <item>Sehr tief</item>
+        <item>Tief</item>
+        <item>Hoch</item>
+        <item>Sehr hoch</item>
+        <item>Ausgeglichen</item>
     </string-array>
 
     <string-array name="robotInfoDisplayOptions">
