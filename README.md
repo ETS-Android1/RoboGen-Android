@@ -49,3 +49,4 @@ dependencies {
     implementation 'com.amazonaws:aws-android-sdk-lambda:2.14.+'
 }
 ```
+ 
