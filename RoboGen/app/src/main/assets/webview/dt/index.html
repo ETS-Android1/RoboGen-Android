@@ -1,0 +1,119 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+		<meta http-equiv="Pragma" content="no-cache"/>
+		<meta http-equiv="Expires" content="0"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Dialog</title>
+		<script src="../js/jquery-2.1.4.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="../css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/main.css">
+		<script>
+			var loadEndpoint = "https://api.jsonstorage.net/v1/json/e7278ae4-8cca-42e7-bba7-5eb3fe91b6f1";
+			var loadMethod = "GET";
+			var refreshInterval = 7500;
+			var dt = [];
+			var timeout = null;
+			function renderDT() {
+				if (dt.length == 0) {
+					var html = "Starte einen Dialog mit dem Roboter, um diesen hier zu verfolgen."
+					$("#dt_history").html(html);
+					$("#dt_current").html("");
+				}
+				else {
+					var html_history = "";
+					var html_current = "";
+					for (var i=0; i<dt.length; i++) {
+						var entry = dt[i];
+						if (entry.answer != -1) {
+							html_history += "<div class='row'>";
+							html_history += "<div class='col-md-9' style='text-align:left;'>";
+							html_history += "<p>"+entry.question+"</p>";
+							html_history += "</div>";
+							html_history += "<div class='col-md-3'>";
+							html_history += "</div>";
+							html_history += "</div>";
+							html_history += "<div class='row'>";
+							html_history += "<div class='col-md-3'>";
+							html_history += "</div>";
+							html_history += "<div class='col-md-9' style='text-align:right;'>";
+							html_history += "<p><i>"+entry.answers[entry.answer]+"</i></p>";
+							html_history += "</div>";
+							html_history += "</div>";
+						}
+						else {
+							html_current += "<p><b>"+entry.question+"</b></p>";
+							if (entry.area == "END") {
+								if (entry.link != "") {
+									html_current += "<p><a href='"+entry.link+"' target='_blank'>"+entry.link+"</a></p>";
+								}
+							}
+							else {
+								for (var j=0; j<entry.answers.length; j++) {
+									html_current += "<p>Antwort "+(j+1)+": "+entry.answers[j]+"</p>";
+								}
+							}
+						}
+					}
+					$("#dt_history").html(html_history);
+					$("#dt_current").html(html_current);
+				}
+				timeout = setTimeout(function(){
+					loadDT(false);
+				},refreshInterval);
+			}
+			function loadDT(loader) {
+				if (loader) {
+					clearTimeout(timeout);
+					$("#dt_loader").removeClass("hidden");
+					$("#dt_main").removeClass("hidden").addClass("hidden");
+				}
+				$.ajax({
+					url: loadEndpoint,
+					type: loadMethod,
+					cache: false,
+					dataType: "json",
+					success: function (res) {
+						dt = res;
+						renderDT();
+						$("#dt_loader").removeClass("hidden").addClass("hidden");
+						$("#dt_main").removeClass("hidden");
+					},
+					error: function(xhr,status,error) {
+						$("#dt_loader").removeClass("hidden").addClass("hidden");
+						$("#dt_main").removeClass("hidden");
+						alert("Fehler beim Laden der Daten - versuchen Sie es später wieder");
+					}
+				});
+			}
+		</script>
+	</head>
+	<body onload="loadDT(true);">
+		<div id="dt_loader">
+			<center><div class="loader"></div></center>
+		</div>
+		<div id="dt_main" class="row hidden">
+			<div class="col-md-12">
+				<div id="dt">
+					<div class="row">
+						<div class="col-md-4 left-btn">
+							<a class="btn btn-lg btn-primary" href="../index.html"><i class='glyphicon glyphicon-home'></i> Hauptmenü</a>
+						</div>
+						<div class="col-md-4 center-btn">
+							<button class="btn btn-lg btn-default" onclick="loadDT(true);"><i class='glyphicon glyphicon-refresh'></i> Dialog</button>
+						</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div id="dt_history" class="col-md-6" style="border-right: 1px solid #eee">
+						</div>
+						<div id="dt_current" class="col-md-6">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

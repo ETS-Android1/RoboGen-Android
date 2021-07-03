@@ -1,0 +1,188 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+		<meta http-equiv="Pragma" content="no-cache"/>
+		<meta http-equiv="Expires" content="0"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Einstellungen</title>
+		<script src="../js/jquery-2.1.4.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="../css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/main.css">
+		<script>
+			var loadEndpoint = "https://api.jsonstorage.net/v1/json/f8d89bf8-6826-4434-9ca1-edd60405bf6d";
+			var saveEndpoint = "https://api.jsonstorage.net/v1/json/f8d89bf8-6826-4434-9ca1-edd60405bf6d";
+			var loadMethod = "GET";
+			var saveMethod = "PUT";
+			var settings = {};
+			function saveSettings() {
+				$("#settings_loader").removeClass("hidden");
+				$("#settings_main").removeClass("hidden").addClass("hidden");
+				var post_data = settings;
+				if (!post_data.robotSettings)
+					post_data.robotSettings = {};
+				if (!post_data.userSettings)
+					post_data.userSettings = {};
+				if (!post_data.userSettings.emergencyAddress)
+					post_data.userSettings.emergencyAddress = {};
+				if (!post_data.userSettings.userPersonalData)
+					post_data.userSettings.emergencyAddress = {};
+				post_data.robotSettings.robotName = $("#settings_robot_name").val();
+				post_data.robotSettings.robotVoice = parseInt($("#settings_robot_voice").val());
+				post_data.robotSettings.robotAudioVolume = parseInt($("#settings_robot_volume").val());
+				post_data.robotSettings.robotThresholdSleep = parseInt($("#settings_robot_thresholdSleep").val());
+				post_data.userSettings.userName = $("#settings_user_name").val();
+				post_data.userSettings.userAge = parseInt($("#settings_user_age").val());
+				post_data.userSettings.userPersonalData.userKnownDiseases = parseInt($("#settings_user_disease").val());
+				post_data.userSettings.emergencyAddress.emergencyEmailAccount = $("#settings_contact_mail").val();
+				$.ajax({
+					url: saveEndpoint,
+					type: saveMethod,
+					cache: false,
+					contentType: "application/json",
+					data: JSON.stringify(post_data),
+					success: function (res) {
+						$(".settings_save").removeClass("disabled").addClass("disabled");
+						settings = post_data;
+						$("#settings_loader").removeClass("hidden").addClass("hidden");
+						$("#settings_main").removeClass("hidden");
+					},
+					error: function(xhr,status,error) {
+						$("#settings_loader").removeClass("hidden").addClass("hidden");
+						$("#settings_main").removeClass("hidden");
+						alert("Fehler beim Speichern der Daten - versuchen Sie es später wieder");
+					}
+				});
+			}
+			function loadSettings() {
+				$("#settings_loader").removeClass("hidden");
+				$("#settings_main").removeClass("hidden").addClass("hidden");
+				$.ajax({
+					url: loadEndpoint,
+					type: loadMethod,
+					cache: false,
+					dataType: "json",
+					success: function (res) {
+						settings = res;
+						if (settings && settings.robotSettings && settings.robotSettings.robotName)
+							$("#settings_robot_name").val(settings.robotSettings.robotName);
+						if (settings && settings.robotSettings && settings.robotSettings.robotVoice)
+							$("#settings_robot_voice").val(settings.robotSettings.robotVoice);
+						if (settings && settings.robotSettings && settings.robotSettings.robotAudioVolume)
+							$("#settings_robot_volume").val(settings.robotSettings.robotAudioVolume);
+						if (settings && settings.robotSettings && settings.robotSettings.robotThresholdSleep)
+							$("#settings_robot_thresholdSleep").val(settings.robotSettings.robotThresholdSleep);
+						if (settings && settings.userSettings && settings.userSettings.userName)
+							$("#settings_user_name").val(settings.userSettings.userName);
+						if (settings && settings.userSettings && settings.userSettings.userAge)
+							$("#settings_user_age").val(settings.userSettings.userAge);
+						if (settings && settings.userSettings && settings.userSettings.userPersonalData && settings.userSettings.userPersonalData.userKnownDiseases)
+							$("#settings_user_disease").val(settings.userSettings.userPersonalData.userKnownDiseases);
+						if (settings && settings.userSettings && settings.userSettings.emergencyAddress && settings.userSettings.emergencyAddress.emergencyEmailAccount)
+							$("#settings_contact_mail").val(settings.userSettings.emergencyAddress.emergencyEmailAccount);
+						$("#settings_loader").removeClass("hidden").addClass("hidden");
+						$("#settings_main").removeClass("hidden");
+					},
+					error: function(xhr,status,error) {
+						$("#settings_loader").removeClass("hidden").addClass("hidden");
+						$("#settings_main").removeClass("hidden");
+						alert("Fehler beim Laden der Daten - versuchen Sie es später wieder");
+					}
+				});
+			}
+		</script>
+	</head>
+	<body onload="loadSettings();">
+		<div id="settings_loader">
+			<center><div class="loader"></div></center>
+		</div>
+		<div id="settings_main" class="row hidden">
+			<div class="col-md-12">
+				<div id="settings">
+					<div class="row">
+						<div class="col-md-4 left-btn">
+							<a class="btn btn-lg btn-primary" href="../index.html"><i class='glyphicon glyphicon-home'></i> Hauptmenü</a>
+						</div>
+						<div class="col-md-4 center-btn">
+							<button class="btn btn-lg btn-default" onclick="loadSettings();"><i class='glyphicon glyphicon-refresh'></i> Einstellungen</button>
+						</div>
+						<div class="col-md-4 right-btn">
+							<button class="btn btn-lg btn-success right-btn settings_save disabled" onclick="saveSettings()"><i class='glyphicon glyphicon-ok'></i> Speichern</button>
+						</div>
+					</div>
+					<hr>
+					<h3>Roboter</h3>
+					<div class='input-group input-group-lg space'>
+						<span class='input-group-addon'>Name</span>
+						<input id='settings_robot_name' class='form-control' type='text'></input>
+					</div>
+					<div class="input-group input-group-lg space">
+						<span class="input-group-addon">Stimme</span>
+						<select id="settings_robot_voice" class="form-control">
+							<option value="0">Standard</option>
+							<option value="1">Sehr tief</option>
+							<option value="2">Tief</option>
+							<option value="5">Ausgeglichen</option>
+							<option value="3">Hoch</option>
+							<option value="4">Sehr hoch</option>
+						</select>
+					</div>
+					<div class="input-group input-group-lg space">
+						<span class="input-group-addon">Lautstärke</span>
+						<select id="settings_robot_volume" class="form-control">
+							<option value="50">Sehr leise</option>
+							<option value="60">Leise</option>
+							<option value="70">Mittelmäßig</option>
+							<option value="80">Laut</option>
+							<option value="90">Sehr laut</option>
+						</select>
+					</div>
+					<div class="input-group input-group-lg space">
+						<span class="input-group-addon">Schlaf-Tipps</span>
+						<select id="settings_robot_thresholdSleep" class="form-control">
+							<option value="100">Immer</option>
+							<option value="89">Schlafindex unter 90 (Gut)</option>
+							<option value="79">Schlafindex unter 80 (In Ordnung)</option>
+							<option value="59">Schlafindex unter 60 (Schlecht)</option>
+							<option value="0">Nie</option>
+						</select>
+					</div>
+					<hr>
+					<h3>BenutzerIn</h3>
+					<div class='input-group input-group-lg space'>
+						<span class='input-group-addon'>Name</span>
+						<input id='settings_user_name' class='form-control' type='text'></input>
+					</div>
+					<div class='input-group input-group-lg space'>
+						<span class='input-group-addon'>Alter</span>
+						<input id='settings_user_age' class='form-control' type='number' step='1' min='0'></input>
+					</div>
+					<div class="input-group input-group-lg space">
+						<span class="input-group-addon">Erkrankungen</span>
+						<select id="settings_user_disease" class="form-control">
+							<option value="3">Keine</option>
+							<option value="0">Diabetes</option>
+						</select>
+					</div>
+					<hr>
+					<h3>Kontaktperson</h3>
+					<div class='input-group input-group-lg space'>
+						<span class='input-group-addon'>Email</span>
+						<input id='settings_contact_mail' class='form-control' type='text'></input>
+					</div>
+					<script type="text/javascript">
+						$(function(){
+							$("input").on("input",function(){
+								$(".settings_save").removeClass("disabled");
+							});
+							$("select").on("change",function(){
+								$(".settings_save").removeClass("disabled");
+							});
+						})
+					</script>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

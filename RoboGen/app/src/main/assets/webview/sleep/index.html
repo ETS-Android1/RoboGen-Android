@@ -1,0 +1,183 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+		<meta http-equiv="Pragma" content="no-cache"/>
+		<meta http-equiv="Expires" content="0"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Schlafdaten</title>
+		<script src="../js/jquery-2.1.4.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/data.js"></script>
+		<link rel="stylesheet" href="../css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/main.css">
+		<script>
+			var loadEndpoint = "https://api.jsonstorage.net/v1/json/f8d89bf8-6826-4434-9ca1-edd60405bf6d";
+			var loadMethod = "GET";
+			var thresholdSleep = 0;
+			var sleepData = {
+				"idx": 75,
+				"duration": 431,
+				"awake": 15,
+				"rem": 18,
+				"light": 49,
+				"deep": 18
+			};
+			function renderSleep() {
+				var sleepQuality = "Schlecht";
+				var sleepQualityClass = "progress-bar-danger";
+				if (sleepData.idx >= 90) {
+					sleepQuality = "Hervorragend";
+					sleepQualityClass = "progress-bar-success";
+				}
+				else if (sleepData.idx >= 80) {
+					sleepQuality = "Gut";
+					sleepQualityClass = "progress-bar-primary";
+				}
+				else if (sleepData.idx >= 60) {
+					sleepQuality = "In Ordnung";
+					sleepQualityClass = "progress-bar-warning";
+				}
+				var html = "";		
+				html += "<div class='row'>";
+				html += "<div class='col-md-3'>";
+				html += "<span style='line-height:50px'><b>Schlafindex</b></span>";
+				html += "</div>";
+				html += "<div class='col-md-9'>";
+				html += "<div class='progress' style='height:50px'>";
+				html += "<div class='progress-bar "+sleepQualityClass+"' role='progressbar' aria-valuenow='"+sleepData.idx+"' aria-valuemin='0' aria-valuemax='100' style='width: "+sleepData.idx+"%; line-height:50px; font-size:16px;'>";
+				html += "<b>"+sleepData.idx+" ("+sleepQuality+")</b>";
+				html += "</div>";
+				html += "</div>";
+				html += "</div>";
+				html += "</div>";
+				/* */
+				html += "<div class='row'>";
+				html += "<div class='col-md-3'>";
+				html += "<span>Schlafdauer</span>";
+				html += "</div>";
+				html += "<div class='col-md-9'>";
+				var hours = Math.floor(sleepData.duration/60);
+				var minutes = sleepData.duration - (hours*60);
+				html += "<div style='margin-bottom: 1em'>"+hours+" Std. "+minutes+" Min.</div>";
+				html += "</div>";
+				html += "</div>";
+				/* */
+				html += "<div class='row'>";
+				html += "<div class='col-md-3'>";
+				html += "<span>Wach</span>";
+				html += "</div>";
+				html += "<div class='col-md-9'>";
+				html += "<div class='progress'>";
+				html += "<div class='progress-bar progress-bar-danger' role='progressbar' aria-valuenow='"+sleepData.awake+"' aria-valuemin='0' aria-valuemax='100' style='width: "+sleepData.awake+"%; font-size:16px;'>";
+				html += sleepData.awake+" %";
+				html += "</div>";
+				html += "</div>";
+				html += "</div>";
+				html += "</div>";
+				/* */
+				html += "<div class='row'>";
+				html += "<div class='col-md-3'>";
+				html += "<span>REM</span>";
+				html += "</div>";
+				html += "<div class='col-md-9'>";
+				html += "<div class='progress'>";
+				html += "<div class='progress-bar progress-bar-primary' role='progressbar' aria-valuenow='"+sleepData.rem+"' aria-valuemin='0' aria-valuemax='100' style='width: "+sleepData.rem+"%; font-size:16px;'>";
+				html += sleepData.rem+" %";
+				html += "</div>";
+				html += "</div>";
+				html += "</div>";
+				html += "</div>";
+				/* */
+				html += "<div class='row'>";
+				html += "<div class='col-md-3'>";
+				html += "<span>Leicht</span>";
+				html += "</div>";
+				html += "<div class='col-md-9'>";
+				html += "<div class='progress'>";
+				html += "<div class='progress-bar progress-bar-info' role='progressbar' aria-valuenow='"+sleepData.light+"' aria-valuemin='0' aria-valuemax='100' style='width: "+sleepData.light+"%; font-size:16px;'>";
+				html += sleepData.light+" %";
+				html += "</div>";
+				html += "</div>";
+				html += "</div>";
+				html += "</div>";
+				/* */
+				html += "<div class='row'>";
+				html += "<div class='col-md-3'>";
+				html += "<span>Tief</span>";
+				html += "</div>";
+				html += "<div class='col-md-9'>";
+				html += "<div class='progress'>";
+				html += "<div class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='"+sleepData.deep+"' aria-valuemin='0' aria-valuemax='100' style='width: "+sleepData.deep+"%; font-size:16px;'>";
+				html += sleepData.deep+" %";
+				html += "</div>";
+				html += "</div>";
+				html += "</div>";
+				html += "</div>";
+				$("#sleep_data").html(html);
+				/* */
+				html = "";
+				if (sleepData.idx <= thresholdSleep) {
+					html += "Dein Schlafindex liegt unter deinem festgelegten Schwellwert - hier findest du einen Tipp, um deine Schlafqualität künftig zu verbessern:<br/><br/>";
+					var min = 0;
+					var max = sleepInterventions.length-1;
+					var rnd = Math.floor(Math.random() * (max - min + 1)) + min;
+					html += "<b>"+sleepInterventions[rnd]+"</b>";
+				}
+				else {
+					html += "Dein Schlafindex liegt über deinem festgelegten Schwellwert - gute Arbeit!"
+				}
+				$("#sleep_tip").html(html);
+			}
+			function loadSleep() {
+				$("#sleep_loader").removeClass("hidden");
+				$("#sleep_main").removeClass("hidden").addClass("hidden");
+				$.ajax({
+					url: loadEndpoint,
+					type: loadMethod,
+					cache: false,
+					dataType: "json",
+					success: function (res) {
+						var settings = res;
+						if (settings && settings.robotSettings && settings.robotSettings.robotThresholdSleep)
+							thresholdSleep = settings.robotSettings.robotThresholdSleep;
+						renderSleep();
+						$("#sleep_loader").removeClass("hidden").addClass("hidden");
+						$("#sleep_main").removeClass("hidden");
+					},
+					error: function(xhr,status,error) {
+						$("#sleep_loader").removeClass("hidden").addClass("hidden");
+						$("#sleep_main").removeClass("hidden");
+						alert("Fehler beim Laden der Daten - versuchen Sie es später wieder");
+					}
+				});
+			}
+		</script>
+	</head>
+	<body onload="loadSleep();">
+		<div id="sleep_loader">
+			<center><div class="loader"></div></center>
+		</div>
+		<div id="sleep_main" class="row hidden">
+			<div class="col-md-12">
+				<div id="sleep">
+					<div class="row">
+						<div class="col-md-4 left-btn">
+							<a class="btn btn-lg btn-primary" href="../index.html"><i class='glyphicon glyphicon-home'></i> Hauptmenü</a>
+						</div>
+						<div class="col-md-4 center-btn">
+							<button class="btn btn-lg btn-default" onclick="loadSleep();"><i class='glyphicon glyphicon-refresh'></i> Schlafdaten</button>
+						</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div id="sleep_data" class="col-md-6" style="border-right: 1px solid #eee">
+						</div>
+						<div id="sleep_tip" class="col-md-6">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
