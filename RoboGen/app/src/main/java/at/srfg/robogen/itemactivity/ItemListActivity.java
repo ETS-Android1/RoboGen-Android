@@ -30,6 +30,7 @@ import at.srfg.robogen.itemdetail.ItemDetailRobot;
 import at.srfg.robogen.itemdetail.ItemDetailWatch;
 import at.srfg.robogen.itemdetail.ItemDetailVector;
 import at.srfg.robogen.itemdetail.ItemDetailSettings;
+import at.srfg.robogen.itemdetail.ItemDetailWV;
 
 /*******************************************************************************
  * An activity representing a list of Items. This activity
@@ -83,6 +84,7 @@ public class ItemListActivity extends AppCompatActivity {
         public Drawable mDrawableIcon_Calendar = null;
         public Drawable mDrawableIcon_Nutrition = null;
         public Drawable mDrawableIcon_Settings = null;
+        public Drawable mDrawableIcon_WV = null;
 
         /*******************************************************************************
          * CTOR will init all entry ImageViews, representing state of connection
@@ -135,6 +137,10 @@ public class ItemListActivity extends AppCompatActivity {
                 {
                     intent.putExtra(ItemDetailSettings.m_sARG_ITEM_ID, item.m_sEntryID); // id = 8
                 }
+                else if(item.toString() == RoboGen_Constants.ItemListEntry_WV)
+                {
+                    intent.putExtra(ItemDetailWV.m_sARG_ITEM_ID, item.m_sEntryID); // id = 9
+                }
                 else
                 {
                     Log.d(m_sLogTag, "Internal Error: invalid option selected");
@@ -157,6 +163,7 @@ public class ItemListActivity extends AppCompatActivity {
             mDrawableIcon_Calendar = view.getResources().getDrawable(R.drawable.icon_calendar);
             mDrawableIcon_Nutrition = view.getResources().getDrawable(R.drawable.icon_nutrition);
             mDrawableIcon_Settings = view.getResources().getDrawable(R.drawable.icon_settings);
+            mDrawableIcon_WV = view.getResources().getDrawable(R.drawable.arrow_right);
 
             return new ViewHolder(view);
         }
@@ -164,6 +171,7 @@ public class ItemListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
 
+            /*
             if(position == RoboGen_Constants.ItemListPos_QBO) {
                 holder.mConnectionView.setImageDrawable(mDrawableIcon_QBO);
             }
@@ -188,8 +196,12 @@ public class ItemListActivity extends AppCompatActivity {
             else if(position == RoboGen_Constants.ItemListPos_Settings) {
                 holder.mConnectionView.setImageDrawable(mDrawableIcon_Settings);
             }
+            else if(position == RoboGen_Constants.ItemListPos_EB) {
+                holder.mConnectionView.setImageDrawable(mDrawableIcon_EB);
+            }
+            */
 
-            holder.mIdView.setText(m_listValues.get(position).m_sEntryID);
+            //holder.mIdView.setText(m_listValues.get(position).m_sEntryID);
             holder.mTitleView.setText(m_listValues.get(position).m_sEntryTitle);
 
             holder.itemView.setTag(m_listValues.get(position));

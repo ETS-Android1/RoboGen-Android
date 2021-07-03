@@ -20,6 +20,7 @@ import at.srfg.robogen.itemdetail.ItemDetailRobot;
 import at.srfg.robogen.itemdetail.ItemDetailWatch;
 import at.srfg.robogen.itemdetail.ItemDetailVector;
 import at.srfg.robogen.itemdetail.ItemDetailSettings;
+import at.srfg.robogen.itemdetail.ItemDetailWV;
 
 /*******************************************************************************
  * An activity representing a single Item detail screen. This
@@ -100,6 +101,13 @@ public class ItemDetailActivity extends AppCompatActivity {
             {
                 arguments.putString(ItemDetailSettings.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailSettings.m_sARG_ITEM_ID));
                 ItemDetailSettings fragment = new ItemDetailSettings();
+                fragment.setArguments(arguments);
+                getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
+            }
+            else if(itemID.equals(RoboGen_Constants.ItemListID_WV))
+            {
+                arguments.putString(ItemDetailWV.m_sARG_ITEM_ID, getIntent().getStringExtra(ItemDetailWV.m_sARG_ITEM_ID));
+                ItemDetailWV fragment = new ItemDetailWV();
                 fragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
             }

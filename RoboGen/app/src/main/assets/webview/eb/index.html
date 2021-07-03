@@ -1,0 +1,1350 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+		<meta http-equiv="Pragma" content="no-cache"/>
+		<meta http-equiv="Expires" content="0"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Energie-Batterie</title>
+		<script src="../js/jquery-2.1.4.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/data.js"></script>
+		<script src="../js/i18next-1.10.1.min.js"></script>
+		<script src="../js/moment-with-locales.min.js"></script>
+		<script src="../js/bootstrap-datetimepicker.min.js"></script>
+		<script src="../js/d3.v3.min.js"></script>
+		<script src="../js/radarChart.js"></script>
+		<link rel="stylesheet" href="../css/bootstrap.min.css">
+		<link rel="stylesheet" href="../css/bootstrap-datetimepicker.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/main.css">
+		<script>
+			var loadEndpoint = "https://api.jsonstorage.net/v1/json/1880b337-5205-4b31-9ca0-db90ecd5e48f";
+			var saveEndpoint = "https://api.jsonstorage.net/v1/json/1880b337-5205-4b31-9ca0-db90ecd5e48f";
+			var loadMethod = "GET";
+			var saveMethod = "PUT";
+			var debug = false;
+			var loaded = false;
+			var last_load = "";
+			var weekdays_arr = ["MO","TU","WE","TH","FR","SA","SU"];
+			i18n.init({
+				resStore: resources,
+				lng: 'de',
+				postProcess: 'postProcessDot'
+			}, function(t) {
+				$("html").i18n();
+			});
+			i18n.addPostProcessor("postProcessDot", function(value, key, options) {
+				if (key == ".")
+					value = ".";
+				return value;
+			});
+			window.onhashchange = function () {
+				if (debug && window.console && window.console.log)
+					console.log("onhashchange detected, loaded: "+loaded);
+				init(true);
+			}
+			$.extend({
+				getUrlVars: function() {
+					var vars = [], hash;
+					var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+					for (var i = 0; i < hashes.length; i++) {
+						hash = hashes[i].split('=');
+						if (hash.length == 2) {
+							vars.push(hash[0]);
+							vars[hash[0]] = hash[1].split('#')[0];
+						}
+					}
+					return vars;
+				},
+				getUrlVar: function(name) {
+					return $.getUrlVars()[name];
+				}
+			});
+			function init(flag) {
+				loaded = true;
+				var site = window.location.href.split("#")[1];
+				if (site)
+					site = site.split("?")[0];
+				if (debug && window.console && window.console.log)
+					console.log("init with site "+site+" and flag "+flag);
+				if (site && flag == false) {}
+				else {
+					if (site) {
+						show(site);
+					}
+					else
+						show('energybattery_step1');
+				}
+			}
+			function show(page,id) {
+				if (debug && window.console && window.console.log)
+					console.log("Trying to show "+page);
+				if (page != last_load) {
+					if (id == null) {
+						last_load = page;
+						if (debug && window.console && window.console.log)
+							console.log("Last load set to "+page);
+						id = "#content";
+						$(".active").removeClass("active");
+						$("."+page).addClass("active");
+						window.location.href = window.location.href.split("#")[0]+"#"+page;
+					}
+					var add = null;
+					if (page.indexOf("energybattery_") != -1) {
+						var split = page.split("_");
+						page = split[0];
+						add = split[1];
+					}
+					performAction(page,add);
+				}
+			}
+			function performAction(page,add) {
+				$("html").i18n();
+				switch (page) {
+					case "energybattery":
+						if (add)
+							loadEnergyBattery(add);
+						else
+							loadEnergyBattery("step1");
+						break;
+					default:
+						break;
+				}
+			}
+			function loadEnergyBattery(step) {
+				renderEBWeekDayButtons();
+				$(".eb").removeClass("active");
+				$("."+step).addClass("active");
+				switch (step) {
+					case "step1":
+						$("#eb_content").html(loadEBStep1());
+						$('#eb_media_modal').on('hidden.bs.modal', function () {
+							$('video').trigger('pause');
+						});
+						break;
+					case "step2":
+						loadEBStep2();
+						break;
+					case "step3":
+						loadEBStep3();
+						break;
+					default:
+						break;
+				}
+				$("#eb_content").i18n();
+			}
+			function renderEBWeekDayButtons() {
+				var html = "";
+				for (var i=0; i<weekdays_arr.length; i++) {
+					html += "<button id='cal_weekdays_btn_"+weekdays_arr[i]+"' class='btn btn-lg btn-default' type='button' onclick='toggleEBWeekDay(this)'>"+i18n.t("i18n_weekday_"+weekdays_arr[i])+"</button> ";
+				}
+				$("#cal_weekdays_btn_inner").html(html);
+			}
+			function loadEBTooltip(tag) {
+				$("#eb_tt_title").html(i18n.t(tag));
+				$("#eb_tt_body").html(i18n.t(tag+"_info"));
+				$("#eb_tt_modal").modal();
+			}
+			function loadEBStep1() {
+				var html = "";
+				html += "<button type='button' class='btn btn-primary btn-lg' onclick='$(\"#eb_media_modal\").modal();'><i class='glyphicon glyphicon-play'></i> <span data-i18n='i18n_play'></span></button><br/>";
+				html += "<div class='space'>"+i18n.t("i18n_eb_step1_intro")+"</div>";
+				html += "<table class='table table-striped table-bordered space'>";
+				html += "<tr>";
+				html += "<th class='success col-md-3'>"+i18n.t("i18n_eb_active_relaxation")+"</th>";
+				html += "<th class='warning col-md-3'>"+i18n.t("i18n_eb_passive_relaxation")+"</th>";
+				html += "<th class='danger col-md-3'>"+i18n.t("i18n_eb_must_dos")+"</th>";
+				html += "<th class='info col-md-3'>"+i18n.t("i18n_eb_sleep")+"</th>";
+				html += "</tr>";
+				html += "<tr>";
+				html += "<td>"+i18n.t("i18n_eb_active_relaxation_info")+"</td>";
+				html += "<td>"+i18n.t("i18n_eb_passive_relaxation_info")+"</td>";
+				html += "<td>"+i18n.t("i18n_eb_must_dos_info")+"</td>";
+				html += "<td>"+i18n.t("i18n_eb_sleep_info")+"</td>";
+				html += "</tr>";
+				html += "</table>";
+				return html;
+			}
+			function addEBAct() {
+				$("#eb_add_act_modal").attr("value","");
+				$("#eb_act_text").val("");
+				$("#eb_act_cat").val("");
+				$("#eb_schedules").val("");
+				$("#eb_schedules").html("");
+				renderEBSchedules();
+				$("#eb_act_delete").removeClass("hidden").addClass("hidden");
+				$("#eb_act_save").prop('disabled', true);
+				$("#eb_add_act_modal").modal();
+			}
+			function addEBSchedule() {
+				$("#sched_modal").attr("value","");
+				$("#cal_weekdays").val("");
+				$('#cal_weekdays_btn .btn').removeClass('active');
+				$("#cal_from").data("DateTimePicker").date(null);
+				$("#cal_to").data("DateTimePicker").date(null);
+				$('#cal_time_sel').removeClass('hidden');
+				$("#sched_delete").removeClass('hidden').addClass("hidden");
+				$("#sched_save").prop('disabled', true);
+				$("#sched_modal").modal();
+			}
+			function saveEBSchedule() {
+				var schedule = {
+					"timeRange": {
+						"startTime": null,
+						"endTime": null
+					},
+					"weekdays": null,
+					"allDay":false,
+					"type":"SCHEDULE"
+				};
+				var weekdays_sel = $("#cal_weekdays").val().split(",");
+				schedule.weekdays = weekdays_sel;
+				schedule.weekdays.sort(function(a,b){
+					return weekdays_arr.indexOf(a)-weekdays_arr.indexOf(b);
+				});
+				schedule.timeRange.startTime = $("#cal_from").data("DateTimePicker").date().format("HH:mm");
+				schedule.timeRange.endTime = $("#cal_to").data("DateTimePicker").date().format("HH:mm");
+				var old_val = $("#eb_schedules").val();
+				if ($("#sched_modal").attr("value") == "") {
+					var new_val = [];
+					if (old_val == "") {
+						new_val.push(schedule);
+					}
+					else {
+						old_val = JSON.parse(old_val);
+						old_val.push(schedule);
+						new_val = old_val;
+					}
+				}
+				else {
+					var i = parseInt($("#sched_modal").attr("value"));
+					old_val = JSON.parse(old_val);
+					old_val[i].timeRange.startTime = schedule.timeRange.startTime;
+					old_val[i].timeRange.endTime = schedule.timeRange.endTime;
+					old_val[i].weekdays = schedule.weekdays;
+					old_val[i].allDay = schedule.allDay;
+					old_val[i].type = schedule.type;
+					new_val = old_val;
+				}
+				$("#eb_schedules").val(JSON.stringify(new_val));
+				renderEBSchedules();
+			}
+			function renderEBSchedules() {
+				checkEBAct();
+				var schedules = $("#eb_schedules").val();
+				if (schedules != "") {
+					schedules = JSON.parse(schedules);
+					var html = "";
+					html += "<button type='button' class='btn btn-default' onclick='addEBSchedule()'><i class='glyphicon glyphicon-plus'></i> "+i18n.t("i18n_add_schedule")+"</button>";
+					html += "<table class='table table-striped table-bordered table-hover space' style='margin-bottom:0px !important'>";
+					for (var i=0; i<schedules.length; i++) {
+						if (debug && window.console && window.console.log)
+							console.log("Index: "+i+", Schedule: "+JSON.stringify(schedules[i]));
+						html += "<tr onclick='editEBSchedule("+i+")'>";
+						html += "<td style='font-size: 16px'>";
+						var start_str = schedules[i].timeRange.startTime;
+						var end_str =  schedules[i].timeRange.endTime;
+						html += start_str+" - "+end_str;
+						html += "</td>";
+						html += "<td style='font-size: 16px'>";
+						var weekdays_str = [];
+						schedules[i].weekdays.sort(function(a,b){
+							return weekdays_arr.indexOf(a)-weekdays_arr.indexOf(b);
+						});
+						for (var j=0; j<schedules[i].weekdays.length; j++) {
+							weekdays_str.push(i18n.t("i18n_weekday_"+schedules[i].weekdays[j]))
+						}
+						html += weekdays_str.toString().replace(/,/g,", ");
+						html += "</td>";
+						html += "</tr>";
+					}
+					html += "</table>";
+					html += "<button type='button' class='btn btn-danger space' onclick='clearEBSchedule()'><i class='glyphicon glyphicon-remove'></i> "+i18n.t("i18n_delete")+"</button>";
+					$("#eb_schedules").html(html);
+				}
+				else {
+					var html = "";
+					html += "<button type='button' class='btn btn-default' onclick='addEBSchedule()'><i class='glyphicon glyphicon-plus'></i> "+i18n.t("i18n_add_schedule")+"</button><br/>";
+					html += "<button type='button' class='btn btn-danger space' onclick='clearEBSchedule()'><i class='glyphicon glyphicon-remove'></i> "+i18n.t("i18n_delete")+"</button>";
+					$("#eb_schedules").html(html);
+				}
+			}
+			function clearEBSchedule() {
+				var result = confirm(i18n.t("i18n_confirm_delete"));
+				if (result) {
+					$("#eb_schedules").val("");
+					renderEBSchedules();
+				}
+			}
+			function deleteEBSchedule() {
+				var result = confirm(i18n.t("i18n_confirm_delete"));
+				if (result) {
+					var index = parseInt($("#sched_modal").attr("value"));
+					var schedules = JSON.parse($("#eb_schedules").val());
+					schedules.splice(index,1);
+					if (schedules.length == 0)
+						$("#eb_schedules").val("");
+					else
+						$("#eb_schedules").val(JSON.stringify(schedules));
+					renderEBSchedules();
+				}
+			}
+			function editEBSchedule(index) {
+				var schedules = JSON.parse($("#eb_schedules").val());
+				var schedule_to_edit = schedules[index];
+				$("#sched_modal").attr("value",index);
+				$('#cal_time_sel').removeClass('hidden');
+				var start = moment("1980-01-01 "+schedule_to_edit.timeRange.startTime);
+				var end = moment("1980-01-01 "+schedule_to_edit.timeRange.endTime);
+				$("#cal_from").data("DateTimePicker").date(start);
+				$("#cal_to").data("DateTimePicker").date(end);
+				$('#cal_weekdays_btn .btn').removeClass('active');
+				var weekdays_str = schedule_to_edit.weekdays;
+				for (var i=0; i<schedule_to_edit.weekdays.length; i++) {
+					$("#cal_weekdays_btn_"+schedule_to_edit.weekdays[i]).addClass('active');
+				}
+				if (weekdays_str.length > 0)
+					$("#cal_weekdays").val(weekdays_str);
+				else
+					$("#cal_weekdays").val("");
+				if (weekdays_str.indexOf("MO") != -1 && weekdays_str.indexOf("TU") != -1 && weekdays_str.indexOf("WE") != -1 && weekdays_str.indexOf("TH") != -1 && weekdays_str.indexOf("FR") != -1) {
+					if (weekdays_str.indexOf("SA") != -1 && weekdays_str.indexOf("SU") != -1)
+						$("#cal_weekdays_btn_DA").addClass('active');
+					else if (weekdays_str.indexOf("SA") == -1 && weekdays_str.indexOf("SU") == -1)
+						$("#cal_weekdays_btn_WD").addClass('active');
+				}
+				$("#sched_delete").removeClass('hidden');
+				$("#sched_save").prop('disabled', false);
+				$("#sched_modal").modal();
+			}
+			function editEBAct(id) {
+				for (var i=0; i<eb_step2_data.length; i++) {
+					if (eb_step2_data[i].identifier == id) {
+						var activity = eb_step2_data[i];
+						$("#eb_add_act_modal").attr("value",id);
+						$("#eb_act_text").val(activity.description);
+						$("#eb_act_cat").val(activity.activityType.identifier);
+						$("#eb_schedules").val(JSON.stringify(activity.schedules));
+						renderEBSchedules();
+						$("#eb_act_delete").removeClass('hidden');
+						$("#eb_act_save").prop('disabled', false);
+						$("#eb_add_act_modal").modal();
+					}
+				}
+			}
+			function saveEBAct() {
+				var id = $("#eb_add_act_modal").attr("value");
+				var activity = {
+					"identifier":null,
+					"type":"SETTINGS",
+					"description":null,
+					"activityType":{
+						"identifier":null,
+						"type":"CONCEPT"
+					},
+					"schedules":[]
+				};
+				activity.description = $("#eb_act_text").val();
+				activity.activityType.identifier = $("#eb_act_cat").val();
+				activity.schedules = JSON.parse($("#eb_schedules").val());
+				if (id != "") {
+					var index = -1;
+					for (var i=0; i<eb_step2_data.length; i++) {
+						if (eb_step2_data[i].identifier == id)
+							index = i;
+					}
+					eb_step2_data.splice(index,1);
+					activity.identifier = id;
+				}
+				else {
+					activity.identifier = uuidv4();
+				}
+				eb_step2_data.push(activity);
+				$("#eb_loader").removeClass("hidden");
+				$("#eb_main").removeClass("hidden").addClass("hidden");
+				$.ajax({
+					method: saveMethod,
+					url: saveEndpoint,
+					cache: false,
+					contentType: "application/json",
+					data: JSON.stringify(eb_step2_data),
+					success: function(res) {
+						loadEnergyBattery("step2");
+						$("#eb_loader").removeClass("hidden").addClass("hidden");
+						$("#eb_main").removeClass("hidden");
+					},
+					error: function(xhr,status,error) {
+						loadEnergyBattery("step2");
+						$("#meal_loader").removeClass("hidden").addClass("hidden");
+						$("#meal_main").removeClass("hidden");
+						alert("Fehler beim Speichern der Daten - versuchen Sie es später wieder");
+					}
+				});
+			}
+			function deleteEBAct() {
+				var id = $("#eb_add_act_modal").attr("value");
+				if (id != "") {
+					var index = -1;
+					for (var i=0; i<eb_step2_data.length; i++) {
+						if (eb_step2_data[i].identifier == id)
+							index = i;
+					}
+					eb_step2_data.splice(index,1);
+					$("#eb_loader").removeClass("hidden");
+					$("#eb_main").removeClass("hidden").addClass("hidden");
+					$.ajax({
+						method: saveMethod,
+						url: saveEndpoint,
+						cache: false,
+						contentType: "application/json",
+						data: JSON.stringify(eb_step2_data),
+						success: function(res) {
+							loadEnergyBattery("step2");
+							$("#eb_loader").removeClass("hidden").addClass("hidden");
+							$("#eb_main").removeClass("hidden");
+						},
+						error: function(xhr,status,error) {
+							loadEnergyBattery("step2");
+							$("#meal_loader").removeClass("hidden").addClass("hidden");
+							$("#meal_main").removeClass("hidden");
+							alert("Fehler beim Speichern der Daten - versuchen Sie es später wieder");
+						}
+					});
+				}
+			}
+			function checkEBAct() {
+				if ($("#eb_act_text").val() == "" || $("#eb_act_cat").val() == "" || $("#eb_schedules").val() == "")
+					$("#eb_act_save").prop('disabled', true);
+				else
+					$("#eb_act_save").prop('disabled', false);
+				if ($("#cal_weekdays").val() == "" || $("#cal_from").data("DateTimePicker").date() == null || $("#cal_to").data("DateTimePicker").date() == null)
+					$("#sched_save").prop('disabled', true);
+				else
+					$("#sched_save").prop('disabled', false);
+			}
+			function initEBCalDates(key) {
+				var from = $("#cal_from").data("DateTimePicker").date();
+				var to = $("#cal_to").data("DateTimePicker").date();
+				if (key == "from" && from == null) {
+					if (to == null)
+						$("#cal_from").data("DateTimePicker").date(moment());
+					else {
+						var new_val = to.subtract(5,"minutes");
+						$("#cal_from").data("DateTimePicker").date(new_val);
+					}
+				}
+				else if (key == "to" && to == null) {
+					if (from == null)
+						$("#cal_to").data("DateTimePicker").date(moment());
+					else {
+						var new_val = from.add(5,"minutes");
+						$("#cal_to").data("DateTimePicker").date(new_val);
+					}
+				}
+				checkEBAct();
+			}
+			function checkEBCalDates(key) {
+				var from = $("#cal_from").data("DateTimePicker").date();
+				var to = $("#cal_to").data("DateTimePicker").date();
+				if (from != null && to != null) {
+					if (Math.abs(from.diff(to,"minutes")) < 1) {
+						if (key == "from") {
+							var new_val = from.add(5,"minutes");
+							$("#cal_to").data("DateTimePicker").date(new_val);
+						}
+						else {
+							var new_val = to.subtract(5,"minutes");
+							$("#cal_from").data("DateTimePicker").date(new_val);
+						}
+					}
+				}
+				checkEBAct();
+			}
+			function toggleEBWeekDay(elem,flag) {
+				if (elem == null) {
+					var arr = $("#cal_weekdays").val().split(",");
+					if (arr.indexOf(flag) == -1) {
+						arr.push(flag);
+						$("#cal_weekdays").val(arr);
+						$("#cal_weekdays_btn_"+flag).addClass("active");
+					}
+				}
+				else if ($(elem).attr("id").split("cal_weekdays_btn_")[1] == "DA") {
+					$("#cal_weekdays_btn_DA").addClass('active');
+					$("#cal_weekdays_btn_WD").removeClass('active');
+					if (!$("#cal_weekdays_btn_MO").hasClass('active'))
+						$("#cal_weekdays_btn_MO").addClass('active');
+					if (!$("#cal_weekdays_btn_TU").hasClass('active'))
+						$("#cal_weekdays_btn_TU").addClass('active');
+					if (!$("#cal_weekdays_btn_WE").hasClass('active'))
+						$("#cal_weekdays_btn_WE").addClass('active');
+					if (!$("#cal_weekdays_btn_TH").hasClass('active'))
+						$("#cal_weekdays_btn_TH").addClass('active');
+					if (!$("#cal_weekdays_btn_FR").hasClass('active'))
+						$("#cal_weekdays_btn_FR").addClass('active');
+					if (!$("#cal_weekdays_btn_SA").hasClass('active'))
+						$("#cal_weekdays_btn_SA").addClass('active');
+					if (!$("#cal_weekdays_btn_SU").hasClass('active'))
+						$("#cal_weekdays_btn_SU").addClass('active');
+					$("#cal_weekdays").val(["MO","TU","WE","TH","FR","SA","SU"]);
+				}
+				else if  ($(elem).attr("id").split("cal_weekdays_btn_")[1] == "WD") {
+					$("#cal_weekdays_btn_WD").addClass('active');
+					$("#cal_weekdays_btn_DA").removeClass('active');
+					if (!$("#cal_weekdays_btn_MO").hasClass('active'))
+						$("#cal_weekdays_btn_MO").addClass('active');
+					if (!$("#cal_weekdays_btn_TU").hasClass('active'))
+						$("#cal_weekdays_btn_TU").addClass('active');
+					if (!$("#cal_weekdays_btn_WE").hasClass('active'))
+						$("#cal_weekdays_btn_WE").addClass('active');
+					if (!$("#cal_weekdays_btn_TH").hasClass('active'))
+						$("#cal_weekdays_btn_TH").addClass('active');
+					if (!$("#cal_weekdays_btn_FR").hasClass('active'))
+						$("#cal_weekdays_btn_FR").addClass('active');
+					if ($("#cal_weekdays_btn_SA").hasClass('active'))
+						$("#cal_weekdays_btn_SA").removeClass('active');
+					if ($("#cal_weekdays_btn_SU").hasClass('active'))
+						$("#cal_weekdays_btn_SU").removeClass('active');
+					$("#cal_weekdays").val(["MO","TU","WE","TH","FR"]);
+				}
+				else {
+					$("#cal_weekdays_btn_DA").removeClass('active');
+					$("#cal_weekdays_btn_WD").removeClass('active');
+					var val = $(elem).attr("id").split("cal_weekdays_btn_")[1];
+					if ($(elem).hasClass('active')) {
+						$(elem).removeClass('active');
+						var arr = $("#cal_weekdays").val().split(",");
+						arr.splice(arr.indexOf(val),1);
+						if (arr.indexOf("MO") != -1 && arr.indexOf("TU") != -1 && arr.indexOf("WE") != -1 && arr.indexOf("TH") != -1 && arr.indexOf("FR") != -1) {
+							if (arr.indexOf("SA") != -1 && arr.indexOf("SU") != -1)
+								$("#cal_weekdays_btn_DA").addClass('active');
+							else if (arr.indexOf("SA") == -1 && arr.indexOf("SU") == -1)
+								$("#cal_weekdays_btn_WD").addClass('active');
+						}
+						$("#cal_weekdays").val(arr);
+					}
+					else {
+						$(elem).addClass('active');
+						var arr = []
+						if ($("#cal_weekdays").val() != "")
+							arr = $("#cal_weekdays").val().split(",");
+						arr.push(val);
+						if (arr.indexOf("MO") != -1 && arr.indexOf("TU") != -1 && arr.indexOf("WE") != -1 && arr.indexOf("TH") != -1 && arr.indexOf("FR") != -1) {
+							if (arr.indexOf("SA") != -1 && arr.indexOf("SU") != -1)
+								$("#cal_weekdays_btn_DA").addClass('active');
+							else if (arr.indexOf("SA") == -1 && arr.indexOf("SU") == -1)
+								$("#cal_weekdays_btn_WD").addClass('active');
+						}
+						$("#cal_weekdays").val(arr);
+					}
+				}
+				checkEBAct();
+			}
+			function evaluateEBSched() {
+				checkEBEvaluate();
+				$("#eb_evaluate_modal").modal();
+			}
+			function evaluateEBSched2() {
+				var id_must_dos = null;
+				var id_passive_relaxation = null;
+				var id_active_relaxation = null;
+				for (var i=0; i<eb_step2_data.length; i++) {
+					if (eb_step2_data[i].activityType.identifier == "i18n_eb_must_dos_rating")
+						id_must_dos = eb_step2_data[i].identifier;
+					else if (eb_step2_data[i].activityType.identifier == "i18n_eb_passive_relaxation_rating")
+						id_passive_relaxation = eb_step2_data[i].identifier;
+					else if (eb_step2_data[i].activityType.identifier == "i18n_eb_active_relaxation_rating")
+						id_active_relaxation = eb_step2_data[i].identifier;
+				}
+				var activity_md = {
+					"identifier":null,
+					"type":"SETTINGS",
+					"description":null,
+					"activityType":{
+						"identifier":null,
+						"type":"CONCEPT"
+					},
+					"schedules":[
+						{
+							"weekdays":["MO","TU","WE","TH","FR","SA","SU"],
+							"allDay":true,
+							"type":"SCHEDULE"
+						}
+					]
+				};
+				activity_md.description = $("#eb_evaluate_must_dos").val();
+				activity_md.activityType.identifier = "i18n_eb_must_dos_rating";
+				if (id_must_dos) {
+					var index = -1;
+					for (var i=0; i<eb_step2_data.length; i++) {
+						if (eb_step2_data[i].identifier == id_must_dos)
+							index = i;
+					}
+					eb_step2_data.splice(index,1);
+					activity_md.identifier = id_must_dos;
+				}
+				else {
+					activity_md.identifier = uuidv4();
+				}
+				eb_step2_data.push(activity_md);
+				var activity_pr = {
+					"identifier":null,
+					"type":"SETTINGS",
+					"description":null,
+					"activityType":{
+						"identifier":null,
+						"type":"CONCEPT"
+					},
+					"schedules":[
+						{
+							"weekdays":["MO","TU","WE","TH","FR","SA","SU"],
+							"allDay":true,
+							"type":"SCHEDULE"
+						}
+					]
+				};
+				activity_pr.description = $("#eb_evaluate_passive_relaxation").val();
+				activity_pr.activityType.identifier = "i18n_eb_passive_relaxation_rating";
+				if (id_passive_relaxation) {
+					var index = -1;
+					for (var i=0; i<eb_step2_data.length; i++) {
+						if (eb_step2_data[i].identifier == id_passive_relaxation)
+							index = i;
+					}
+					eb_step2_data.splice(index,1);
+					activity_pr.identifier = id_passive_relaxation;
+				}
+				else {
+					activity_pr.identifier = uuidv4();
+				}
+				eb_step2_data.push(activity_pr);
+				var activity_ar = {
+					"identifier":null,
+					"type":"SETTINGS",
+					"description":null,
+					"activityType":{
+						"identifier":null,
+						"type":"CONCEPT"
+					},
+					"schedules":[
+						{
+							"weekdays":["MO","TU","WE","TH","FR","SA","SU"],
+							"allDay":true,
+							"type":"SCHEDULE"
+						}
+					]
+				};
+				activity_ar.description = $("#eb_evaluate_active_relaxation").val();
+				activity_ar.activityType.identifier = "i18n_eb_active_relaxation_rating";
+				if (id_active_relaxation) {
+					var index = -1;
+					for (var i=0; i<eb_step2_data.length; i++) {
+						if (eb_step2_data[i].identifier == id_active_relaxation)
+							index = i;
+					}
+					eb_step2_data.splice(index,1);
+					activity_ar.identifier = id_active_relaxation;
+				}
+				else {
+					activity_ar.identifier = uuidv4();
+				}
+				eb_step2_data.push(activity_ar);
+				$("#eb_loader").removeClass("hidden");
+				$("#eb_main").removeClass("hidden").addClass("hidden");
+				$.ajax({
+					method: saveMethod,
+					url: saveEndpoint,
+					cache: false,
+					contentType: "application/json",
+					data: JSON.stringify(eb_step2_data),
+					success: function(res) {
+						$("#eb_loader").removeClass("hidden").addClass("hidden");
+						$("#eb_main").removeClass("hidden");
+						setTimeout(function(){
+							show("energybattery_step3");
+						},200);
+					},
+					error: function(xhr,status,error) {
+						loadEnergyBattery("step2");
+						$("#meal_loader").removeClass("hidden").addClass("hidden");
+						$("#meal_main").removeClass("hidden");
+						alert("Fehler beim Speichern der Daten - versuchen Sie es später wieder");
+					}
+				});
+			}
+			function checkEBEvaluate() {
+				if ($("#eb_evaluate_must_dos").val() == "" || $("#eb_evaluate_passive_relaxation").val() == "" || $("#eb_evaluate_active_relaxation").val() == "")
+					$("#eb_evaluate_next").prop('disabled', true);
+				else
+					$("#eb_evaluate_next").prop('disabled', false);
+			}
+			var eb_step2_data = [];
+			function loadEBStep2() {
+				eb_step2_data = [];
+				var html = "";
+				html += i18n.t("i18n_eb_step2_intro");
+				html += "<br><button type='button' class='btn btn-primary btn-lg space' onclick='addEBAct()'><i class='glyphicon glyphicon-plus'></i> <span data-i18n='i18n_add'></span></button> <button type='button' class='btn btn-primary btn-lg space' style='margin-left:10px;' onclick='evaluateEBSched()'><i class='glyphicon glyphicon-search'></i> <span data-i18n='i18n_evaluate'></span></button>";
+				html += "<table class='table table-striped table-bordered space'>";
+				html += "<tr>";
+				for (var i=0; i<weekdays_arr.length; i++) {
+					html += "<th>"+i18n.t("i18n_weekday_"+weekdays_arr[i])+"</th>";
+				}
+				html += "</tr>";
+				html += "<tr id='eb_step2_data'>";
+				html += "<td colspan='7'>"+i18n.t("i18n_loading")+"</td>";
+				html += "</tr>";
+				html += "</table>";
+				$("#eb_loader").removeClass("hidden");
+				$("#eb_main").removeClass("hidden").addClass("hidden");
+				$("#eb_content").html(html);
+				$.ajax({
+					method: loadMethod,
+					url: loadEndpoint,
+					cache: false,
+					dataType: "json",
+					success: function(response,status,xhr) {
+						$("#eb_loader").removeClass("hidden").addClass("hidden");
+						$("#eb_main").removeClass("hidden");
+						eb_step2_data = response;
+						var html = "";
+						if (response.length == 0) {
+							html = "<td colspan='7'>"+i18n.t("i18n_no_data")+"</td>";
+						}
+						else {
+							var events = {
+								"MO":[],
+								"TU":[],
+								"WE":[],
+								"TH":[],
+								"FR":[],
+								"SA":[],
+								"SU":[],
+							};
+							for (var i=0; i<response.length; i++) {
+								if (response[i].activityType.identifier == "i18n_eb_must_dos_rating")
+									$("#eb_evaluate_must_dos").val(response[i].description);
+								else if (response[i].activityType.identifier == "i18n_eb_passive_relaxation_rating")
+									$("#eb_evaluate_passive_relaxation").val(response[i].description);
+								else if (response[i].activityType.identifier == "i18n_eb_active_relaxation_rating")
+									$("#eb_evaluate_active_relaxation").val(response[i].description);
+								else {
+									for (var j=0; j<response[i].schedules.length; j++) {
+										for (var k=0; k<weekdays_arr.length; k++) {
+											if (response[i].schedules[j].weekdays.indexOf(weekdays_arr[k]) != -1) {
+												events[weekdays_arr[k]].push({
+													"id":response[i].identifier,
+													"title":response[i].description,
+													"type":response[i].activityType.identifier,
+													"start":response[i].schedules[j].timeRange.startTime,
+													"end":response[i].schedules[j].timeRange.endTime
+												});
+											}
+										}
+									}
+								}
+							}
+							for (var i=0; i<weekdays_arr.length; i++) {
+								events[weekdays_arr[i]].sort(function(a,b){
+									var a_comp = a.start;
+									var b_comp = b.start;
+									return a_comp.localeCompare(b_comp);
+								});
+							}
+							for (var i=0; i<weekdays_arr.length; i++) {
+								html += "<td>";
+								for (var j=0; j<events[weekdays_arr[i]].length; j++) {
+									var ev = events[weekdays_arr[i]][j];
+									var cl;
+									if (ev.type == "i18n_eb_active_relaxation")
+										cl = "success";
+									else if (ev.type == "i18n_eb_passive_relaxation")
+										cl = "warning";
+									else if (ev.type == "i18n_eb_must_dos")
+										cl = "danger";
+									else if (ev.type == "i18n_eb_sleep")
+										cl = "info";
+									html += "<div class='eb-act bg-"+cl+"' onclick='editEBAct(\""+ev.id+"\")'>";
+									html += "<small>"+ev.start+" - "+ev.end+"</small><br/>"+ev.title;
+									html += "</div>";
+								}
+								html += "</td>";
+							}
+						}
+						$("#eb_step2_data").html(html);
+					},
+					error: function(xhr,status,error) {
+						$("#eb_loader").removeClass("hidden").addClass("hidden");
+						$("#eb_main").removeClass("hidden");
+						var html = "<td colspan='7'>"+i18n.t("i18n_no_data")+"</td>";
+						$("#eb_step2_data").html(html);
+						alert("Fehler beim Laden der Daten - versuchen Sie es später wieder");
+					}
+				});
+			}
+			var eb_step3_data = [];
+			function loadEBStep3() {
+				eb_step3_data = [];
+				var html = "";
+				html += "<div class='row'>";
+				html += "<div class='col-md-4'>";
+				html += i18n.t("i18n_eb_step3_intro");
+				html += "<div id='eb_eval_text' class='space'>";
+				html += i18n.t("i18n_loading");
+				html += "</div>";
+				html += "</div>";
+				html += "<div class='col-md-8'>";
+				html += "<center><div id='eb_eval_graph'>"+i18n.t("i18n_loading")+"</div></center>";
+				html += "</div>";
+				html += "</div>";
+				$("#eb_loader").removeClass("hidden");
+				$("#eb_main").removeClass("hidden").addClass("hidden");
+				$("#eb_content").html(html);
+				$.ajax({
+					method: loadMethod,
+					url: loadEndpoint,
+					cache: false,
+					dataType: "json",
+					success: function(response,status,xhr) {
+						$("#eb_loader").removeClass("hidden").addClass("hidden");
+						$("#eb_main").removeClass("hidden");
+						eb_step3_data = response;
+						if (response.length == 0) {
+							html = i18n.t("i18n_no_data");
+							$("#eb_eval_text").html(html);
+							$("#eb_eval_graph").html(html);
+						}
+						else {
+							var sleep = 0;
+							var eb_must_dos_rating = null;
+							var eb_passive_relaxation_rating = null;
+							var eb_active_relaxation_rating = null;
+							for (var i=0; i<eb_step3_data.length; i++) {
+								if (eb_step3_data[i].activityType.identifier == "i18n_eb_sleep") {
+									for (var j=0; j<eb_step3_data[i].schedules.length; j++) {
+										var sched = eb_step3_data[i].schedules[j];
+										var start = moment("1980-01-01 "+sched.timeRange.startTime);
+										var end = moment("1980-01-01 "+sched.timeRange.endTime);
+										var minute_diff = end.diff(start,"minutes");
+										var hour_diff = minute_diff/60;
+										if (hour_diff < 0)
+											hour_diff += 24;
+										var full_time = hour_diff*eb_step3_data[i].schedules[j].weekdays.length;
+										sleep += full_time;
+									}
+								}
+								else if (eb_step3_data[i].activityType.identifier == "i18n_eb_must_dos_rating")
+									eb_must_dos_rating = eb_step3_data[i].description;
+								else if (eb_step3_data[i].activityType.identifier == "i18n_eb_passive_relaxation_rating")
+									eb_passive_relaxation_rating = eb_step3_data[i].description;
+								else if (eb_step3_data[i].activityType.identifier == "i18n_eb_active_relaxation_rating")
+									eb_active_relaxation_rating = eb_step3_data[i].description;
+							}
+							insertEBStep3Rating(sleep,eb_must_dos_rating,eb_passive_relaxation_rating,eb_active_relaxation_rating);
+							$("#eb_eval_graph").html("");
+							var root = {
+								"name": "",
+								"color": "#ffffff",
+								"children": [
+									{
+										"name": "i18n_eb_active_relaxation",
+										"color": "#449d44",
+										"children": []
+									},
+									{
+										"name": "i18n_eb_passive_relaxation",
+										"color": "#ec971f",
+										"children": []
+									},
+									{
+										"name": "i18n_eb_must_dos",
+										"color": "#c9302c",
+										"children": []
+									},
+									{
+										"name": "i18n_eb_sleep",
+										"color": "#31b0d5",
+										"children": []
+									}
+								]
+							};
+							for (var i=0; i<response.length; i++) {
+								for (var j=0; j<root.children.length; j++) {
+									if (root.children[j].name == response[i].activityType.identifier) {
+										var size = 0;
+										for (var k=0; k<response[i].schedules.length; k++) {
+											var start = moment("1980-01-01 "+response[i].schedules[k].timeRange.startTime);
+											var end = moment("1980-01-01 "+response[i].schedules[k].timeRange.endTime);
+											var minute_diff = end.diff(start,"minutes");
+											var hour_diff = minute_diff/60;
+											if (hour_diff < 0)
+												hour_diff += 24;
+											var full_time = hour_diff*response[i].schedules[k].weekdays.length;
+											size += full_time;
+										}
+										size = size/(24*7)*100;
+										root.children[j].children.push({
+											"name":response[i].description,
+											"size":size
+										});
+									}
+								}
+							}
+							for (var i=0; i<root.children.length; i++) {
+								if (root.children[i].children.length == 0)
+									root.children[i].name = "";
+							}
+							var width = 600,
+							height = 600,
+							radius = (Math.min(width, height) / 2) - 10,
+							x = d3.scale.linear().range([0, 2 * Math.PI]),
+							y = d3.scale.pow().exponent(1.3).domain([0, 1]).range([0, radius]),
+							padding = 7,
+							maxChars = 15,
+							duration = 750;
+							var formatNumber = d3.format(",d");
+							var x = d3.scale.linear().range([0, 2 * Math.PI]);
+							var y = d3.scale.linear().range([-80, radius]);
+							var partition = d3.layout.partition().value(function(d) { return d.size; });
+							var arc = d3.svg.arc()
+								.startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
+								.endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx))); })
+								.innerRadius(function(d) { return Math.max(0, y(d.y)); })
+								.outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
+							var svg = d3.select("#eb_eval_graph").append("svg")
+								.attr("width", width)
+								.attr("height", height)
+								.append("g")
+								.attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
+							svg.selectAll("path")
+								.data(partition.nodes(root))
+								.enter().append("path")
+								.attr("d", arc)
+								.attr("id", function(d,i) { return "path"+i })
+								.style("fill", function(d,i) { return (d.children ? d : d.parent).color; })
+								.on("click", function(d){
+									svg.transition()
+										.duration(duration)
+										.tween("scale", function() {
+											var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
+											yd = d3.interpolate(y.domain(), [d.y, 1]),
+											yr = d3.interpolate(y.range(), [d.y ? 20 : -80, radius]);
+											return function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
+										})
+										.selectAll("path")
+										.attrTween("d", function(d) { return function() { return arc(d); }; });
+									text.style("visibility", function(e) {
+										return isParentOf(d, e) ? null : d3.select(this).style("visibility");
+									})
+										.transition()
+										.duration(duration)
+										.attrTween("text-anchor", function(d) {
+											return function() {
+												return x(d.x + d.dx / 2) > Math.PI ? "end" : "start";
+											};
+										})
+										.attrTween("transform", function(d) {
+											return function() {
+												var angle = x(d.x + d.dx / 2) * 180 / Math.PI - 90,
+												rotate = angle;
+												return "rotate(" + rotate + ")translate(" + (y(d.y) + padding) + ")rotate(" + (angle > 90 ? -180 : 0) + ")";
+											};
+										})
+										.style("fill-opacity", function(e) { return isParentOf(d, e) ? 1 : 1e-6; })
+										.each("end", function(e) {
+											d3.select(this).style("visibility", isParentOf(d, e) ? null : "hidden");
+										});
+								})
+								.append("title")
+								.html(function(d) { return d.value==100? "" : i18n.t(d.name) + "\n&#x2300; " + Math.round(d.value/100*24*10)/10 + " h" ; });
+							var text = svg.selectAll("text").data(partition.nodes(root));
+							var textEnter = text.enter().append("text")
+								.style("fill-opacity", 1)
+								.style("fill", function(d) {
+									return "#ffffff";
+								})
+								.attr("text-anchor", function(d) {
+									return x(d.x + d.dx / 2) > Math.PI ? "end" : "start";
+								})
+								.attr("dy", ".2em")
+								.attr("transform", function(d) {
+									var angle = x(d.x + d.dx / 2) * 180 / Math.PI - 90,
+									rotate = angle;
+									return "rotate(" + rotate + ")translate(" + (y(d.y) + padding) + ")rotate(" + (angle > 90 ? -180 : 0) + ")";
+								})
+								.on("click", function(d){
+									svg.transition()
+										.duration(duration)
+										.tween("scale", function() {
+											var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
+											yd = d3.interpolate(y.domain(), [d.y, 1]),
+											yr = d3.interpolate(y.range(), [d.y ? 20 : -80, radius]);
+											return function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
+										})
+										.selectAll("path")
+										.attrTween("d", function(d) { return function() { return arc(d); }; });
+									text.style("visibility", function(e) {
+										return isParentOf(d, e) ? null : d3.select(this).style("visibility");
+									})
+										.transition()
+										.duration(duration)
+										.attrTween("text-anchor", function(d) {
+											return function() {
+												return x(d.x + d.dx / 2) > Math.PI ? "end" : "start";
+											};
+										})
+										.attrTween("transform", function(d) {
+											return function() {
+												var angle = x(d.x + d.dx / 2) * 180 / Math.PI - 90,
+												rotate = angle;
+												return "rotate(" + rotate + ")translate(" + (y(d.y) + padding) + ")rotate(" + (angle > 90 ? -180 : 0) + ")";
+											};
+										})
+										.style("fill-opacity", function(e) { return isParentOf(d, e) ? 1 : 1e-6; })
+										.each("end", function(e) {
+											d3.select(this).style("visibility", isParentOf(d, e) ? null : "hidden");
+										});
+								});
+							textEnter.append("tspan")
+								.attr("x", 0)
+								.text(function(d) {
+									var label = i18n.t(d.name);
+									if (label.length>maxChars)
+										label = label.slice(0,(maxChars-3))+"...";
+									return label;
+								})
+								.append("title")
+								.html(function(d) { return i18n.t(d.name) + "\n&#x2300; " + Math.round(d.value/100*24*10)/10 + " h"; });
+							d3.select(self.frameElement).style("height", height + "px");
+						}
+					},
+					error: function(xhr,status,error) {
+						$("#eb_loader").removeClass("hidden").addClass("hidden");
+						$("#eb_main").removeClass("hidden");
+						html = i18n.t("i18n_no_data");
+						$("#eb_eval_text").html(html);
+						$("#eb_eval_graph").html(html);
+						alert("Fehler beim Laden der Daten - versuchen Sie es später wieder");
+					}
+				});
+			}
+			function insertEBStep3Rating(sle,md,pr,ar) {
+				var interventions = eb_interventions;
+				var usedInterventions = [];
+				var html = "";
+				var sleep = (sle*10/7)/10;
+				if (sleep > 0) {
+					html += "<div class='space'>";
+					if (sleep < 6) {
+						html += i18n.t("i18n_eb_evaluate_sleep_fb_low");
+						var tmp_int = insertEBStep3Intervention(interventions,usedInterventions,"sleep-low");
+						if (tmp_int[0] != -1) {
+							usedInterventions.push(tmp_int[0]);
+							html += tmp_int[1];
+						}
+					}
+					else if (sleep < 10) {
+						html += i18n.t("i18n_eb_evaluate_sleep_fb_average");
+						var tmp_int = insertEBStep3Intervention(interventions,usedInterventions,"sleep-average");
+						if (tmp_int[0] != -1) {
+							usedInterventions.push(tmp_int[0]);
+							html += tmp_int[1];
+						}
+					}
+					else {
+						html += i18n.t("i18n_eb_evaluate_sleep_fb_high");
+						var tmp_int = insertEBStep3Intervention(interventions,usedInterventions,"sleep-high");
+						if (tmp_int[0] != -1) {
+							usedInterventions.push(tmp_int[0]);
+							html += tmp_int[1];
+						}
+					}
+					html += "</div>";
+				}
+				if (md && pr && ar) {
+					html += "<div class='space'>";
+					html += i18n.t("i18n_eb_evaluate_must_dos_fb_"+md.toLowerCase());
+					var tmp_int = insertEBStep3Intervention(interventions,usedInterventions,"must-"+md.toLowerCase());
+					if (tmp_int[0] != -1) {
+						usedInterventions.push(tmp_int[0]);
+						html += tmp_int[1];
+					}
+					html += "</div>";
+					html += "<div class='space'>";
+					html += i18n.t("i18n_eb_evaluate_passive_relaxation_fb_"+pr.toLowerCase());
+					tmp_int = insertEBStep3Intervention(interventions,usedInterventions,"passive-"+pr.toLowerCase());
+					if (tmp_int[0] != -1) {
+						usedInterventions.push(tmp_int[0]);
+						html += tmp_int[1];
+					}
+					html += "</div>";
+					html += "<div class='space'>";
+					html += i18n.t("i18n_eb_evaluate_active_relaxation_fb_"+ar.toLowerCase());
+					tmp_int = insertEBStep3Intervention(interventions,usedInterventions,"active-"+ar.toLowerCase());
+					if (tmp_int[0] != -1) {
+						usedInterventions.push(tmp_int[0]);
+						html += tmp_int[1];
+					}
+					html += "</div>";
+				}
+				else if (sleep == 0)
+					html += i18n.t("i18n_no_data");
+				$("#eb_eval_text").html(html);
+			}
+			function insertEBStep3Intervention(interventions,usedInterventions,code) {
+				var entries = [];
+				var ret = [-1,""];
+				for (var i=0; i<interventions.length; i++) {
+					if (usedInterventions.indexOf(i) == -1) {
+						var intervention = interventions[i];
+						for (var j=0; j<intervention['codes'].length; j++) {
+							var codeToCheck = intervention['codes'][j];
+							if (codeToCheck.localeCompare(code) == 0) {
+								var entry = intervention['text'];
+								var lnk = intervention['link'];
+								var txt = "<br>> "+entry;
+								if (lnk != "")
+									txt += "<br><a href='"+lnk+"' target='_blank'>"+lnk+"</a>";
+								entries.push([i,txt]);
+							}
+						}
+					}
+				}
+				if (entries.length > 0) {
+					var min = 0;
+					var max = entries.length-1;
+					var rnd = Math.floor(Math.random() * (max - min + 1)) + min;
+					ret = entries[rnd];
+				}
+				return ret;
+			}
+			function isParentOf(p, c) {
+				if (p === c) return true;
+				if (p.children) {
+					return p.children.some(function(d) {
+						return isParentOf(d, c);
+					});
+				}
+				return false;
+			}
+			function uuidv4() {
+			  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+				var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+				return v.toString(16);
+			  });
+			}
+		</script>
+	</head>
+	<body onload="init(true)">
+		<div id="eb_loader" class="hidden">
+			<center><div class="loader"></div></center>
+		</div>
+		<div id="eb_main">
+			<div class="row">
+				<div class="col-md-12">
+					<div id="eb">
+						<div class="row">
+							<div class="col-md-4 left-btn">
+								<a class="btn btn-lg btn-primary" href="../index.html"><i class='glyphicon glyphicon-home'></i> Hauptmenü</a>
+							</div>
+							<div class="col-md-4 center-btn">
+								<button class="btn btn-lg btn-default">Energie-Batterie</button>
+							</div>
+						</div>
+						<hr>
+						<ul class="nav nav-tabs nav-justified">
+							<li role="presentation" class="eb pointer step1"><a href="#energybattery_step1" data-i18n="i18n_eb_step1"></a></li>
+							<li role="presentation" class="eb pointer step2"><a href="#energybattery_step2" data-i18n="i18n_eb_step2"></a></li>
+							<li role="presentation" class="eb pointer step3"><a href="#energybattery_step3" data-i18n="i18n_eb_step3"></a></li>
+						</ul>
+						<div id="eb_content">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div  class="modal fade" id="eb_media_modal" data-backdrop="static" data-keyboard="false">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" data-i18n="i18n_eb_step1"></h4>
+						</div>
+						<div class="modal-body">
+							<center>
+								<video width="854" height="480" controls>
+									<source id="eb_video" src="../media/energy_battery_de.mp4" type="video/mp4">
+								</video>
+							</center>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div  class="modal fade" id="eb_evaluate_modal" data-backdrop="static" data-keyboard="false">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" data-i18n="i18n_eb_step2"></h4>
+						</div>
+						<div class="modal-body">
+							<div data-i18n="[html]i18n_eb_evaluate_intro"></div>
+							<div class="space" data-i18n="[html]i18n_eb_evaluate_must_dos"></div>
+							<div class="input-group">
+								<span class="input-group-addon" style="min-width:0 !important">...</span>
+								<select id="eb_evaluate_must_dos" class="form-control">
+									<option value=""></option>
+									<option value="HIGH" data-i18n="i18n_eb_evaluate_must_dos_high"></option>
+									<option value="AVERAGE" data-i18n="i18n_eb_evaluate_must_dos_average"></option>
+									<option value="LOW" data-i18n="i18n_eb_evaluate_must_dos_low"></option>
+								</select>
+							</div>
+							<script type="text/javascript">
+								$(function () { $("#eb_evaluate_must_dos").on("change",function(){checkEBEvaluate()});})
+							</script>
+							<div class="space" data-i18n="[html]i18n_eb_evaluate_passive_relaxation"></div>
+							<div class="input-group">
+								<span class="input-group-addon" style="min-width:0 !important">...</span>
+								<select id="eb_evaluate_passive_relaxation" class="form-control">
+									<option value=""></option>
+									<option value="HIGH" data-i18n="i18n_eb_evaluate_passive_relaxation_high"></option>
+									<option value="AVERAGE" data-i18n="i18n_eb_evaluate_passive_relaxation_average"></option>
+									<option value="LOW" data-i18n="i18n_eb_evaluate_passive_relaxation_low"></option>
+								</select>
+							</div>
+							<script type="text/javascript">
+								$(function () { $("#eb_evaluate_passive_relaxation").on("change",function(){checkEBEvaluate()});})
+							</script>
+							<div class="space" data-i18n="[html]i18n_eb_evaluate_active_relaxation"></div>
+							<div class="input-group">
+								<span class="input-group-addon" style="min-width:0 !important">...</span>
+								<select id="eb_evaluate_active_relaxation" class="form-control">
+									<option value=""></option>
+									<option value="HIGH" data-i18n="i18n_eb_evaluate_active_relaxation_high"></option>
+									<option value="AVERAGE" data-i18n="i18n_eb_evaluate_active_relaxation_average"></option>
+									<option value="LOW" data-i18n="i18n_eb_evaluate_active_relaxation_low"></option>
+								</select>
+							</div>
+							<script type="text/javascript">
+								$(function () { $("#eb_evaluate_active_relaxation").on("change",function(){checkEBEvaluate()});})
+							</script>
+						</div>
+						<div class="modal-footer">
+							<button data-dismiss="modal" class="btn btn-lg btn-default btn-cancel" type="button" data-i18n="i18n_cancel"></button>
+							<button onclick="evaluateEBSched2()" data-dismiss="modal" disabled class="btn btn-lg btn-primary" type="button" id="eb_evaluate_next"><i class='glyphicon glyphicon-arrow-right'></i> <span data-i18n="i18n_save_and_continue"></span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div  class="modal fade" id="eb_tt_modal" data-backdrop="static" data-keyboard="false">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="eb_tt_title"></h4>
+						</div>
+						<div class="modal-body" id="eb_tt_body">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="eb_add_act_modal" data-backdrop="static" data-keyboard="false">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true">x</span></button>
+							<h4 class="modal-title" data-i18n="i18n_activity"></h4>
+						</div>
+						<div class="modal-body">
+							<div class="input-group input-group-lg">
+								<span class="input-group-addon"><span data-i18n="i18n_activity"></span> *</span>
+								<textarea class="form-control" id="eb_act_text"></textarea>
+								<script type="text/javascript">
+									$(function () { $("#eb_act_text").on("input",function(){checkEBAct()});})
+								</script>
+							</div>
+							<div class="input-group input-group-lg space">
+								<span class="input-group-addon"><span data-i18n="i18n_category"></span> *</span>
+								<select id="eb_act_cat" class="form-control">
+									<option value=""></option>
+									<option value="i18n_eb_active_relaxation" data-i18n="i18n_eb_active_relaxation"></option>
+									<option value="i18n_eb_passive_relaxation" data-i18n="i18n_eb_passive_relaxation"></option>
+									<option value="i18n_eb_must_dos" data-i18n="i18n_eb_must_dos"></option>
+									<option value="i18n_eb_sleep" data-i18n="i18n_eb_sleep"></option>
+								</select>
+								<script type="text/javascript">
+									$(function () { $("#eb_act_cat").on("change",function(){checkEBAct()});})
+								</script>
+							</div>
+							<div class="input-group input-group-lg space">
+								<span class="input-group-addon"><span data-i18n="i18n_schedule"></span> *</span>
+								<span class="form-control multi-sel" id="eb_schedules" value=""></span>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<div class="modal-right-tag">* <span data-i18n="i18n_required_field"></span></div>
+							<button data-dismiss="modal" class="btn btn-lg btn-default btn-cancel" type="button" data-i18n="i18n_cancel"></button>
+							<button onclick="deleteEBAct()" data-dismiss="modal" class="btn btn-lg btn-danger hidden" type="button" id="eb_act_delete"><i class='glyphicon glyphicon-remove'></i> <span data-i18n="i18n_delete"></span></button>
+							<button onclick="saveEBAct()" data-dismiss="modal" disabled class="btn btn-lg btn-success" type="button" id="eb_act_save"><i class='glyphicon glyphicon-ok'></i> <span data-i18n="i18n_save"></span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="sched_modal" data-backdrop="static" data-keyboard="false">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true">x</span></button>
+							<h4 class="modal-title" data-i18n="i18n_schedule"></h4>
+						</div>
+						<div class="modal-body">
+							<div class="input-group input-group-lg space">
+								<span class="input-group-addon"><span data-i18n="i18n_weekdays"></span> *</span>
+								<input id="cal_weekdays" class="hide" value=""></input>
+								<span id="cal_weekdays_btn" class="form-control btn-sel">
+									<span id="cal_weekdays_btn_inner"></span>
+									<br/><div class="space">
+									<button id="cal_weekdays_btn_WD" class="btn btn-lg btn-default" type="button" data-i18n="i18n_weekday_WD" onclick="toggleEBWeekDay(this)"></button>
+									<button id="cal_weekdays_btn_DA" class="btn btn-lg btn-default" type="button" data-i18n="i18n_weekday_DA" onclick="toggleEBWeekDay(this)"></button>
+									</div>
+								</span>
+							</div>
+							<div id="cal_time_sel">
+								<div class="input-group input-group-lg space" id="cal_from">
+									<span class="input-group-addon"><span data-i18n="i18n_from"></span> *</span>
+									<input type="text" class="form-control">
+									<script type="text/javascript">
+										$(function () {	$('#cal_from').datetimepicker({allowInputToggle: true, useCurrent: false, format: "HH:mm", locale: "de"})})
+									</script>
+									<script type="text/javascript">
+										$(function () { $("#cal_from").on("dp.show",function(){initEBCalDates("from")});})
+									</script>
+									<script type="text/javascript">
+										$(function () { $("#cal_from").on("dp.change",function(){checkEBCalDates("from")});})
+									</script>
+								</div>
+								<div class="input-group input-group-lg space" id="cal_to">
+									<span class="input-group-addon"><span data-i18n="i18n_to"></span> *</span>
+									<input type="text" class="form-control">
+									<script type="text/javascript">
+										$(function () {	$('#cal_to').datetimepicker({allowInputToggle: true, useCurrent: false, format: "HH:mm", locale: "de"})})
+									</script>
+									<script type="text/javascript">
+										$(function () { $("#cal_to").on("dp.show",function(){initEBCalDates("to")});})
+									</script>
+									<script type="text/javascript">
+										$(function () { $("#cal_to").on("dp.change",function(){checkEBCalDates("to")});})
+									</script>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<div class="modal-right-tag">* <span data-i18n="i18n_required_field"></span></div>
+							<button data-dismiss="modal" class="btn btn-lg btn-default btn-cancel" type="button" data-i18n="i18n_cancel"></button>
+							<button onclick="deleteEBSchedule()" data-dismiss="modal" class="btn btn-lg btn-danger hidden" type="button" id="sched_delete"><i class='glyphicon glyphicon-remove'></i> <span data-i18n="i18n_delete"></span></button>
+							<button onclick="saveEBSchedule()" disabled data-dismiss="modal" class="btn btn-lg btn-success" type="button" id="sched_save"><i class='glyphicon glyphicon-ok'></i> <span data-i18n="i18n_save"></span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -11,6 +11,7 @@ public class RoboGen_Constants {
     static public final String ItemListID_Calendar = "6.";
     static public final String ItemListID_Nutrition = "7.";
     static public final String ItemListID_Settings = "8.";
+    static public final String ItemListID_WV = "9.";
 
     // item title name
     static public final String ItemListEntry_QBO = "Q.bo";
@@ -20,7 +21,8 @@ public class RoboGen_Constants {
     static public final String ItemListEntry_Contacts = "Kontakte";
     static public final String ItemListEntry_Calendar = "Kalender";
     static public final String ItemListEntry_Nutrition = "Ernährung";
-    static public final String ItemListEntry_Settings = "Settings";
+    static public final String ItemListEntry_Settings = "Einstellungen";
+    static public final String ItemListEntry_WV = "Starten";
 
     // item position in list
     static public final int ItemListPos_QBO  = 0;
@@ -31,4 +33,5 @@ public class RoboGen_Constants {
     static public final int ItemListPos_Calendar  = 5;
     static public final int ItemListPos_Nutrition  = 6;
     static public final int ItemListPos_Settings  = 7;
+    static public final int ItemListPos_WV  = 8;
 }
