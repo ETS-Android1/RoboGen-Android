@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/item_detail_title"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:textSize="@dimen/title_font_size"
+        android:textIsSelectable="true"
+        tools:context=".ItemDetail.ItemDetailNutrition" />
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/item_detail_text_1"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:textSize="@dimen/text_font_size"
+        android:textIsSelectable="true"
+        tools:context=".ItemDetail.ItemDetailNutrition" />
+
+    <!-- ************************************************************************* -->
+    <!-- ********************************* title ********************************* -->
+    <!-- ************************************************************************* -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:text="Bezeichnung des Eintrags: "/>
+
+        <EditText android:id="@+id/nutTitle" android:hint="Bezeichnung"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
+            android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <!-- ************************************************************************* -->
+    <!-- ********************************* amount ********************************* -->
+    <!-- ************************************************************************* -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="400dp" android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size" android:text="Konsumierte Menge [ml/g]: "/>
+
+        <EditText android:id="@+id/nutAmount" android:hint="Menge"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
+            android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <!-- ************************************************************************* -->
+    <!-- ********************************** date ********************************* -->
+    <!-- ************************************************************************* -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <Button android:layout_width="400dp" android:layout_height="wrap_content"
+            android:text="Datum setzen" android:id="@+id/btn_date" app:backgroundTint= "@color/colorPrimary"/>
+
+        <EditText android:id="@+id/nutDate" android:hint="Datum" android:editable="false"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
+            android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <!-- ************************************************************************* -->
+    <!-- ********************************* time ********************************** -->
+    <!-- ************************************************************************* -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <Button android:layout_width="400dp" android:layout_height="wrap_content"
+            android:text="Zeit setzen" android:id="@+id/btn_time" app:backgroundTint= "@color/colorPrimary"/>
+
+        <EditText android:id="@+id/nutTime" android:hint="Uhrzeit" android:editable="false"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:textSize="@dimen/editfield_font_size" android:layout_marginLeft="16dp"
+            android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <!-- ************************************************************************* -->
+    <!-- ***************************** add button ******************************** -->
+    <!-- ************************************************************************* -->
+    <View android:layout_width="fill_parent" android:layout_height="1dp" android:background="#3f3f3f"
+        android:layout_marginLeft="16dp" android:layout_marginRight="16dp" android:layout_marginTop="36dp"/>
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/bt_addUserCalendar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/icon_nutrition"
+            app:fabSize="normal"
+            app:rippleColor="@color/cardview_dark_background"
+            app:backgroundTint= "@color/colorPrimary" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/bt_refreshUserCalendar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/icon_refresh"
+            app:fabSize="normal"
+            app:rippleColor="@color/cardview_dark_background"
+            app:backgroundTint= "@color/colorPrimary" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/bt_removeUserCalendar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/bluetooth_send_q"
+            app:fabSize="normal"
+            app:rippleColor="@color/cardview_dark_background"
+            app:backgroundTint= "@color/colorAlertRed" />
+    </LinearLayout>
+
+    <!-- ************************************************************************* -->
+    <!-- ************************** existing entries ***************************** -->
+    <!-- ************************************************************************* -->
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#3f3f3f"
+        android:layout_marginLeft="16dp" android:layout_marginRight="16dp" android:layout_marginTop="36dp"/>
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/item_detail_nutritionexisting"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:textSize="@dimen/title_font_size"
+        android:text="Vorhandene Einträge"
+        android:textIsSelectable="true"
+        tools:context=".ItemDetail.ItemDetailCalendar" />
+
+    <!-- *************************** existing entries list *************************** -->
+    <LinearLayout android:orientation="horizontal" android:padding="16dp"
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <ListView
+            android:id="@+id/nutList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" >
+        </ListView>
+    </LinearLayout>
+
+</LinearLayout>
