@@ -7,6 +7,10 @@ body {
 	font-size: 16px;
 }
 
+#dt-content * {
+	font-size: 24px !important;
+}
+
 path {
 	stroke: #fff;
 	cursor: pointer;
